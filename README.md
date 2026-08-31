@@ -11,6 +11,17 @@ npm run dev
 
 生产构建：`npm run build`，产物位于 `dist/`。
 
+## GitHub Pages
+
+仓库内置 `.github/workflows/deploy-pages.yml`。将 `master` 分支推送到 GitHub 后，Actions 会自动构建并发布到 Pages；首次发布前在仓库 `Settings → Pages` 将 Source 设为 `GitHub Actions`。发布地址通常为 `https://<用户名>.github.io/<仓库名>/`。
+
+发布前可在本地验证 Pages 产物：
+
+```bash
+npm run build
+npm run prepare:github-pages
+```
+
 ## 操作
 
 从启动页选择主线或支线。战斗中先点击我方单位查看移动范围和敌方意图，再移动、生命攻击、信念攻击或使用职业技能；敌人在我方结束阶段后统一行动。亚瑟主线还包含技能树、军职任务、永久装备和 Boss 机制目标。
