@@ -82,7 +82,7 @@ import {campaignProgress,parseCampaignArchive,serializeCampaignArchive} from './
 import {Battlefield,type BattleAnimation,type BattleInput} from './render/battlefield';
 import {battleScenePresetFor,paletteForBattleId,terrainForBattleScene} from './render/battleScenePresets';
 import {audioManager,type MusicTrackId} from './audio/AudioManager';
-import {modelGalleryAssets,modelGallerySummary,mountModelGallery} from './render/modelGallery';
+import {modelGalleryAssets,modelGallerySummary} from './render/modelGallery';
 
 const app=document.querySelector<HTMLElement>('#app');
 if(!app)throw new Error('Missing #app');
@@ -132,7 +132,7 @@ const set=(html:string)=>{
   app.innerHTML=html;scrollTo(0,0);requestAnimationFrame(()=>scrollTo(0,0));
   if(html.includes('class="battle"'))audioManager.setScene(bossRuntime?'boss':'battle',{track:!bossRuntime&&campaignState.campaignId==='unflagged-side'?'abyssGatefallSide':undefined,campaignId:campaignState.campaignId,bossPhase:bossRuntime?(currentBossPhase(bossRuntime)?.phase===2?2:1):undefined});
   else if(html.includes('class="screen story"'))audioManager.setScene('story');
-  else if(html.includes('campaign-home-grid')||html.includes('battle-overview')||html.includes('roster-page')||html.includes('preparation-page')||html.includes('model-gallery-page'))audioManager.setScene('home');
+  else if(html.includes('campaign-home-grid')||html.includes('battle-overview')||html.includes('roster-page')||html.includes('preparation-page')||html.includes('model-gallery-page')||html.includes('shop-page'))audioManager.setScene('home');
   else if(html.includes('library-page'))audioManager.setScene('library');
   else if(html.includes('archive-page'))audioManager.setScene('archive');
   else if(html.includes('campaign-shell'))audioManager.setScene('story');
@@ -140,6 +140,7 @@ const set=(html:string)=>{
   app.querySelector<HTMLButtonElement>('[data-open-archive]')?.addEventListener('click',()=>renderArchive());
   app.querySelector<HTMLButtonElement>('[data-open-models]')?.addEventListener('click',()=>renderModelGallery());
   app.querySelector<HTMLButtonElement>('[data-go-home]')?.addEventListener('click',()=>renderCampaignHome());
+  app.querySelector<HTMLButtonElement>('[data-return-title]')?.addEventListener('click',()=>dispatchEvent(new CustomEvent('goddess:return-title')));
   app.querySelectorAll<HTMLButtonElement>('[data-flow-step]').forEach(button=>button.addEventListener('click',()=>{
     const step=button.dataset.flowStep as FlowStep|undefined;
     if(step==='models')renderModelGallery();
@@ -526,13 +527,11 @@ function renderLibrary(axis:LibraryAxis|'全部'='全部'){
 function renderModelGallery(){
   persistCampaign(navigateCampaign(campaignState,'models'));
   const summary=modelGallerySummary();
-  const initial=campaignState.campaignId==='arthur-main'?'arthur':'unflagged';
   const cards=modelGalleryAssets.map(asset=>'<button type="button" class="model-gallery-card" data-model-select="'+escapeHtml(asset.id)+'" data-model-category="'+escapeHtml(asset.category)+'" data-model-maker="'+escapeHtml(asset.maker)+'" aria-label="查看 '+escapeHtml(asset.title)+'"><strong>'+escapeHtml(asset.title)+'</strong><small>'+escapeHtml(asset.maker)+' · '+escapeHtml(asset.category)+'</small><span>'+escapeHtml(asset.url.split('/').pop()??asset.url)+'</span></button>').join('');
-  set('<main class="campaign-shell inner">'+flowHeader('models')+'<section class="campaign-page model-gallery-page"><header class="page-heading model-gallery-heading"><div><p class="eyebrow">美术资产 · 3D 模型清单</p><h1>当前模型一览</h1><p>按当前运行时 manifest 与制作来源整理。点击下方卡片即可在可旋转的 3D 舞台中查看单个 GLB；统计范围为模型文件，不含握手测试残留。</p></div></header><section class="model-gallery-stats" aria-label="模型统计"><article><small>收录模型文件</small><strong>'+summary.total+'</strong><span>去重后的 GLB</span></article><article><small>K3 制作</small><strong>'+summary.k3+'</strong><span>含环境与角色回退</span></article><article><small>GPT 制作</small><strong>'+summary.gpt+'</strong><span>img2threejs 主线模型</span></article><article><small>项目 / 第三方</small><strong>'+summary.other+'</strong><span>外部模型与整理资产</span></article></section><div class="model-gallery-toolbar"><label for="model-gallery-search">搜索模型<input id="model-gallery-search" type="search" placeholder="名称或文件名"></label><label for="model-gallery-filter">筛选分类<select id="model-gallery-filter"><option value="全部">全部分类</option><option value="角色">角色</option><option value="敌人">敌人</option><option value="Boss">Boss</option><option value="环境">环境</option><option value="K3 回退">K3 回退</option></select></label><label for="model-gallery-maker-filter">筛选制作方<select id="model-gallery-maker-filter"><option value="全部">全部制作方</option><option value="K3">K3 制作</option><option value="GPT">GPT / img2threejs</option><option value="项目/第三方">项目 / 第三方</option></select></label></div><section class="model-gallery-layout"><div class="model-gallery-stage"><canvas id="model-gallery-canvas" aria-label="当前选中模型的 3D 预览"></canvas><div class="model-gallery-status" data-model-status role="status" aria-live="polite">准备预览</div></div><aside class="model-gallery-detail"><p class="eyebrow" data-model-source>当前制作来源</p><h2 data-model-title>加载中</h2><p class="model-gallery-note">拖动旋转，滚轮缩放。模型会使用运行时 manifest 的 visualScale，并自动播放首个 idle 动画。</p><dl class="model-gallery-meta"><div><dt>运行路径</dt><dd data-model-path>—</dd></div><div><dt>运行时缩放</dt><dd data-model-scale>—</dd></div><div><dt>动画片段</dt><dd data-model-actions>加载后读取</dd></div><div><dt>K3 资产体积</dt><dd data-model-k3-size>统计中</dd></div></dl><div class="page-actions"><button type="button" class="text-button" data-go-home>返回主页</button></div></aside></section><div class="model-gallery-grid" aria-label="模型列表">'+cards+'</div></section></main>');
+  set('<main class="campaign-shell inner">'+flowHeader('models')+'<section class="campaign-page model-gallery-page"><header class="page-heading model-gallery-heading"><div><p class="eyebrow">美术资产 · 3D 模型库存</p><h1>模型已移出游戏包</h1><p>模型文件已从主游戏运行时剥离，保存在独立库存中；主游戏战斗使用 2D 立绘或程序化 fallback。要查看可旋转的 GLB，请使用单独构建的 model-gallery.html。</p></div></header><section class="model-gallery-stats" aria-label="模型统计"><article><small>库存模型文件</small><strong>'+summary.total+'</strong><span>去重后的 GLB</span></article><article><small>K3 制作</small><strong>'+summary.k3+'</strong><span>含环境与角色回退</span></article><article><small>GPT 制作</small><strong>'+summary.gpt+'</strong><span>img2threejs 主线模型</span></article><article><small>项目 / 第三方</small><strong>'+summary.other+'</strong><span>外部模型与整理资产</span></article></section><div class="model-gallery-toolbar"><label for="model-gallery-search">搜索模型<input id="model-gallery-search" type="search" placeholder="名称或文件名"></label><label for="model-gallery-filter">筛选分类<select id="model-gallery-filter"><option value="全部">全部分类</option><option value="角色">角色</option><option value="敌人">敌人</option><option value="Boss">Boss</option><option value="环境">环境</option><option value="K3 回退">K3 回退</option></select></label><label for="model-gallery-maker-filter">筛选制作方<select id="model-gallery-maker-filter"><option value="全部">全部制作方</option><option value="K3">K3 制作</option><option value="GPT">GPT / img2threejs</option><option value="项目/第三方">项目 / 第三方</option></select></label></div><section class="model-gallery-layout"><div class="model-gallery-stage"><div class="model-gallery-status" data-model-status role="status">主游戏不加载 3D 模型；请运行 npm run build:gallery 生成独立检验台。</div></div><aside class="model-gallery-detail"><p class="eyebrow" data-model-source>模型库存</p><h2 data-model-title>可选资产</h2><p class="model-gallery-note">当前页只展示库存索引，不触发模型下载；独立检验台会从 model-inventory/ 加载 GLB。</p><div class="page-actions"><button type="button" class="text-button" data-go-home>返回主页</button></div></aside></section><div class="model-gallery-grid" aria-label="模型列表">'+cards+'</div></section></main>');
   const page=document.querySelector<HTMLElement>('.model-gallery-page');
   if(!page)return;
-  const controller=mountModelGallery(page,initial);
-  modelGalleryCleanup=controller.dispose;
+  modelGalleryCleanup=undefined;
   const search=page.querySelector<HTMLInputElement>('#model-gallery-search');
   const filter=page.querySelector<HTMLSelectElement>('#model-gallery-filter');
   const makerFilter=page.querySelector<HTMLSelectElement>('#model-gallery-maker-filter');
@@ -560,7 +559,7 @@ function renderShop(){
   const shopItemArt:Record<string,string>={"iron-ward":"anvil-guard","frontier-lance":"frontier-lance","sanctified-edge":"holy-flame-blade","warden-mail":"warden-mail","veil-breaker":"veil-prism","echo-compass":"system-compass"};
   const shopQuips:Record<string,string>={"iron-ward":"穿上它，你会更像一个暂时不会被风吹倒的人。","frontier-lance":"直线很诚实；拐弯的账留给下一回合。","sanctified-edge":"圣火不保证胜利，只保证刀刃很有仪式感。","warden-mail":"它很重，但伤势报告会因此少写两行。","veil-breaker":"专门拆幕的棱刃，顺便拆掉一点自信。","echo-compass":"会提前告诉你哪里危险；不会替你绕开。"};
   const weapons=campaignShop.map(item=>{const owned=campaignState.ownedWeapons.includes(item.id),equipped=campaignState.equippedWeapon===item.id;const art=shopItemArt[item.id];return `<article class="library-entry shop-entry"><div class="shop-art"><img src="/assets/images/shop/${art}.webp" alt="${item.name}" loading="lazy" width="256" height="256"></div><header><span>${item.quality} · ${item.slot}</span><small>${item.attack?`攻击 +${item.attack}`:''} ${item.defense?`防御 +${item.defense}`:''} ${item.faith?`信念 +${item.faith}`:''} ${item.moveRange?`移动 +${item.moveRange}`:''}</small></header><h2>${item.name}</h2><p>${item.description}购买后永久记录在档案。</p><small class="shop-quip">${shopQuips[item.id]}</small><button class="campaign-primary" data-buy-weapon="${item.id}" ${owned||campaignState.coins<item.cost?'disabled':''}>${owned?'已拥有':`购买 · ${item.cost} 银币`}</button>${owned?`<button class="text-button" data-equip-weapon="${item.id}" ${equipped?'disabled':''}>${equipped?'当前装备':'装备'}</button>`:''}</article>`}).join('');
-  set(`<main class="campaign-shell inner"><section class="campaign-page library-page"><header class="page-heading"><p class="eyebrow">商店 · 补给与装备</p><h1>把战果换成下一场的余地</h1><p>银币来自战斗；胜利奖励按章节翻倍。Boss 挑战不消耗口粮。</p><div class="campaign-status-line"><span>银币 <b>${campaignState.coins ?? 0}</b></span><span>口粮 <b>${campaignState.supplies}</b></span><span>药剂 <b>${campaignState.potions ?? 0}</b></span></div></header><div class="library-grid">${weapons}<article class="library-entry shop-entry"><div class="shop-art"><img src="/assets/images/shop/healing-vial.webp" alt="回血药剂" loading="lazy" width="256" height="256"></div><header><span>消耗品</span><small>恢复用</small></header><h2>回血药剂</h2><p>在战斗前储备，后续接入角色伤势恢复。</p><small class="shop-quip">喝下去不会让你忘记挨过的打，但能让你继续挨打。</small><button class="campaign-primary" data-buy-potion ${(campaignState.coins ?? 0)<5?'disabled':''}>购买 · 5 银币</button></article></div><div class="page-actions"><button class="text-button" data-go-home>返回主页</button></div></section></main>`);
+  set(`<main class="campaign-shell inner"><section class="campaign-page library-page shop-page"><header class="page-heading"><div class="shop-heading-row"><div><p class="eyebrow">商店 · 补给与装备</p><h1>把战果换成下一场的余地</h1></div><button class="text-button shop-home-button" data-return-title>返回标题</button></div><p>银币来自战斗；胜利奖励按章节翻倍。Boss 挑战不消耗口粮。</p><div class="campaign-status-line"><span>银币 <b>${campaignState.coins ?? 0}</b></span><span>口粮 <b>${campaignState.supplies}</b></span><span>药剂 <b>${campaignState.potions ?? 0}</b></span></div></header><div class="library-grid">${weapons}<article class="library-entry shop-entry"><div class="shop-art"><img src="/assets/images/shop/healing-vial.webp" alt="回血药剂" loading="lazy" width="256" height="256"></div><header><span>消耗品</span><small>恢复用</small></header><h2>回血药剂</h2><p>在战斗前储备，后续接入角色伤势恢复。</p><small class="shop-quip">喝下去不会让你忘记挨过的打，但能让你继续挨打。</small><button class="campaign-primary" data-buy-potion ${(campaignState.coins ?? 0)<5?'disabled':''}>购买 · 5 银币</button></article></div></section></main>`);
   const rationCard=document.createElement('article');rationCard.className='library-entry shop-entry';rationCard.innerHTML=`<div class="shop-art"><img src="/assets/images/shop/rations.webp" alt="口粮" loading="lazy" width="256" height="256"></div><header><span>补给</span><small>3 份</small></header><h2>口粮</h2><p>普通战斗按出战人数消耗；Boss 战不消耗。</p><small class="shop-quip">没有口粮，最勇敢的军阵也只能讨论晚饭。</small><button class="campaign-primary" data-buy-rations ${((campaignState.coins??0)<3)?'disabled':''}>购买 3 份 · 3 银币</button>`;document.querySelector('.library-grid')?.prepend(rationCard);
   rationCard.querySelector<HTMLButtonElement>('[data-buy-rations]')?.addEventListener('click',()=>{persistCampaign(buyCampaignRations(campaignState,3));renderShop()});
   document.querySelectorAll<HTMLButtonElement>('[data-buy-weapon]').forEach(button=>button.onclick=()=>{persistCampaign(buyCampaignWeapon(campaignState,button.dataset.buyWeapon as CampaignWeaponId));renderShop()});
@@ -608,13 +607,13 @@ function renderStartup(){
   const hasMainlineSave=Boolean(localStorage.getItem(mainlineSaveKey));
   app.innerHTML=`<main class="startup-screen"><div class="startup-backdrop" role="img" aria-label="圣辉城档案厅与远方圣火之城"></div><section class="startup-card"><h1>女神之殇</h1><div class="startup-campaign-grid"><article class="startup-campaign-entry"><div class="startup-entry-title"><span class="startup-entry-index">01</span><h2>铁与火</h2></div><div class="startup-entry-actions"><button id="startup-mainline-continue" class="campaign-primary" type="button" ${hasMainlineSave?'':'disabled'}>${hasMainlineSave?'继续':'暂无存档'}</button><button id="startup-mainline-new" class="text-button" type="button">新建</button></div></article><article class="startup-campaign-entry"><div class="startup-entry-title"><span class="startup-entry-index">02</span><h2>无旗使团</h2></div><div class="startup-entry-actions"><button id="startup-side-continue" class="campaign-primary" type="button" ${hasSideSave?'':'disabled'}>${hasSideSave?'继续':'暂无存档'}</button><button id="startup-side-new" class="text-button" type="button">新建</button></div></article></div><div class="startup-global-actions"><button id="startup-load" class="text-button" type="button">选择存档</button><input id="startup-file" type="file" accept=".json,application/json" hidden></div><small class="startup-note">本地存档 · 音乐将在首次点击后启用</small></section></main>`;
   const fileInput=document.querySelector<HTMLInputElement>('#startup-file')!;
-  document.querySelector('#startup-load')?.addEventListener('click',()=>showSaveHint(()=>fileInput.click()));
+  document.querySelector('#startup-load')?.addEventListener('click',()=>{void audioManager.unlock();showSaveHint(()=>fileInput.click())});
   fileInput.onchange=()=>{const file=fileInput.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const archive=parseCampaignArchive(String(reader.result??''));if(!archive){alert('无法载入：请选择有效的《女神之殇》存档 JSON。');return}persistCampaign(archive.state);lineupDraft=[...campaignState.lineup];renderCampaign(campaignState.view)};reader.readAsText(file)};
   audioManager.setScene('title');
-  document.querySelector('#startup-mainline-continue')?.addEventListener('click',()=>{campaignState=loadCampaignById(localStorage,'arthur-main');lineupDraft=[...campaignState.lineup];renderCampaign(campaignState.view)});
-  document.querySelector('#startup-mainline-new')?.addEventListener('click',()=>{persistCampaign(createMainlineCampaignState());lineupDraft=[...campaignState.lineup];renderCampaignHome()});
-  document.querySelector('#startup-side-continue')?.addEventListener('click',()=>{campaignState=loadCampaignById(localStorage,'unflagged-side');lineupDraft=[...campaignState.lineup];renderCampaign(campaignState.view)});
-  document.querySelector('#startup-side-new')?.addEventListener('click',()=>{persistCampaign(createCampaignState());lineupDraft=[...campaignState.lineup];renderCampaignHome()});
+  document.querySelector('#startup-mainline-continue')?.addEventListener('click',()=>{void audioManager.unlock();campaignState=loadCampaignById(localStorage,'arthur-main');lineupDraft=[...campaignState.lineup];renderCampaign(campaignState.view)});
+  document.querySelector('#startup-mainline-new')?.addEventListener('click',()=>{void audioManager.unlock();persistCampaign(createMainlineCampaignState());lineupDraft=[...campaignState.lineup];renderCampaignHome()});
+  document.querySelector('#startup-side-continue')?.addEventListener('click',()=>{void audioManager.unlock();campaignState=loadCampaignById(localStorage,'unflagged-side');lineupDraft=[...campaignState.lineup];renderCampaign(campaignState.view)});
+  document.querySelector('#startup-side-new')?.addEventListener('click',()=>{void audioManager.unlock();persistCampaign(createCampaignState());lineupDraft=[...campaignState.lineup];renderCampaignHome()});
 }
 
 function title(){
@@ -824,12 +823,12 @@ function renderBattleShell(){
 function onBattleInput(input:BattleInput){
   if(!battleState||battleState.phase!=='player')return;
   if(tutorial==='intro'){syncBattle('请先点击教程卡片中的“开始指引”。');return}
-  if(input.type==='cancel'){selectedId=undefined;setAttackMode(undefined);syncBattle('已取消选择。');return}
-  if(input.type==='inspect'){undoSnapshot=undefined;selectedId=input.unitId;setAttackMode(undefined);syncBattle('已选中敌方单位，仅查看状态；请选择我方单位并选择攻击模式后才能攻击。');return}
-  if(input.type==='select'){if(selectedId&&selectedId!==input.unitId)undoSnapshot=undefined;selectedId=input.unitId;setAttackMode(undefined);syncBattle();tutorialEvent('select');return}
+  if(input.type==='cancel'){audioManager.playSfx('cancel');selectedId=undefined;setAttackMode(undefined);syncBattle('已取消选择。');return}
+  if(input.type==='inspect'){audioManager.playSfx('select');undoSnapshot=undefined;selectedId=input.unitId;setAttackMode(undefined);syncBattle('已选中敌方单位，仅查看状态；请选择我方单位并选择攻击模式后才能攻击。');return}
+  if(input.type==='select'){audioManager.playSfx('select');if(selectedId&&selectedId!==input.unitId)undoSnapshot=undefined;selectedId=input.unitId;setAttackMode(undefined);syncBattle();tutorialEvent('select');return}
   if(input.type==='terrain'){
     const actor=selectedId?unitById(selectedId):undefined;if(!actor){syncBattle('先选择一名尚未行动的同伴，再靠近地形互动。');return}
-    const result=interactTerrain(battleState,actor.id,input.position);resolveAction(result,`${actor.name} 处理了${input.kind==='holy-fire'?'圣火':input.kind==='mechanism'?'机关':'地形'}：${terrainInteractionLabel(actor,{kind:input.kind})}。`,undefined,input.position);if(result.ok){selectedId=undefined;undoSnapshot=undefined}
+    const result=interactTerrain(battleState,actor.id,input.position);if(result.ok)audioManager.playSfx('terrain');resolveAction(result,`${actor.name} 处理了${input.kind==='holy-fire'?'圣火':input.kind==='mechanism'?'机关':'地形'}：${terrainInteractionLabel(actor,{kind:input.kind})}。`,undefined,input.position);if(result.ok){selectedId=undefined;undoSnapshot=undefined}
     return;
   }
   if(input.type==='move'){
@@ -845,7 +844,7 @@ function onBattleInput(input:BattleInput){
 }
 
 function resolveAction(result:{state:BattleState;ok:boolean;reason?:string},message:string,animation?:BattleAnimation,cell?:{x:number;y:number}){
-  if(!result.ok){syncBattle(reasonZh(result.reason));return}
+  if(!result.ok){audioManager.playSfx('error');syncBattle(reasonZh(result.reason));return}
   if(animation?.type==='move')audioManager.playSfx('move');
   if(animation?.type==='attack'){
     audioManager.playSfx(animation.damageKind==='faith'?'attackFaith':'attackHealth');
@@ -894,6 +893,7 @@ function applyMissionObjective(advanceRound=false){
 
 function setAttackMode(mode?:'health'|'faith'){
   if(mode&&battlefield?.isBusy())return;
+  audioManager.playSfx(mode?'select':'cancel');
   attackMode=mode;battlefield?.setAttackMode(mode);renderAttackControls();
   if(mode){syncBattle(`当前模式：${mode==='health'?'生命攻击':'信念打击'}。点击带目标环的合法敌人；再次点击可取消。`);tutorialEvent('attack-mode')}
 }
@@ -902,7 +902,7 @@ function undoLastMove(){
   if(battlefield?.isBusy()||!battleState||!undoSnapshot||undoSnapshot.round!==battleState.round)return;
   const snapshot=undoSnapshot,result=undoMove(battleState,snapshot.unitId,snapshot.from);
   if(!result.ok){syncBattle(reasonZh(result.reason));return}
-  const unit=result.state.units.find(item=>item.id===snapshot.unitId);battleState=result.state;undoSnapshot=undefined;selectedId=undefined;setAttackMode(undefined);battlefield?.sync(battleState,{type:'move',unitId:snapshot.unitId,from:snapshot.to,to:snapshot.from});battleLog.unshift({text:`${unit?.name??'单位'} 撤回移动，返回坐标 (${snapshot.from.x+1},${snapshot.from.y+1})。`,cell:snapshot.from});battleLog.splice(3);syncBattle('移动已撤回，该单位恢复为可行动；请重新选择单位。');
+  const unit=result.state.units.find(item=>item.id===snapshot.unitId);audioManager.playSfx('cancel');battleState=result.state;undoSnapshot=undefined;selectedId=undefined;setAttackMode(undefined);battlefield?.sync(battleState,{type:'move',unitId:snapshot.unitId,from:snapshot.to,to:snapshot.from});battleLog.unshift({text:`${unit?.name??'单位'} 撤回移动，返回坐标 (${snapshot.from.x+1},${snapshot.from.y+1})。`,cell:snapshot.from});battleLog.splice(3);syncBattle('移动已撤回，该单位恢复为可行动；请重新选择单位。');
 }
 
 function endPhase(){
@@ -918,6 +918,7 @@ function endPhase(){
     if(warningCell){battlefield?.flashCell(warningCell.x,warningCell.y);battleLog.unshift({text:`危险预警：红色意图最危险的目标格在 (${warningCell.x+1},${warningCell.y+1})。`,cell:warningCell});battleLog.splice(3)}
     dangerWarningRound=before.round;
   }
+  audioManager.playSfx('endPhase');
   const after=endPlayerTurn(before);
   battleState={...before,phase:'enemy'};battlefield?.sync(battleState);syncBattle('敌方阶段：正在执行已预告的行动……');renderTutorial();
   setTimeout(()=>{battleState=after;selectedId=undefined;applyLakeMutualSiphon();const objective=applyMissionObjective(true);battlefield?.sync(battleState);for(const intent of [...before.enemyIntents].reverse()){const actor=before.units.find(unit=>unit.id===intent.unitId);if(intent.type==='move'){battleLog.unshift({text:`${actor?.name??'敌人'} 移动至 (${intent.destination.x+1},${intent.destination.y+1})。`,cell:intent.destination})}else{const target=before.units.find(unit=>unit.id===intent.targetId),cell=target?.position;battleLog.unshift({text:`${actor?.name??'敌人'} 在 (${(cell?.x??0)+1},${(cell?.y??0)+1}) 攻击 ${target?.name??'目标'}。`,cell})}}battleLog.splice(3);syncBattle(objective??`第 ${battleState.round} 回合开始；所有存活同伴恢复行动。`);if(tutorial==='observe-enemy'&&(battleState.round===tutorialRound+1||battleState.phase==='victory'||battleState.phase==='defeat'))completeTutorial();finishIfNeeded()},reducedMotion?0:500);

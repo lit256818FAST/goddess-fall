@@ -7,6 +7,7 @@ const root = resolve('.');
 const dist = join(root, 'dist');
 const assets = join(dist, 'assets');
 await mkdir(assets, { recursive: true });
+await cp(join(root, 'model-inventory', 'assets', 'models'), join(dist, 'model-inventory', 'assets', 'models'), { recursive: true });
 // Keep esbuild's worker outside the CJK workspace path. The Windows binary
 // can otherwise resolve the workspace parent as a package directory and fail
 // before it reaches the actual entry file. The output is copied back through

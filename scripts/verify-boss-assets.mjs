@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 const assets=[
   {
     key:'boss-odric',
-    file:'public/assets/models/bosses/odric-judgment.glb',
+    file:'model-inventory/assets/models/bosses/odric-judgment.glb',
     actions:{
       idle:['idle'],
       attack_health:['attack_health','attack'],
@@ -16,7 +16,7 @@ const assets=[
   },
   {
     key:'boss-iron-bulwark',
-    file:'public/assets/models/bosses/iron-bulwark.glb',
+    file:'model-inventory/assets/models/bosses/iron-bulwark.glb',
     actions:{
       idle:['idle','Idle'],
       attack_health:['attack_health','2H_Melee_Attack_Chop','1H_Melee_Attack_Chop'],
@@ -28,7 +28,7 @@ const assets=[
   },
   {
     key:'boss-veiled-avatar',
-    file:'public/assets/models/bosses/veiled-avatar.glb',
+    file:'model-inventory/assets/models/bosses/veiled-avatar.glb',
     actions:{
       idle:['idle'],
       attack_health:['attack_health','attack_faith','attack'],

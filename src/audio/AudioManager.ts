@@ -1,5 +1,5 @@
 export type AudioScene='title'|'home'|'story'|'battle'|'boss'|'library'|'archive'|'victory'|'defeat'|'silent';
-export type SoundEffect='click'|'move'|'attackHealth'|'attackFaith'|'skill'|'hit'|'victory'|'defeat'|'bossWarning';
+export type SoundEffect='click'|'select'|'cancel'|'terrain'|'endPhase'|'error'|'move'|'attackHealth'|'attackFaith'|'skill'|'hit'|'victory'|'defeat'|'bossWarning';
 export type MusicTrackId='archiveGate'|'archiveGateAlt'|'lanternMap'|'lanternMapAlt'|'ashesMap'|'ashesMapAlt'|'shadowMarch'|'shadowMarchBoss'|'abyssGatefall'|'abyssGatefallSide';
 export type MusicSceneOptions={track?:MusicTrackId;campaignId?:'arthur-main'|'unflagged-side';bossPhase?:1|2};
 
@@ -121,6 +121,9 @@ export const AUDIO_UI_TEXT={
   unavailable:'声音暂不可用',
   loading:'正在加载场景音乐',
   mutedStatus:'已静音',
+  fullscreen:'进入全屏',
+  exitFullscreen:'退出全屏',
+  fullscreenUnavailable:'当前浏览器不支持全屏',
 } as const;
 
 export const configureLazyTrack=<T extends Pick<HTMLAudioElement,'preload'|'loop'|'src'>>(audio:T,src:string)=>{
@@ -173,6 +176,9 @@ export class AudioManager{
     if(typeof addEventListener!=='function')return;
     const unlock=()=>{void this.unlock()};
     addEventListener('pointerdown',unlock,{once:true,capture:true});
+    // iOS Safari versions without Pointer Events only expose touchstart.
+    // Keep this listener passive so it never delays the first tap.
+    addEventListener('touchstart',unlock,{once:true,capture:true,passive:true});
     addEventListener('keydown',unlock,{once:true,capture:true});
     addEventListener('click',event=>{
       const target=event.target;
@@ -186,7 +192,7 @@ export class AudioManager{
     root.className='audio-controls';
     root.dataset.audioControl='';
     root.setAttribute('aria-label',AUDIO_UI_TEXT.settings);
-    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
+    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="fullscreen-toggle">${this.fullscreenLabel()}</button><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
     parent.append(root);
     this.controls=root;
     this.status=root.querySelector('.audio-status')??undefined;
@@ -195,6 +201,7 @@ export class AudioManager{
     const closeSettings=()=>{if(panel){panel.hidden=true}settingsToggle?.setAttribute('aria-expanded','false')};
     settingsToggle?.addEventListener('click',()=>{if(!panel)return;panel.hidden=!panel.hidden;settingsToggle.setAttribute('aria-expanded',String(!panel.hidden));});
     root.querySelector<HTMLButtonElement>('.settings-close')?.addEventListener('click',closeSettings);
+    root.querySelector<HTMLButtonElement>('.fullscreen-toggle')?.addEventListener('click',()=>{void this.toggleFullscreen()});
     root.querySelector<HTMLButtonElement>('.return-title')?.addEventListener('click',()=>{closeSettings();dispatchEvent(new CustomEvent('goddess:return-title'));});
     root.querySelector<HTMLButtonElement>('.audio-toggle')?.addEventListener('click',async()=>{
       await this.unlock();
@@ -213,21 +220,38 @@ export class AudioManager{
       this.persist();
       this.syncControls();
     });
+    const fullscreenEvents=['fullscreenchange','webkitfullscreenchange'] as const;
+    fullscreenEvents.forEach(event=>addEventListener(event,()=>this.syncControls()));
   }
 
   async unlock(){
+    // Pointer and touch events can both fire for one mobile tap. Do not start
+    // two competing media requests for that single gesture.
+    if(this.unlocked)return true;
     const context=this.ensureContext();
     if(!context){
-      this.setStatus(AUDIO_UI_TEXT.unsupported);
-      return false;
+      // A browser may expose HTMLAudioElement but not Web Audio. Keep the
+      // media-track path usable instead of treating that as total failure.
+      if(typeof Audio==='function'){
+        this.unlocked=true;
+        this.startScene(this.requestedScene,this.requestedOptions);
+        this.syncControls();
+        return true;
+      }
+      this.setStatus(AUDIO_UI_TEXT.unsupported);return false;
     }
     try{
+      // Start the HTML track before awaiting resume: on mobile Safari the
+      // play() call must happen inside the same user-gesture task.
+      this.unlocked=context.state!=='closed';
+      if(this.unlocked)this.startScene(this.requestedScene,this.requestedOptions);
       if(context.state==='suspended')await context.resume();
       this.unlocked=context.state==='running';
       if(this.unlocked)this.startScene(this.requestedScene,this.requestedOptions);
       this.syncControls();
       return this.unlocked;
     }catch{
+      this.unlocked=false;
       this.setStatus(AUDIO_UI_TEXT.unavailable);
       return false;
     }
@@ -259,6 +283,11 @@ export class AudioManager{
       oscillator.start(now);oscillator.stop(now+duration+.02);
     };
     if(effect==='click')tone(520,.055,.035,'sine',420);
+    if(effect==='select')tone(460,.09,.045,'sine',680);
+    if(effect==='cancel')tone(300,.1,.04,'triangle',190);
+    if(effect==='terrain'){tone(250,.16,.055,'triangle',420);this.toneAt(560,.2,.028,'sine',720)}
+    if(effect==='endPhase'){tone(132,.18,.06,'triangle',92);this.toneAt(264,.24,.035,'sine',198)}
+    if(effect==='error')tone(180,.16,.05,'square',105);
     if(effect==='move'){tone(150,.11,.075,'triangle',220);setTimeout(()=>this.toneAt(230,.08,.045,'triangle',300),65)}
     if(effect==='attackHealth')tone(210,.18,.12,'sawtooth',70);
     if(effect==='attackFaith'){tone(390,.24,.08,'sine',760);this.toneAt(585,.2,.045,'triangle',880)}
@@ -380,8 +409,29 @@ export class AudioManager{
     const cached=this.trackCache.get(track.src);
     if(cached)return cached;
     const audio=configureLazyTrack(new Audio(),track.src);
+    audio.setAttribute('playsinline','');
+    audio.setAttribute('webkit-playsinline','');
     this.trackCache.set(track.src,audio);
     return audio;
+  }
+
+  private fullscreenLabel(){
+    const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
+    return doc?.fullscreenElement||doc?.webkitFullscreenElement?AUDIO_UI_TEXT.exitFullscreen:AUDIO_UI_TEXT.fullscreen;
+  }
+
+  private async toggleFullscreen(){
+    const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element;webkitExitFullscreen?:()=>Promise<void>|void})|undefined;
+    const root=doc?.documentElement as (HTMLElement&{webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
+    if(!doc||!root){this.setStatus(AUDIO_UI_TEXT.fullscreenUnavailable);return}
+    try{
+      if(doc.fullscreenElement||doc.webkitFullscreenElement){
+        if(doc.exitFullscreen)await doc.exitFullscreen();
+        else await doc.webkitExitFullscreen?.();
+      }else if(root.requestFullscreen)await root.requestFullscreen();
+      else await root.webkitRequestFullscreen?.();
+      this.syncControls();
+    }catch{this.setStatus(AUDIO_UI_TEXT.fullscreenUnavailable)}
   }
 
   private installTrackErrorFallback(audio:HTMLAudioElement,scene:Exclude<AudioScene,'silent'|'victory'|'defeat'>){
@@ -562,6 +612,13 @@ export class AudioManager{
     if(button){button.ariaPressed=String(this.preferences.muted);button.ariaLabel=this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}
     if(label)label.textContent=this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel;
     if(input)input.value=String(Math.round(this.preferences.volume*100));
+    const fullscreen=this.controls?.querySelector<HTMLButtonElement>('.fullscreen-toggle');
+    if(fullscreen){
+      const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
+      const root=doc?.documentElement as (HTMLElement&{webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
+      fullscreen.textContent=this.fullscreenLabel();
+      fullscreen.disabled=!Boolean(root?.requestFullscreen||root?.webkitRequestFullscreen);
+    }
     this.controls?.classList.toggle('muted',this.preferences.muted);
     if(this.controls){
       this.controls.dataset.audioScene=this.scene;

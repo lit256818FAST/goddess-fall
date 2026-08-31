@@ -68,7 +68,7 @@
 - `dist/`：8 个文件，共 977,831 B（0.933 MiB）。
 - 首屏 HTML + CSS + JS + 路线图 + 三张人物图：973,087 B（0.928 MiB）。
 - 首屏明显低于 8 MB，完整 `dist/` 明显低于 100 MB。
-- `dist/assets/models/handshake-test.glb` 仍有 4,744 B；不影响预算，但发布冻结前应移除该握手测试残留。
+- `model-inventory/assets/models/handshake-test.glb` 仍有 4,744 B；仅属于独立模型库存，不进入主游戏构建。
 
 ## 后续浏览器阶段
 

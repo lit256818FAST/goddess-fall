@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { environmentVisualManifest } from './environmentVisuals';
 import { characterVisualManifest, type VisualKey } from './characterVisuals';
+import { inventoryModelUrl } from './modelInventory';
 
 export type ModelGalleryCategory = '角色' | '敌人' | 'Boss' | '环境' | 'K3 回退';
 export type ModelGalleryMaker = 'K3' | 'GPT' | '项目/第三方';
@@ -63,9 +64,9 @@ function characterAssets(): ModelGalleryAsset[] {
   for (const [key, entry] of Object.entries(characterVisualManifest) as [VisualKey, typeof characterVisualManifest[VisualKey]][]) {
     if (!entry.url) continue;
     const title = characterTitles[key] ?? key;
-    assets.push({ id: key, title, category: characterCategory(key), maker: makerForUrl(entry.url), source: 'runtime', url: entry.url, visualScale: entry.visualScale, actions: Object.keys(entry.actionAliases ?? {}) });
+    assets.push({ id: key, title, category: characterCategory(key), maker: makerForUrl(entry.url), source: 'K3', url: inventoryModelUrl(entry.url), visualScale: entry.visualScale, actions: Object.keys(entry.actionAliases ?? {}) });
     for (const [index, fallback] of (entry.fallbacks ?? []).entries()) {
-      assets.push({ id: key + '-fallback-' + index, title: title + ' · K3 回退', category: 'K3 回退', maker: 'K3', source: 'K3', url: fallback.url, visualScale: fallback.visualScale, actions: Object.keys(entry.actionAliases ?? {}), fallbackOf: key });
+      assets.push({ id: key + '-fallback-' + index, title: title + ' · K3 回退', category: 'K3 回退', maker: 'K3', source: 'K3', url: inventoryModelUrl(fallback.url), visualScale: fallback.visualScale, actions: Object.keys(entry.actionAliases ?? {}), fallbackOf: key });
     }
   }
   return assets;
@@ -76,7 +77,7 @@ function environmentAssets(): ModelGalleryAsset[] {
   for (const [key, entry] of Object.entries(environmentVisualManifest)) {
     const existing = grouped.get(entry.url);
     if (existing) existing.aliases = [...(existing.aliases ?? []), key];
-    else grouped.set(entry.url, { id: key, title: environmentTitles[key] ?? key, category: '环境', maker: 'K3', source: 'K3', url: entry.url, visualScale: entry.visualScale, actions: [], aliases: [key] });
+    else grouped.set(entry.url, { id: key, title: environmentTitles[key] ?? key, category: '环境', maker: 'K3', source: 'K3', url: inventoryModelUrl(entry.url), visualScale: entry.visualScale, actions: [], aliases: [key] });
   }
   return [...grouped.values()].map(asset => ({ ...asset, aliases: asset.aliases && asset.aliases.length > 1 ? asset.aliases : undefined }));
 }

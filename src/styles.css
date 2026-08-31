@@ -22,8 +22,9 @@
 .settings-panel .audio-toggle{justify-content:flex-start;padding:5px 0;cursor:pointer}
 .settings-panel label{justify-content:space-between;min-height:28px}
 .settings-panel input{width:116px}
-.settings-panel .return-title{border:1px solid #8a744d;background:transparent;color:#d9b66d;padding:9px 10px;cursor:pointer;text-align:center}
-.settings-panel .return-title:hover{background:#2a2419;color:#f1d494}
+.settings-panel .fullscreen-toggle,.settings-panel .return-title{border:1px solid #8a744d;background:transparent;color:#d9b66d;padding:9px 10px;cursor:pointer;text-align:center}
+.settings-panel .fullscreen-toggle:disabled{opacity:.5;cursor:not-allowed}
+.settings-panel .fullscreen-toggle:hover,.settings-panel .return-title:hover{background:#2a2419;color:#f1d494}
 .settings-panel .audio-status{position:static;display:block;max-width:none;padding:0;background:transparent;opacity:1;color:#77858e}
 @media(max-width:620px){.audio-controls{position:fixed;right:10px;bottom:10px;left:auto;width:46px;height:46px;margin:0;padding:0}.settings-panel{position:fixed;right:10px;bottom:64px;width:min(280px,calc(100vw - 20px));}.settings-panel .audio-toggle,.settings-panel label{min-height:40px}.settings-panel input{width:min(48vw,170px)}}
 

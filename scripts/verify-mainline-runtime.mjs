@@ -23,11 +23,11 @@ const actionAliases = {
   },
 };
 models.push(
-  { id: 'shield-guard', path: 'public/assets/models/enemies/mainline/shield-guard.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
-  { id: 'scout', path: 'public/assets/models/enemies/mainline/scout.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
-  { id: 'faith-acolyte', path: 'public/assets/models/enemies/mainline/faith-acolyte.glb', actions: ['idle', 'move', 'attack_faith', 'hit_health', 'death_health'] },
-  { id: 'engineer', path: 'public/assets/models/enemies/mainline/engineer.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
-  { id: 'raider-rider', path: 'public/assets/models/enemies/mainline/raider-rider.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
+  { id: 'shield-guard', path: 'model-inventory/assets/models/enemies/mainline/shield-guard.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
+  { id: 'scout', path: 'model-inventory/assets/models/enemies/mainline/scout.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
+  { id: 'faith-acolyte', path: 'model-inventory/assets/models/enemies/mainline/faith-acolyte.glb', actions: ['idle', 'move', 'attack_faith', 'hit_health', 'death_health'] },
+  { id: 'engineer', path: 'model-inventory/assets/models/enemies/mainline/engineer.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
+  { id: 'raider-rider', path: 'model-inventory/assets/models/enemies/mainline/raider-rider.glb', actions: ['idle', 'move', 'attack_health', 'hit_health', 'death_health'] },
 );
 
 const loader = new GLTFLoader();
@@ -38,7 +38,7 @@ const load = (id) => new Promise((resolve, reject) => {
 
 const specPath = (id) => {
   const spec = models.find((item) => item.id === id);
-  return spec?.path ?? `public/assets/models/mainline/${id}.glb`;
+  return spec?.path ?? `model-inventory/assets/models/mainline/${id}.glb`;
 };
 
 const report = [];

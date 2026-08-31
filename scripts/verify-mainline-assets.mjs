@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const modelDir = path.join(root, 'public', 'assets', 'models', 'mainline');
+const modelDir = path.join(root, 'model-inventory', 'assets', 'models', 'mainline');
 const manifestPath = path.join(modelDir, 'manifest.json');
 const expected = ['arthur', 'hans', 'asnoka'];
 const actions = ['idle', 'move', 'attack_health', 'attack_faith', 'hit_health', 'hit_faith', 'death_health', 'death_faith', 'skill'];
@@ -36,7 +36,8 @@ function readGlbJson(file) {
 
 function assetFile(runtimePath) {
   const normalized = runtimePath.replace(/^\//, '').replaceAll('/', path.sep);
-  return path.join(root, normalized.startsWith(`public${path.sep}`) ? normalized : `public${path.sep}${normalized}`);
+  const relative = normalized.replace(/^assets[\\/]models[\\/]/, '');
+  return path.join(root, 'model-inventory', 'assets', 'models', relative);
 }
 
 if (!fs.existsSync(manifestPath)) throw new Error('mainline manifest.json missing');

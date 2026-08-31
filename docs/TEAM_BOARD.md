@@ -15,7 +15,7 @@
 - 生成亚瑟、汉斯、阿斯诺卡统一风格概念参考图。
 - 按 img2threejs 阶段门禁制作程序化模型或可复现 factory。
 - 输出 sculpt spec、assessment、细节分区、动作枢轴、socket、fallback 和验证记录。
-- 资产源文件放在 `art-source/img2threejs/mainline/`；运行时资产放在 `public/assets/models/mainline/`。
+- 3D 模型源文件放在 `model-inventory/assets/models/`，不随主游戏 `public/` 首包发布；运行时默认关闭 GLB 加载，独立 `model-gallery.html` 构建才复制库存。
 
 禁止：
 
