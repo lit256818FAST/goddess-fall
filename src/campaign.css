@@ -363,3 +363,17 @@
     transform:none;
   }
 }
+
+/* The regional route map uses compact pins so all seven mainline chapters
+   remain visible without covering the furnace, rail and lake landmarks. */
+.map-node{border-radius:9px}
+.mainline-map-node{min-width:142px;padding:8px 10px;background:#11181edb}
+.mainline-map-node.current{box-shadow:0 0 0 2px #c79b5248,0 8px 22px #000b}
+.home-member img{height:210px}
+@media(max-width:900px){.home-member img{height:178px}}
+@media(max-width:620px){.home-member img{height:145px}.mainline-map-node{min-width:126px}}
+@media(max-width:900px) and (orientation:landscape){
+  .home-member img{height:78px}
+  .mainline-map-node{min-width:112px;padding:7px 8px}
+  .mainline-map-node span{font-size:.8rem}
+}
