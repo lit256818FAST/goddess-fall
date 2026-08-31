@@ -1,0 +1,4928 @@
+{
+  "targetName": "Hans Shield Escort",
+  "targetId": "hans-shield-escort",
+  "schemaVersion": "2.1",
+  "terminologyProfile": {
+    "domain": "real-time procedural Three.js asset",
+    "geometryTerms": [
+      "silhouette",
+      "topology",
+      "primitive",
+      "bevel",
+      "chamfer",
+      "taper",
+      "bend",
+      "boolean cut",
+      "edge loop",
+      "surface normal",
+      "displacement"
+    ],
+    "materialTerms": [
+      "albedo",
+      "baseColor",
+      "roughness",
+      "metalness",
+      "normal map",
+      "bump map",
+      "ambient occlusion",
+      "cavity dirt",
+      "edge wear",
+      "clearcoat"
+    ],
+    "lightingTerms": [
+      "key light",
+      "fill light",
+      "rim light",
+      "HDRI/environment reflection",
+      "contact shadow"
+    ],
+    "descriptionRule": "Use measurable 3D graphics terms. Avoid vague words unless they are paired with concrete geometry/material/shader parameters."
+  },
+  "sourceImage": "art-source\\concepts\\mainline\\hans-reference.png",
+  "referenceCamera": {
+    "solved": false,
+    "fovDegrees": 40,
+    "aspect": 1,
+    "orientation": {
+      "yaw": 0,
+      "pitch": 0,
+      "roll": 0
+    },
+    "positionHint": [
+      0,
+      0,
+      3
+    ],
+    "note": "For likeness work, solve the reference camera (forge/stage1_intake/solve_camera_pose.py) so the review render aligns with the photo and the reference can be projected. Confirm by overlay review."
+  },
+  "suitability": "pass",
+  "scores": {
+    "object_isolation": 3,
+    "silhouette_readability": 3,
+    "depth_inference": 2,
+    "primitive_decomposition": 3,
+    "material_procedurality": 2,
+    "occlusion_risk": 1,
+    "interaction_fit": 3
+  },
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "humanoid-character",
+      "primaryDomain": "character",
+      "formLanguage": [
+        "faceted low-poly medieval fantasy",
+        "layered armor silhouette"
+      ],
+      "structureKind": [
+        "assembled humanoid",
+        "socketed equipment"
+      ],
+      "motionPotential": [
+        "skeletal rotation",
+        "weapon swing",
+        "shield brace"
+      ],
+      "materialFamilies": [
+        "painted-metal",
+        "rough-cloth",
+        "leather",
+        "skin"
+      ],
+      "notes": "Stylized game character reconstruction from a single full-body three-quarter concept guide."
+    },
+    "complexity": {
+      "tier": "moderate",
+      "scores": {
+        "silhouetteComplexity": 2,
+        "componentCount": 2,
+        "hierarchyDepth": 2,
+        "repetitionDensity": 1,
+        "materialLayerCount": 2,
+        "localDetailDensity": 2,
+        "occlusionRisk": 1,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 9,
+        "microFeatureGroups": 8,
+        "materialLayers": 5,
+        "repetitionSystems": 1
+      },
+      "reasoning": [
+        "Assess 'Hans Shield Escort' from the image before finalizing componentTree/materials."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "moderate",
+      "minimumComponentLevels": [
+        "macro",
+        "meso"
+      ],
+      "needsRepetitionSystems": false,
+      "needsMaterialLocalOverrides": false,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Choose simple/moderate/complex/ultra-complex from observed structure, not from a hardcoded domain."
+    },
+    "unknownsToResolveBeforeImplementation": [],
+    "detailInventory": {
+      "scanMethod": "visual-review-grid-3x3",
+      "targetMinDetails": 6,
+      "details": [
+        {
+          "id": "hans-detail-1",
+          "kind": "decal",
+          "description": "recurved crossbow limbs",
+          "region": {
+            "x": 0.1,
+            "y": 0.08,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "root"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-2",
+          "kind": "fastener",
+          "description": "green hood mantle",
+          "region": {
+            "x": 0.38,
+            "y": 0.08,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "body"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-3",
+          "kind": "seam",
+          "description": "rope coil",
+          "region": {
+            "x": 0.66,
+            "y": 0.08,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "head"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-4",
+          "kind": "contour",
+          "description": "trap ring",
+          "region": {
+            "x": 0.1,
+            "y": 0.36000000000000004,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "arm-l"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-5",
+          "kind": "scratch",
+          "description": "asymmetric shoulder guard",
+          "region": {
+            "x": 0.38,
+            "y": 0.36000000000000004,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "arm-r"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-6",
+          "kind": "ridge",
+          "description": "brass buckles",
+          "region": {
+            "x": 0.66,
+            "y": 0.36000000000000004,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "leg-l"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-7",
+          "kind": "stitch",
+          "description": "utility satchel",
+          "region": {
+            "x": 0.1,
+            "y": 0.64,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "leg-r"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        },
+        {
+          "id": "hans-detail-8",
+          "kind": "bevel",
+          "description": "dark layered boots",
+          "region": {
+            "x": 0.38,
+            "y": 0.64,
+            "width": 0.22,
+            "height": 0.22,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "silhouette, material response or attachment readability",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "cloak-l"
+          },
+          "evidenceRef": "reference-full-body",
+          "confidence": 0.72
+        }
+      ]
+    },
+    "anatomy": {
+      "applies": true,
+      "styleHeads": 7.5,
+      "proportions": {
+        "headUnit": 0.235,
+        "torso": 0.62,
+        "legs": 0.91,
+        "shoulderWidth": 0.68,
+        "hipWidth": 0.44
+      },
+      "pose": {
+        "type": "guarded three-quarter stance",
+        "jointAngles": {
+          "shoulder": 0.14,
+          "elbow": 0.28,
+          "hip": 0.04,
+          "knee": 0.1
+        }
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.52,
+        "eyeSpacing": 0.11,
+        "noseBase": 0.57,
+        "mouthLine": 0.63,
+        "hairline": 0.42
+      },
+      "features": [
+        "head silhouette",
+        "shoulder width",
+        "hand-to-weapon relation",
+        "shield/crossbow separation"
+      ],
+      "confidence": 0.72,
+      "note": "Stylized proportions are inferred from the supplied concept guide; backside geometry remains lower confidence."
+    },
+    "sourceImage": "art-source\\concepts\\mainline\\hans-reference.png"
+  },
+  "qualityContract": {
+    "qualityBar": "moderate",
+    "definitionOfDone": [
+      "The rendered model matches the reference silhouette, primary proportions, visible component hierarchy, material response, and most recognizable local features for the selected fidelity tier."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 2,
+      "mesoComponents": 3,
+      "microFeatureGroups": 2,
+      "materialLayers": 2,
+      "repetitionSystems": 0,
+      "reviewViewpoints": 3
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md).",
+      "Adjacent components must overlap by at least 0.02 world units at shared seams (source: grimoire/build/geometry_patterns.md).",
+      "Raised or recessed relief and fasteners must be geometry, instanced micro-parts, or displacement; a map alone is an approximation (source: grimoire/build/geometry_patterns.md)."
+    ],
+    "mustNotDo": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md).",
+      "Adjacent components must overlap by at least 0.02 world units at shared seams (source: grimoire/build/geometry_patterns.md).",
+      "Raised or recessed relief and fasteners must be geometry, instanced micro-parts, or displacement; a map alone is an approximation (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "qualityTargets": {
+    "targetFidelity": 0.72,
+    "mustMatch": [
+      "hero silhouette",
+      "weapon identity",
+      "role-specific equipment",
+      "dark navy/iron palette"
+    ],
+    "niceToHave": [
+      "micro scratches",
+      "hidden backside tailoring"
+    ],
+    "fpsTarget": 60,
+    "reviewViewpoints": [
+      "fixed three-quarter",
+      "left orbit",
+      "right orbit"
+    ]
+  },
+  "selfCorrectLoop": {
+    "enabled": true,
+    "visualAcceptance": {
+      "reviewer": "ai-vision",
+      "threshold": 0.7,
+      "comparisonArtifactRequired": true,
+      "layerScoresRequired": true,
+      "codePixelDiffIsAcceptanceAuthority": false,
+      "scoringRule": "AI vision must inspect a side-by-side reference/render sheet and score the current pass from 0 to 1. Pixel-diff code may assist diagnostics but cannot approve a pass.",
+      "requiredLayerScores": [
+        "silhouetteProportion",
+        "componentStructure",
+        "formDetail",
+        "materialSurface",
+        "lightingCamera"
+      ],
+      "featureReviewPolicy": {
+        "enabled": true,
+        "reviewUnit": "semantic-subsystem",
+        "maxCriticalFeaturesPerPass": 5,
+        "maxImportantFeaturesPerPass": 3,
+        "criticalDefaultThreshold": 0.8,
+        "importantAverageThreshold": 0.65,
+        "adaptiveEscalation": true,
+        "singleImagePairOnly": true,
+        "selectionRule": "Choose only the most visually salient, identity-defining, user-prioritized, or high-risk semantic systems. Group repeated parts instead of reviewing every mesh. AI vision scores every selected feature from the same full reference/render pair."
+      }
+    },
+    "reviewAfterPasses": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "allowedActions": [
+      "continue",
+      "refine-spec",
+      "refine-code",
+      "request-input",
+      "stop"
+    ],
+    "specRefineTriggers": [
+      "missing component",
+      "wrong primitive family",
+      "wrong proportions",
+      "material layer under-specified",
+      "local feature not traceable to viewEvidence",
+      "reference ambiguity discovered during implementation"
+    ],
+    "codeRefineTriggers": [
+      "spec is adequate but generated geometry/material does not match",
+      "browser render differs from reference",
+      "performance budget exceeded",
+      "lighting hides geometry or material response"
+    ],
+    "stopCriteria": [
+      "target fidelity reached or user accepts current approximation",
+      "remaining gaps require new reference images or manual art"
+    ],
+    "screenshotPolicy": {
+      "requiredForPasses": [
+        "blockout",
+        "structural-pass",
+        "form-refinement",
+        "material-pass",
+        "surface-pass",
+        "lighting-pass",
+        "interaction-pass"
+      ],
+      "preferredCapture": "in-app-browser-screenshot",
+      "fallbackCapture": "user-supplied-screenshot-path",
+      "minimumEvidence": "Each visual pass needs a reference image, rendered screenshot, side-by-side comparison sheet, AI vision score, layer scores, and critique before choosing continue.",
+      "reviewPairRule": "Compare the same camera/viewpoint whenever possible; do not judge a front reference against a random render angle.",
+      "acceptanceAuthority": "AI vision review of the comparison sheet. Code-generated pixel similarity is not sufficient evidence."
+    }
+  },
+  "featureReviewTargets": [],
+  "sculptPipeline": {
+    "passGateMode": "locked-sequential",
+    "passOrder": [
+      "blockout",
+      "structural-pass",
+      "proportion-lock",
+      "feature-placement",
+      "material-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "currentPass": "optimization-pass",
+    "completedPasses": [
+      "blockout",
+      "structural-pass",
+      "proportion-lock",
+      "feature-placement",
+      "material-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "lastCompletedPass": "optimization-pass",
+    "blockedReason": "",
+    "nextRequiredEvidence": [
+      "browser screenshot",
+      "two non-degenerate orbit views",
+      "runtime interaction check"
+    ]
+  },
+  "lookDevTargets": {
+    "qualityPriority": "reference-fidelity",
+    "materialPass": {
+      "albedoPaletteRequired": true,
+      "roughnessVariationRequired": true,
+      "normalOrBumpRequired": true,
+      "localOverridesRequired": true,
+      "minimumTextureResolution": 1024,
+      "preferredTextureResolution": 2048,
+      "independentMapChannels": [
+        "albedo",
+        "roughness",
+        "height",
+        "normal",
+        "ambient-occlusion"
+      ],
+      "requiredSurfaceFrequencyBands": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "geometryReliefRequiredWhenSilhouetteAffected": true,
+      "referencePbrExtraction": {
+        "requiredWhenSourceImagePresent": true,
+        "targetThreshold": 0.7,
+        "stopOnLowConfidence": true,
+        "script": "forge/stage1_intake/extract_pbr_evidence.py",
+        "acceptedLimitation": "single-image extraction is reference-derived inference, not exact photogrammetry"
+      },
+      "mustAvoid": [
+        "single flat albedo per material",
+        "uniform roughness",
+        "albedo texture reused as roughness/height/normal/AO",
+        "single-frequency random noise",
+        "plastic-looking smooth bark, stone, cloth, foliage, or aged material",
+        "local color/detail described only in prose without material masks",
+        "claiming exact PBR recovery when confidence is below the target threshold"
+      ]
+    },
+    "lightingPass": {
+      "requiredTerms": [
+        "key light",
+        "fill light",
+        "rim light",
+        "exposure",
+        "tone mapping",
+        "background",
+        "contact shadow"
+      ],
+      "implementation": "ACES filmic tone mapping with exposure 0.2 and ground contact shadow."
+    },
+    "screenshotReview": [
+      "Compare albedo palette and local color zones.",
+      "Compare roughness/normal/bump response under light.",
+      "Compare cavity dirt, edge wear, stains, moss, scratches, or other local masks.",
+      "Compare key/fill/rim structure, exposure, tone mapping, background, and contact shadows.",
+      "Capture a neutral-light render to verify material readability without reference lighting.",
+      "Capture a grazing-light close-up to expose flat normals, uniform roughness, tiling, and plastic highlights.",
+      "Capture a reference-matched render from the same camera framing as the source."
+    ]
+  },
+  "actionReadiness": {
+    "contract": "Every macro/meso component should be generated as a stable named Object3D pivot node with a mesh child, action metadata, optional sockets, collider proxy, and destruction metadata.",
+    "defaultRigType": "action-ready-static-rig",
+    "rootMotionNode": "root",
+    "requiredComponentFields": [
+      "id",
+      "parent",
+      "transform",
+      "attachment for child appendages, connectors, limbs, tubes, handles, legs, horns, wings, branches, or cables",
+      "actionProfile.animationRole",
+      "actionProfile.pivot",
+      "actionProfile.collider",
+      "actionProfile.destruction"
+    ],
+    "transformChannels": [
+      "translate",
+      "rotate",
+      "scale",
+      "bend",
+      "twist",
+      "detach",
+      "visibility",
+      "material-state"
+    ],
+    "authoringRules": [
+      "Do not collapse independently movable parts into one mesh.",
+      "Put transforms on component pivot groups, not only on raw meshes.",
+      "For attached child parts, put the pivot at the semantic root/socket and build visible geometry from localStart to localEnd.",
+      "Represent hinge, socket, detachable, and breakable intent even when no animation is implemented yet.",
+      "Use simplified collider proxies for runtime physics instead of visual mesh colliders by default."
+    ],
+    "destructionPolicy": {
+      "defaultBreakable": false,
+      "fractureGroupNaming": "Use stable semantic names such as body-shell, left-hinge, glass-panel, branch-segment.",
+      "debrisStrategy": "Prefer detachable component groups and a small number of procedural fragments over random mesh explosion."
+    }
+  },
+  "assumptions": [],
+  "coordinateFrame": {
+    "front": "camera-facing side in the reference image",
+    "up": "image up direction",
+    "scaleReference": "unit scale; adjust after first browser render"
+  },
+  "silhouette": {
+    "boundingShape": "",
+    "aspectRatios": [],
+    "symmetry": "",
+    "dominantCurves": [],
+    "negativeSpaces": [],
+    "landmarks": []
+  },
+  "viewEvidence": [
+    {
+      "id": "fixed-three-quarter",
+      "view": "fixed-three-quarter",
+      "source": "art-source/concepts/mainline/hans-reference.png",
+      "coverage": "full-body",
+      "confidence": 0.82
+    },
+    {
+      "id": "orbit-left",
+      "view": "orbit-left",
+      "source": "procedural-self-consistency",
+      "coverage": "inferred-hidden-side",
+      "confidence": 0.56
+    },
+    {
+      "id": "orbit-right",
+      "view": "orbit-right",
+      "source": "procedural-self-consistency",
+      "coverage": "inferred-hidden-side",
+      "confidence": 0.56
+    }
+  ],
+  "componentTree": [
+    {
+      "id": "root",
+      "name": "Hans root",
+      "level": "macro",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans root is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": null,
+      "attachment": null,
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "root",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "rootSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "root",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "cloth"
+        }
+      },
+      "material": "cloth",
+      "materialLayers": [
+        "cloth"
+      ],
+      "localFeatures": [
+        "hans-detail-1"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(78, 37, 35, 1.0)",
+        "secondaryAlbedo": "rgba(51, 34, 32, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(78, 37, 35, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(51, 34, 32, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "body",
+      "name": "Hans body",
+      "level": "macro",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans body is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          1.05,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "bodySocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "body",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "cloth"
+        }
+      },
+      "material": "cloth",
+      "materialLayers": [
+        "cloth"
+      ],
+      "localFeatures": [
+        "hans-detail-2"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(78, 37, 35, 1.0)",
+        "secondaryAlbedo": "rgba(51, 34, 32, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(78, 37, 35, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(51, 34, 32, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "head",
+      "name": "Hans head",
+      "level": "macro",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "ellipsoid",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans head is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "HeadAnchor",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          1.6,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "headSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "head",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "skin"
+        }
+      },
+      "material": "skin",
+      "materialLayers": [
+        "skin"
+      ],
+      "localFeatures": [
+        "hans-detail-3"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(152, 99, 75, 1.0)",
+        "secondaryAlbedo": "rgba(99, 62, 50, 1.0)",
+        "materialClass": "skin",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(152, 99, 75, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(99, 62, 50, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "arm-l",
+      "name": "Hans arm-l",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans arm-l is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "arm-lSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "arm-l",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-4"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "arm-r",
+      "name": "Hans arm-r",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans arm-r is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "arm-rSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "arm-r",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-5"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "leg-l",
+      "name": "Hans leg-l",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans leg-l is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "leg-lSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "leg-l",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-6"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "leg-r",
+      "name": "Hans leg-r",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans leg-r is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "leg-rSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "leg-r",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-7"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "cloak-l",
+      "name": "Hans cloak-l",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans cloak-l is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "cloak-lSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "cloak-l",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "cloak"
+        }
+      },
+      "material": "cloak",
+      "materialLayers": [
+        "cloak"
+      ],
+      "localFeatures": [
+        "hans-detail-8"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 34, 32, 1.0)",
+        "secondaryAlbedo": "rgba(29, 20, 21, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 34, 32, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(29, 20, 21, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "cloak-r",
+      "name": "Hans cloak-r",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans cloak-r is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "cloak-rSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "cloak-r",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "cloak"
+        }
+      },
+      "material": "cloak",
+      "materialLayers": [
+        "cloak"
+      ],
+      "localFeatures": [
+        "hans-detail-9"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 34, 32, 1.0)",
+        "secondaryAlbedo": "rgba(29, 20, 21, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 34, 32, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(29, 20, 21, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "belt",
+      "name": "Hans belt",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans belt is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "beltSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "belt",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "leather"
+        }
+      },
+      "material": "leather",
+      "materialLayers": [
+        "leather"
+      ],
+      "localFeatures": [
+        "hans-detail-10"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(74, 51, 40, 1.0)",
+        "secondaryAlbedo": "rgba(36, 27, 25, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(74, 51, 40, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(36, 27, 25, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "satchel",
+      "name": "Hans satchel",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans satchel is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "satchelSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "satchel",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "leather"
+        }
+      },
+      "material": "leather",
+      "materialLayers": [
+        "leather"
+      ],
+      "localFeatures": [
+        "hans-detail-11"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(74, 51, 40, 1.0)",
+        "secondaryAlbedo": "rgba(36, 27, 25, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(74, 51, 40, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(36, 27, 25, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "weapon",
+      "name": "Hans weapon",
+      "level": "macro",
+      "role": "equipment",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans weapon is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "WeaponAnchor",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "weaponSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "weapon",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-12"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "shield",
+      "name": "Hans shield",
+      "level": "macro",
+      "role": "equipment",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "extrude",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans shield is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          1,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.72,
+        "height": 1,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "shieldSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "shield",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "steel"
+        }
+      },
+      "material": "steel",
+      "materialLayers": [
+        "steel"
+      ],
+      "localFeatures": [
+        "hans-detail-13"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(51, 58, 66, 1.0)",
+        "secondaryAlbedo": "rgba(111, 119, 128, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(51, 58, 66, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(111, 119, 128, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "emblem",
+      "name": "Hans emblem",
+      "level": "micro",
+      "role": "body",
+      "importance": 0.65,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans emblem is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "emblemSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "emblem",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "gold"
+        }
+      },
+      "material": "gold",
+      "materialLayers": [
+        "gold"
+      ],
+      "localFeatures": [
+        "hans-detail-14"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(179, 138, 61, 1.0)",
+        "secondaryAlbedo": "rgba(109, 81, 39, 1.0)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(179, 138, 61, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(109, 81, 39, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    },
+    {
+      "id": "hair",
+      "name": "Hans hair",
+      "level": "meso",
+      "role": "body",
+      "importance": 0.95,
+      "confidence": 0.76,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "The Hans hair is a separate rigid or semi-rigid part with visible seams and an animation socket in the reference.",
+      "geometryDescriptor": {
+        "topologyIntent": "faceted low-poly character part",
+        "edgeTreatment": {
+          "type": "chamfer",
+          "bevelRadius": 0.018,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "smooth normals with weighted hard edges"
+      },
+      "parent": "root",
+      "attachment": {
+        "parentSocket": "BodySocket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.35,
+          0
+        ],
+        "contactType": "overlap",
+        "embedDepth": 0.025,
+        "gapTolerance": 0.02
+      },
+      "dimensions": {
+        "width": 0.34,
+        "height": 0.35,
+        "depth": 0.22,
+        "units": "meters",
+        "confidence": 0.72
+      },
+      "transform": {
+        "position": [
+          0,
+          0.45,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "attached-part",
+        "pivot": {
+          "mode": "socket",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.74
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": false
+        },
+        "sockets": [
+          {
+            "id": "hairSocket",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "semantic": "runtime attachment socket"
+          }
+        ],
+        "collider": {
+          "type": "capsule",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "low-poly proxy collider"
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "hair",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0,
+          "debrisMaterial": "dark"
+        }
+      },
+      "material": "dark",
+      "materialLayers": [
+        "dark"
+      ],
+      "localFeatures": [
+        "hans-detail-15"
+      ],
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(21, 25, 34, 1.0)",
+        "secondaryAlbedo": "rgba(9, 11, 16, 1.0)",
+        "materialClass": "fabric",
+        "materialClassConfidence": 0.78,
+        "colorGradient": {
+          "type": "linear",
+          "stops": [
+            {
+              "at": 0,
+              "color": "rgba(21, 25, 34, 1.0)"
+            },
+            {
+              "at": 1,
+              "color": "rgba(9, 11, 16, 1.0)"
+            }
+          ]
+        }
+      },
+      "surfaceDetail": {
+        "macroRoughness": 0.14,
+        "microRoughness": 0.08,
+        "bumpAmplitude": 0.02,
+        "normalPattern": "faceted procedural normal breakup",
+        "displacementPattern": "none",
+        "occlusionPattern": "contact seams",
+        "edgeWearPattern": "muted edge wear",
+        "notes": "Independent albedo, roughness and normal intent; no projected texture in runtime."
+      },
+      "evidenceRefs": [
+        "fixed-three-quarter"
+      ],
+      "details": [],
+      "fidelityTier": "optimization"
+    }
+  ],
+  "materials": [
+    {
+      "id": "cloth",
+      "name": "cloth material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#4e2523",
+      "color": "#4e2523",
+      "albedo": {
+        "dominant": "#4e2523",
+        "secondary": [
+          "#332220"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#4e2523",
+          "#332220"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.78,
+        "variation": 0.12,
+        "map": "generated://cloth/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.05,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://cloth/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://cloth/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.08,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "cloth-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://cloth/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://cloth/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://cloth/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://cloth/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://cloth/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "skin",
+      "name": "skin material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#98634b",
+      "color": "#98634b",
+      "albedo": {
+        "dominant": "#98634b",
+        "secondary": [
+          "#633e32"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#98634b",
+          "#633e32"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.56,
+        "variation": 0.12,
+        "map": "generated://skin/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.05,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://skin/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://skin/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.08,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "skin-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://skin/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://skin/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://skin/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://skin/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://skin/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "steel",
+      "name": "steel material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#333a42",
+      "color": "#333a42",
+      "albedo": {
+        "dominant": "#333a42",
+        "secondary": [
+          "#6f7780"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#333a42",
+          "#6f7780"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.38,
+        "variation": 0.12,
+        "map": "generated://steel/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.8,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://steel/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://steel/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.22,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "steel-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://steel/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://steel/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://steel/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://steel/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://steel/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "gold",
+      "name": "gold material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#b38a3d",
+      "color": "#b38a3d",
+      "albedo": {
+        "dominant": "#b38a3d",
+        "secondary": [
+          "#6d5127"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#b38a3d",
+          "#6d5127"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.78,
+        "variation": 0.12,
+        "map": "generated://gold/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.72,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://gold/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://gold/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.22,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "gold-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://gold/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://gold/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://gold/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://gold/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://gold/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "leather",
+      "name": "leather material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#4a3328",
+      "color": "#4a3328",
+      "albedo": {
+        "dominant": "#4a3328",
+        "secondary": [
+          "#241b19"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#4a3328",
+          "#241b19"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.78,
+        "variation": 0.12,
+        "map": "generated://leather/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.05,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://leather/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://leather/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.08,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "leather-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://leather/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://leather/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://leather/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://leather/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://leather/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "cloak",
+      "name": "cloak material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#332220",
+      "color": "#332220",
+      "albedo": {
+        "dominant": "#332220",
+        "secondary": [
+          "#1d1415"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#332220",
+          "#1d1415"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.78,
+        "variation": 0.12,
+        "map": "generated://cloak/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.05,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://cloak/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://cloak/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.08,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "cloak-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://cloak/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://cloak/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://cloak/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://cloak/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://cloak/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "dark",
+      "name": "dark material",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#151922",
+      "color": "#151922",
+      "albedo": {
+        "dominant": "#151922",
+        "secondary": [
+          "#090b10"
+        ],
+        "samplingNotes": "Palette sampled from the concept guide; hidden surfaces are approximate."
+      },
+      "colorVariation": {
+        "palette": [
+          "#151922",
+          "#090b10"
+        ],
+        "pattern": "low-amplitude faceted variation",
+        "amplitude": 0.12,
+        "heightCorrelation": 0.25
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2,
+          2
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.78,
+        "variation": 0.12,
+        "map": "generated://dark/roughness",
+        "localResponse": "cavities darker and worn edges slightly smoother"
+      },
+      "metalness": {
+        "base": 0.05,
+        "variation": 0.08
+      },
+      "normal": {
+        "pattern": "generated://dark/normal",
+        "strength": 0.22,
+        "scale": 18,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "generated://dark/height",
+        "amplitude": 0.015,
+        "scale": 18
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0,
+        "scale": 1,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.32,
+        "contactShadowBias": 0.3,
+        "notes": "Independent cavity response at armor seams and cloth folds."
+      },
+      "wear": {
+        "edgeWear": 0.08,
+        "scratches": [
+          "sparse directional scuffs"
+        ],
+        "chips": [
+          "small edge chips"
+        ]
+      },
+      "dirt": {
+        "amount": 0.18,
+        "cavityBias": 0.42,
+        "color": "#211d1a"
+      },
+      "localOverrides": [
+        {
+          "id": "dark-edge",
+          "region": "silhouette edges",
+          "roughnessDelta": -0.08,
+          "colorDelta": "slightly warm highlight"
+        }
+      ],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Replace with image-derived color, roughness, noise, and edge-wear notes.",
+      "referencePbr": {
+        "version": "img2threejs-1.4.3",
+        "sourceImage": "art-source/concepts/mainline/hans-reference.png",
+        "extractor": "concept-palette-review",
+        "method": "visual palette + independent procedural channels",
+        "verdict": "conditional stylized guide",
+        "hardLimit": "single concept view cannot prove hidden-side material response",
+        "usable": true,
+        "confidence": 0.74,
+        "estimatedFidelity": 0.72,
+        "targetThreshold": 0.7,
+        "maps": {
+          "albedo": {
+            "path": "generated://dark/albedo",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "generated://dark/roughness",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "generated://dark/height",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "generated://dark/normal",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "generated://dark/ao",
+            "channel": "ao"
+          }
+        }
+      }
+    }
+  ],
+  "repetitionSystems": [
+    {
+      "id": "hans-rivets",
+      "name": "equipment rivets",
+      "geometry": "instanced micro fasteners on shield/armor rims",
+      "instances": 12,
+      "buildsGeometry": true,
+      "realization": "instanced-mesh"
+    }
+  ],
+  "buildPasses": [
+    {
+      "id": "blockout",
+      "goal": "blockout for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "blockout evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "structural-pass",
+      "goal": "structural-pass for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "structural-pass evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "proportion-lock",
+      "goal": "proportion-lock for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "proportion-lock evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "feature-placement",
+      "goal": "feature-placement for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "feature-placement evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "material-pass",
+      "goal": "material-pass for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "material-pass evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "lighting-pass",
+      "goal": "lighting-pass for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "lighting-pass evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "interaction-pass",
+      "goal": "interaction-pass for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "interaction-pass evidence recorded for Hans."
+      ]
+    },
+    {
+      "id": "optimization-pass",
+      "goal": "optimization-pass for Hans",
+      "componentRefs": [
+        "root",
+        "body",
+        "head",
+        "arm-l",
+        "arm-r",
+        "leg-l",
+        "leg-r",
+        "cloak-l",
+        "cloak-r",
+        "belt",
+        "satchel",
+        "weapon",
+        "shield",
+        "emblem",
+        "hair"
+      ],
+      "acceptance": [
+        "optimization-pass evidence recorded for Hans."
+      ]
+    }
+  ],
+  "visualEvidence": [
+    {
+      "pass": "optimization-pass",
+      "screenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparison": "art-source/img2threejs/mainline/hans-comparison.png",
+      "note": "Runtime GLB smoke evidence; visual preview is a procedural self-consistency render, not a claim of exact hidden-side reconstruction."
+    }
+  ],
+  "reviewHistory": [
+    {
+      "passId": "blockout",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "blockout evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "blockout",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "structural-pass",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "structural-pass evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "structural-pass",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "proportion-lock",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "proportion-lock evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "proportion-lock",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "feature-placement",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "feature-placement evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "feature-placement",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "material-pass",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "material-pass evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "material-pass",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "lighting-pass",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "lighting-pass evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "lighting-pass",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "interaction-pass",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "interaction-pass evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "interaction-pass",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    },
+    {
+      "passId": "optimization-pass",
+      "fidelity": 0.72,
+      "action": "continue",
+      "summary": "optimization-pass evidence recorded for the first playable vertical slice; hidden-side details remain approximate.",
+      "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+      "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+      "aiVisionScore": 0.72,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.82,
+        "componentStructure": 0.8,
+        "formDetail": 0.7,
+        "materialSurface": 0.68,
+        "lightingCamera": 0.7
+      },
+      "visualEvidence": {
+        "passId": "optimization-pass",
+        "renderScreenshot": "art-source/img2threejs/mainline/hans-preview.png",
+        "comparisonImage": "art-source/img2threejs/mainline/hans-comparison.png",
+        "cameraView": "fixed-three-quarter plus two orbit views",
+        "notes": "Procedural self-consistency evidence; not an exact hidden-side claim.",
+        "aiVisionNotes": "Human-reviewed first vertical slice."
+      }
+    }
+  ],
+  "lodPlan": [
+    {
+      "tier": "near",
+      "distance": 0,
+      "strategy": "full component tree and material layers"
+    },
+    {
+      "tier": "far",
+      "distance": 30,
+      "strategy": "merge static components and reduce local feature geometry"
+    }
+  ],
+  "performanceBudget": {
+    "qualityPriority": "silhouette and action readability",
+    "targetTriangles": 3000,
+    "maxDrawCalls": 28,
+    "textureSize": 0,
+    "fpsTarget": 60,
+    "optimizationPolicy": "procedural flat-color materials, shared skeleton naming, lazy GLB loading"
+  },
+  "lightingFromPhoto": [
+    {
+      "type": "key light",
+      "direction": "upper-left warm rim",
+      "intensity": 1.2
+    },
+    {
+      "type": "fill light",
+      "direction": "front cool",
+      "intensity": 0.55
+    },
+    {
+      "type": "rim light",
+      "direction": "back edge",
+      "intensity": 0.7
+    },
+    {
+      "type": "contact shadow",
+      "direction": "ground",
+      "intensity": 0.8
+    },
+    {
+      "type": "tone mapping",
+      "direction": "ACES filmic exposure 0.2",
+      "intensity": 1
+    }
+  ],
+  "proceduralStrategy": [
+    "Use Three.js primitives and ExtrudeGeometry for body and equipment volumes.",
+    "Keep the 26-bone hierarchy stable across the three mainline characters.",
+    "Use deterministic palette materials with independent roughness/normal metadata.",
+    "Keep weapons and shields on named sockets for runtime replacement.",
+    "Use named parts and explodeWithParent metadata for assembly inspection.",
+    "Do not claim exact hidden-side reconstruction from the single concept guide."
+  ],
+  "animationAnchors": [
+    {
+      "id": "weapon-strike",
+      "parentSocket": "WeaponAnchor",
+      "action": "attack_health",
+      "frame": 0.62
+    },
+    {
+      "id": "hit-anchor",
+      "parentSocket": "HitAnchor",
+      "action": "hit_health",
+      "frame": 0.36
+    }
+  ],
+  "destructionAnchors": [
+    {
+      "id": "shield-rim",
+      "component": "shield",
+      "detachable": false,
+      "fractureGroup": "equipment"
+    },
+    {
+      "id": "cloak-hem",
+      "component": "cloak-l",
+      "detachable": false,
+      "fractureGroup": "cloth"
+    }
+  ],
+  "risks": [
+    "Reference is one generated three-quarter view; backside and underside are inferred.",
+    "The first playable GLB is intentionally untextured to preserve load budget.",
+    "Art-direction review may adjust face and armor proportions before final production."
+  ],
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Hans Shield Escort tower shield armor socket",
+    "index": {
+      "status": "hit",
+      "reason": "current",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.socket-pivot",
+        "file_path": "grimoire/glossary/3d_vocabulary.md",
+        "heading": "Animation, Physics, And Destruction",
+        "key_path": null,
+        "score": 5.511200483252,
+        "snippets": [
+          "A pivot is a local rotation origin; a socket is an attachment point for a child part. In a runtime hierarchy, a socket Object3D is a child of the relevant pivot."
+        ],
+        "source_refs": [
+          {
+            "path": "grimoire/glossary/3d_vocabulary.md",
+            "heading": "Animation, Physics, And Destruction",
+            "key_path": null
+          },
+          {
+            "path": "grimoire/readiness/action_rigging.md",
+            "heading": "Hierarchy Pattern",
+            "key_path": null
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "grimoire/readiness/action_rigging.md"
+          },
+          {
+            "kind": "notebooklm-research",
+            "ref": "notebooklm:4b03c2f9-8393-411f-b5b4-039ab9532843",
+            "note": "Validated generic schema vocabulary; numeric claims remain backed by local source_refs."
+          }
+        ]
+      },
+      {
+        "record_id": "core.attachment-contract",
+        "file_path": "grimoire/readiness/joint_attachment.md",
+        "heading": "Attachment Contract",
+        "key_path": null,
+        "score": 4.774467103191,
+        "snippets": [
+          "An attached child records its parent, parent socket, local start and end, contact type, and embed depth or overlap where applicable."
+        ],
+        "source_refs": [
+          {
+            "path": "grimoire/readiness/joint_attachment.md",
+            "heading": "Attachment Contract",
+            "key_path": null
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "grimoire/readiness/joint_attachment.md"
+          },
+          {
+            "kind": "notebooklm-research",
+            "ref": "notebooklm:4b03c2f9-8393-411f-b5b4-039ab9532843",
+            "note": "Validated generic schema vocabulary; numeric claims remain backed by local source_refs."
+          }
+        ]
+      },
+      {
+        "record_id": "core.shader-mapping-uvcoordinate-system-conversion-attachment-hierarchy",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.rendering_shader_mapping[14]",
+        "score": 2.120316187009,
+        "snippets": [
+          "... ngắm, lưỡi dao, dây đeo) bị lật ngược hoặc lệch sau khi import báo hiệu sai lệch tay thuận; Điểm gắn kết hoạt động như socket/joint có tên (Unreal sockets, USD UsdPhysicsFixedJoint, 'ghost link') — một offset+xoay cục bộ tương đối với node ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.rendering_shader_mapping[14]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      }
+    ]
+  }
+}

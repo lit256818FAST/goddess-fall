@@ -1,0 +1,196 @@
+[
+  {
+    "id": "brazier",
+    "file": "brazier.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [
+      "FxFlame"
+    ],
+    "visualScale": 1.0,
+    "triangles": 346,
+    "bytes": 30532,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "wall-broken",
+    "file": "wall-broken.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 528,
+    "bytes": 41484,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "column",
+    "file": "column.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 176,
+    "bytes": 16252,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "altar",
+    "file": "altar.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [
+      "FxFlame"
+    ],
+    "visualScale": 1.0,
+    "triangles": 212,
+    "bytes": 21708,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "gate-segment",
+    "file": "gate-segment.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      2,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 288,
+    "bytes": 24660,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "bush",
+    "file": "bush.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 40,
+    "bytes": 8580,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "half",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "dead-tree",
+    "file": "dead-tree.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 144,
+    "bytes": 14592,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "road-sign",
+    "file": "road-sign.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 156,
+    "bytes": 15432,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "decor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "grain-cart",
+    "file": "grain-cart.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      2,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 240,
+    "bytes": 21808,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "rubble",
+    "file": "rubble.glb",
+    "chapter": "shenghui",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 156,
+    "bytes": 15432,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "half",
+    "license": "procedural (K3)"
+  }
+]

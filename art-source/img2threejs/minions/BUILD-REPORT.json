@@ -1,0 +1,135 @@
+{
+  "pipeline": [
+    "intake",
+    "pre-spec",
+    "blockout",
+    "structure",
+    "material",
+    "lighting",
+    "interaction",
+    "optimization"
+  ],
+  "models": [
+    {
+      "id": "shield-guard",
+      "role": "shield-guard",
+      "mapsTo": "e1",
+      "modelPath": "/assets/models/enemies/mainline/shield-guard.glb",
+      "bytes": 235004,
+      "visualScale": 0.76,
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "hit_health": "hit_health",
+        "death_health": "death_health"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor"
+      ],
+      "fallback": "procedural-enemy-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "scout",
+      "role": "scout",
+      "mapsTo": "e2",
+      "modelPath": "/assets/models/enemies/mainline/scout.glb",
+      "bytes": 237888,
+      "visualScale": 0.76,
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "hit_health": "hit_health",
+        "death_health": "death_health"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor"
+      ],
+      "fallback": "procedural-enemy-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "faith-acolyte",
+      "role": "faith-acolyte",
+      "mapsTo": "e4",
+      "modelPath": "/assets/models/enemies/mainline/faith-acolyte.glb",
+      "bytes": 241440,
+      "visualScale": 0.76,
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_faith": "attack_faith",
+        "hit_health": "hit_health",
+        "death_health": "death_health"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor"
+      ],
+      "fallback": "procedural-enemy-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "engineer",
+      "role": "engineer",
+      "mapsTo": "e5",
+      "modelPath": "/assets/models/enemies/mainline/engineer.glb",
+      "bytes": 246148,
+      "visualScale": 0.76,
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "hit_health": "hit_health",
+        "death_health": "death_health"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor"
+      ],
+      "fallback": "procedural-enemy-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "raider-rider",
+      "role": "raider-rider",
+      "mapsTo": "e6",
+      "modelPath": "/assets/models/enemies/mainline/raider-rider.glb",
+      "bytes": 235216,
+      "visualScale": 0.78,
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "hit_health": "hit_health",
+        "death_health": "death_health"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor"
+      ],
+      "fallback": "procedural-enemy-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    }
+  ],
+  "notes": [
+    "23-bone K3-structured rig with real skinning.",
+    "Full-body multi-track animation clips.",
+    "Named PBR materials.",
+    "No src/business code or existing side-campaign assets changed."
+  ]
+}

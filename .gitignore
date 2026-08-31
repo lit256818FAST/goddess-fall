@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.playwright-cli/
+output/
+output-qa-*.png
+*.log
+
+# Local recovery snapshots and unrelated workspace material stay outside the
+# published game repository.
+recovery/
+像素财经视频工厂/
+第一性原理_像素钩子/
+x.endsWith*

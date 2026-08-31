@@ -1,0 +1,69 @@
+import * as THREE from 'three';
+
+export type Side = 'player' | 'enemy';
+export interface BattleUnit { id:string; name:string; side:Side; x:number; z:number; hp:number; maxHp:number; belief:number; moved?:boolean; }
+export interface BattleEvent { type:'select'|'move'|'attack'|'victory'|'defeat'; unit?:BattleUnit; target?:BattleUnit; }
+
+const GRID=8;
+export class Battlefield {
+  private scene=new THREE.Scene(); private camera:THREE.OrthographicCamera;
+  private renderer:THREE.WebGLRenderer; private ray=new THREE.Raycaster(); private pointer=new THREE.Vector2();
+  private unitMeshes=new Map<string,THREE.Group>(); private selected?:BattleUnit; private running=true;
+  readonly units:BattleUnit[];
+  constructor(private host:HTMLElement, private emit:(e:BattleEvent)=>void) {
+    this.units=[
+      {id:'u1',name:'无旗者',side:'player',x:1,z:6,hp:7,maxHp:7,belief:5},
+      {id:'u2',name:'塞拉菲娜',side:'player',x:2,z:6,hp:5,maxHp:5,belief:8},
+      {id:'u3',name:'蕾娜',side:'player',x:1,z:7,hp:6,maxHp:6,belief:6},
+      {id:'e1',name:'女神骑士',side:'enemy',x:6,z:1,hp:6,maxHp:6,belief:5},
+      {id:'e2',name:'狂热侍从',side:'enemy',x:5,z:1,hp:4,maxHp:4,belief:4},
+      {id:'e3',name:'狂热侍从',side:'enemy',x:6,z:2,hp:4,maxHp:4,belief:4}
+    ];
+    this.scene.background=new THREE.Color(0x111820);
+    const aspect=Math.max(.65,host.clientWidth/Math.max(1,host.clientHeight)); const span=10;
+    this.camera=new THREE.OrthographicCamera(-span*aspect/2,span*aspect/2,span/2,-span/2,.1,100);
+    this.camera.position.set(9,11,9); this.camera.lookAt(3.5,0,3.5);
+    this.renderer=new THREE.WebGLRenderer({antialias:devicePixelRatio<2,alpha:false,powerPreference:'high-performance'});
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.5)); this.renderer.setSize(host.clientWidth,host.clientHeight);
+    this.renderer.outputColorSpace=THREE.SRGBColorSpace; host.append(this.renderer.domElement);
+    this.build(); this.resize();
+    this.renderer.domElement.addEventListener('pointerup',this.onPointer);
+    addEventListener('resize',this.resize); this.loop();
+  }
+  private build(){
+    this.scene.add(new THREE.HemisphereLight(0xbfd8ee,0x332b25,2.2));
+    const sun=new THREE.DirectionalLight(0xffe3b0,3); sun.position.set(-4,10,6); this.scene.add(sun);
+    const tileGeo=new THREE.BoxGeometry(.94,.16,.94); const matA=new THREE.MeshLambertMaterial({color:0x43505a}); const matB=new THREE.MeshLambertMaterial({color:0x38434c});
+    const tiles=new THREE.InstancedMesh(tileGeo,[matA,matB],GRID*GRID); const m=new THREE.Matrix4(); let i=0;
+    for(let z=0;z<GRID;z++)for(let x=0;x<GRID;x++){m.setPosition(x,-.12,z);tiles.setMatrixAt(i,m);tiles.setColorAt(i++,new THREE.Color((x+z)%2?0x40505a:0x344149));} this.scene.add(tiles);
+    const altar=new THREE.Mesh(new THREE.CylinderGeometry(.45,.65,1.25,6),new THREE.MeshLambertMaterial({color:0x81745f})); altar.position.set(3.5,.55,3.5);this.scene.add(altar);
+    const flame=new THREE.Mesh(new THREE.ConeGeometry(.18,.7,7),new THREE.MeshBasicMaterial({color:0xffad45}));flame.position.set(3.5,1.5,3.5);this.scene.add(flame);
+    this.units.forEach(u=>this.addUnit(u));
+  }
+  private addUnit(u:BattleUnit){
+    const g=new THREE.Group(); g.userData.unitId=u.id;
+    const color=u.side==='player'?0x4a91a8:0x9b4a43; const body=new THREE.Mesh(new THREE.CylinderGeometry(.24,.34,.75,7),new THREE.MeshLambertMaterial({color}));body.position.y=.48;body.userData.unitId=u.id;
+    const head=new THREE.Mesh(new THREE.SphereGeometry(.2,8,6),new THREE.MeshLambertMaterial({color:0xd9b99b}));head.position.y=1;head.userData.unitId=u.id;g.add(body,head);g.position.set(u.x,0,u.z);this.scene.add(g);this.unitMeshes.set(u.id,g);
+  }
+  private onPointer=(ev:PointerEvent)=>{
+    const rect=this.renderer.domElement.getBoundingClientRect();this.pointer.set((ev.clientX-rect.left)/rect.width*2-1,-((ev.clientY-rect.top)/rect.height*2-1));this.ray.setFromCamera(this.pointer,this.camera);
+    const hits=this.ray.intersectObjects(this.scene.children,true); const id=hits.map(h=>h.object.userData.unitId).find(Boolean) as string|undefined;
+    const unit=this.units.find(u=>u.id===id&&u.hp>0);
+    if(unit){ if(!this.selected&&unit.side==='player'){this.select(unit);return;} if(this.selected&&unit.side==='enemy'&&this.distance(this.selected,unit)<=1){unit.hp-=2;this.emit({type:'attack',unit:this.selected,target:unit});this.endAction();return;} if(unit.side==='player')this.select(unit); return; }
+    if(!this.selected||this.selected.moved||!hits.length)return; const p=hits[0].point; const x=Math.round(p.x),z=Math.round(p.z);
+    if(x<0||z<0||x>=GRID||z>=GRID||this.units.some(u=>u.hp>0&&u.x===x&&u.z===z)||Math.abs(x-this.selected.x)+Math.abs(z-this.selected.z)>2)return;
+    this.selected.x=x;this.selected.z=z;this.selected.moved=true;this.unitMeshes.get(this.selected.id)?.position.set(x,0,z);this.emit({type:'move',unit:this.selected});
+  };
+  private select(u:BattleUnit){this.selected=u;this.emit({type:'select',unit:u});this.unitMeshes.forEach((g,id)=>g.scale.setScalar(id===u.id?1.18:1));}
+  private distance(a:BattleUnit,b:BattleUnit){return Math.abs(a.x-b.x)+Math.abs(a.z-b.z)}
+  endAction(){if(!this.selected)return;this.selected.moved=true;this.selected=undefined;this.unitMeshes.forEach(g=>g.scale.setScalar(1));this.enemyTurn();}
+  private enemyTurn(){
+    if(!this.units.some(u=>u.side==='enemy'&&u.hp>0)){this.emit({type:'victory'});return;}
+    const enemy=this.units.find(u=>u.side==='enemy'&&u.hp>0); const target=this.units.filter(u=>u.side==='player'&&u.hp>0).sort((a,b)=>this.distance(enemy!,a)-this.distance(enemy!,b))[0];
+    if(enemy&&target){if(this.distance(enemy,target)<=1){target.hp-=1;this.emit({type:'attack',unit:enemy,target});this.unitMeshes.get(target.id)!.visible=target.hp>0;}else{enemy.x+=Math.sign(target.x-enemy.x);enemy.z+=Math.sign(target.z-enemy.z);this.unitMeshes.get(enemy.id)?.position.set(enemy.x,0,enemy.z);}}
+    this.units.filter(u=>u.side==='player').forEach(u=>u.moved=false); if(!this.units.some(u=>u.side==='player'&&u.hp>0))this.emit({type:'defeat'});
+  }
+  private resize=()=>{const w=Math.max(1,this.host.clientWidth),h=Math.max(1,this.host.clientHeight),aspect=w/h,span=10;this.camera.left=-span*aspect/2;this.camera.right=span*aspect/2;this.camera.top=span/2;this.camera.bottom=-span/2;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false)};
+  private loop=()=>{if(!this.running)return;this.renderer.render(this.scene,this.camera);requestAnimationFrame(this.loop)};
+  dispose(){this.running=false;removeEventListener('resize',this.resize);this.renderer.domElement.removeEventListener('pointerup',this.onPointer);this.scene.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.InstancedMesh){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose())}});this.renderer.dispose();this.host.replaceChildren();}
+}

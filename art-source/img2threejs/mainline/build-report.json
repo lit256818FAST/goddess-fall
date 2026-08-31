@@ -1,0 +1,142 @@
+{
+  "generatedBy": "img2threejs",
+  "pipeline": [
+    "blockout",
+    "structure",
+    "form",
+    "material",
+    "lighting",
+    "interaction",
+    "optimization"
+  ],
+  "results": [
+    {
+      "id": "arthur",
+      "path": "public/assets/models/mainline/arthur.glb",
+      "bytes": 347288,
+      "clips": [
+        "idle",
+        "move",
+        "attack_health",
+        "attack_faith",
+        "hit_health",
+        "hit_faith",
+        "death_health",
+        "death_faith",
+        "skill"
+      ]
+    },
+    {
+      "id": "hans",
+      "path": "public/assets/models/mainline/hans.glb",
+      "bytes": 332244,
+      "clips": [
+        "idle",
+        "move",
+        "attack_health",
+        "attack_faith",
+        "hit_health",
+        "hit_faith",
+        "death_health",
+        "death_faith",
+        "skill"
+      ]
+    },
+    {
+      "id": "asnoka",
+      "path": "public/assets/models/mainline/asnoka.glb",
+      "bytes": 304112,
+      "clips": [
+        "idle",
+        "move",
+        "attack_health",
+        "attack_faith",
+        "hit_health",
+        "hit_faith",
+        "death_health",
+        "death_faith",
+        "skill"
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "id": "boss-white-knight",
+      "bytes": 361600,
+      "clips": [
+        "idle",
+        "move",
+        "attack_health",
+        "hit_health",
+        "death_health",
+        "phase_transition"
+      ],
+      "scale": 0.85,
+      "fallback": "procedural-boss-white-knight-v1",
+      "phases": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ]
+    },
+    {
+      "id": "boss-night-judge",
+      "bytes": 329924,
+      "clips": [
+        "idle",
+        "move",
+        "attack_faith",
+        "hit_faith",
+        "death_faith",
+        "phase_transition"
+      ],
+      "scale": 0.78,
+      "fallback": "procedural-boss-night-judge-v1",
+      "phases": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ]
+    },
+    {
+      "id": "boss-lake-god-a",
+      "bytes": 309784,
+      "clips": [
+        "idle",
+        "move",
+        "attack_faith",
+        "hit_faith",
+        "death_faith",
+        "phase_transition"
+      ],
+      "scale": 0.92,
+      "fallback": "procedural-boss-lake-god-v1",
+      "phases": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ]
+    },
+    {
+      "id": "boss-lake-god-b",
+      "bytes": 309776,
+      "clips": [
+        "idle",
+        "move",
+        "attack_faith",
+        "hit_faith",
+        "death_faith",
+        "phase_transition"
+      ],
+      "scale": 0.92,
+      "fallback": "procedural-boss-lake-god-v1",
+      "phases": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ]
+    }
+  ],
+  "notes": [
+    "23-bone K3-structured rig with real skinning.",
+    "Full-body multi-track animation clips.",
+    "Named PBR materials (metal/cloth/skin/emissive).",
+    "No src files or side-campaign assets touched."
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "source": "img2threejs",
+  "generatedAt": "2026-08-26T13:40:06.231Z",
+  "sharedSkeleton": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Spine1",
+    "Spine2",
+    "Neck",
+    "Head",
+    "Shoulder_L",
+    "Arm_L",
+    "Forearm_L",
+    "Hand_L",
+    "Shoulder_R",
+    "Arm_R",
+    "Forearm_R",
+    "Hand_R",
+    "Leg_L",
+    "Shin_L",
+    "Foot_L",
+    "Toe_L",
+    "Leg_R",
+    "Shin_R",
+    "Foot_R",
+    "Toe_R"
+  ],
+  "models": [
+    {
+      "id": "arthur",
+      "modelPath": "/assets/models/mainline/arthur.glb",
+      "visualScale": 0.76,
+      "facing": "+Z",
+      "targetWorldHeight": 1.75,
+      "feetOrigin": "baked rig lift (foot sole at Y=0)",
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "attack_faith": "attack_faith",
+        "hit_health": "hit_health",
+        "hit_faith": "hit_faith",
+        "death_health": "death_health",
+        "death_faith": "death_faith",
+        "skill": "skill"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-mainline-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "hans",
+      "modelPath": "/assets/models/mainline/hans.glb",
+      "visualScale": 0.74,
+      "facing": "+Z",
+      "targetWorldHeight": 1.75,
+      "feetOrigin": "baked rig lift (foot sole at Y=0)",
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "attack_faith": "attack_faith",
+        "hit_health": "hit_health",
+        "hit_faith": "hit_faith",
+        "death_health": "death_health",
+        "death_faith": "death_faith",
+        "skill": "skill"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-mainline-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "asnoka",
+      "modelPath": "/assets/models/mainline/asnoka.glb",
+      "visualScale": 0.76,
+      "facing": "+Z",
+      "targetWorldHeight": 1.75,
+      "feetOrigin": "baked rig lift (foot sole at Y=0)",
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "attack_faith": "attack_faith",
+        "hit_health": "hit_health",
+        "hit_faith": "hit_faith",
+        "death_health": "death_health",
+        "death_faith": "death_faith",
+        "skill": "skill"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-mainline-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    }
+  ],
+  "bosses": [
+    {
+      "id": "boss-white-knight",
+      "modelPath": "/assets/models/mainline/boss-white-knight.glb",
+      "visualScale": 0.85,
+      "facing": "+Z",
+      "targetWorldHeight": 1.95,
+      "phases": [
+        {
+          "id": "phase-1",
+          "node": "Phase1Parts",
+          "visibleByDefault": true
+        },
+        {
+          "id": "phase-2",
+          "node": "Phase2Parts",
+          "visibleByDefault": false
+        }
+      ],
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_health": "attack_health",
+        "hit_health": "hit_health",
+        "death_health": "death_health",
+        "phase_transition": "phase_transition"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-boss-white-knight-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "boss-night-judge",
+      "modelPath": "/assets/models/mainline/boss-night-judge.glb",
+      "visualScale": 0.78,
+      "facing": "+Z",
+      "targetWorldHeight": 1.95,
+      "phases": [
+        {
+          "id": "phase-1",
+          "node": "Phase1Parts",
+          "visibleByDefault": true
+        },
+        {
+          "id": "phase-2",
+          "node": "Phase2Parts",
+          "visibleByDefault": false
+        }
+      ],
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_faith": "attack_faith",
+        "hit_faith": "hit_faith",
+        "death_faith": "death_faith",
+        "phase_transition": "phase_transition"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-boss-night-judge-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "boss-lake-god-a",
+      "modelPath": "/assets/models/mainline/boss-lake-god-a.glb",
+      "visualScale": 0.92,
+      "facing": "+Z",
+      "targetWorldHeight": 1.95,
+      "phases": [
+        {
+          "id": "phase-1",
+          "node": "Phase1Parts",
+          "visibleByDefault": true
+        },
+        {
+          "id": "phase-2",
+          "node": "Phase2Parts",
+          "visibleByDefault": false
+        }
+      ],
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_faith": "attack_faith",
+        "hit_faith": "hit_faith",
+        "death_faith": "death_faith",
+        "phase_transition": "phase_transition"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-boss-lake-god-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    },
+    {
+      "id": "boss-lake-god-b",
+      "modelPath": "/assets/models/mainline/boss-lake-god-b.glb",
+      "visualScale": 0.92,
+      "facing": "+Z",
+      "targetWorldHeight": 1.95,
+      "phases": [
+        {
+          "id": "phase-1",
+          "node": "Phase1Parts",
+          "visibleByDefault": true
+        },
+        {
+          "id": "phase-2",
+          "node": "Phase2Parts",
+          "visibleByDefault": false
+        }
+      ],
+      "actions": {
+        "idle": "idle",
+        "move": "move",
+        "attack_faith": "attack_faith",
+        "hit_faith": "hit_faith",
+        "death_faith": "death_faith",
+        "phase_transition": "phase_transition"
+      },
+      "sockets": [
+        "HeadAnchor",
+        "WeaponAnchor",
+        "HitAnchor",
+        "FootAnchor",
+        "FxWeapon"
+      ],
+      "fallback": "procedural-boss-lake-god-v1",
+      "license": "Generated procedural geometry; concept reference only"
+    }
+  ]
+}

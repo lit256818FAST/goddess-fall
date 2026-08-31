@@ -1,0 +1,198 @@
+[
+  {
+    "id": "statue-base",
+    "file": "statue-base.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 360,
+    "bytes": 31364,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "corrupted-brazier",
+    "file": "corrupted-brazier.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [
+      "FxFlame"
+    ],
+    "visualScale": 1.0,
+    "triangles": 346,
+    "bytes": 30548,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "stone-steps",
+    "file": "stone-steps.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 72,
+    "bytes": 9360,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "floor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "floating-shard-a",
+    "file": "floating-shard-a.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 44,
+    "bytes": 7712,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "decor",
+    "license": "procedural (K3)",
+    "floating": true,
+    "hoverAmplitude": 0.05
+  },
+  {
+    "id": "floating-shard-b",
+    "file": "floating-shard-b.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 16,
+    "bytes": 5692,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "decor",
+    "license": "procedural (K3)",
+    "floating": true,
+    "hoverAmplitude": 0.05
+  },
+  {
+    "id": "black-bush",
+    "file": "black-bush.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 25,
+    "bytes": 6856,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "half",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "black-tree",
+    "file": "black-tree.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 148,
+    "bytes": 15188,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "ritual-ring",
+    "file": "ritual-ring.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 132,
+    "bytes": 13172,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "floor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "veil-pillar",
+    "file": "veil-pillar.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 116,
+    "bytes": 12888,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "fallen-bell",
+    "file": "fallen-bell.glb",
+    "chapter": "veil-sanctum",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 166,
+    "bytes": 16384,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  }
+]

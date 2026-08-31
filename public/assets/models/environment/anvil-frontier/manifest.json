@@ -1,0 +1,214 @@
+[
+  {
+    "id": "rail-straight",
+    "file": "rail-straight.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 156,
+    "bytes": 15596,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "floor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "rail-curve",
+    "file": "rail-curve.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 185,
+    "bytes": 17576,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "floor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "rail-buffer",
+    "file": "rail-buffer.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 168,
+    "bytes": 16468,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "valve-wheel",
+    "file": "valve-wheel.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [
+      "FxTrigger"
+    ],
+    "visualScale": 1.0,
+    "triangles": 276,
+    "bytes": 23352,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "scrap-pile",
+    "file": "scrap-pile.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 196,
+    "bytes": 17800,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "mud-patch",
+    "file": "mud-patch.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": false,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 45,
+    "bytes": 7780,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "floor",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "anvil-block",
+    "file": "anvil-block.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 156,
+    "bytes": 15752,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "ore-crate",
+    "file": "ore-crate.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 180,
+    "bytes": 17300,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "iron-fence",
+    "file": "iron-fence.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 160,
+    "bytes": 16432,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "coal-cart",
+    "file": "coal-cart.glb",
+    "chapter": "anvil-frontier",
+    "footprint": [
+      1,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": false,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 204,
+    "bytes": 19508,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  },
+  {
+    "id": "grain-cart",
+    "file": "grain-cart.glb",
+    "chapter": "anvil-frontier",
+    "sharedFrom": "shenghui",
+    "footprint": [
+      2,
+      1
+    ],
+    "blocksMovement": true,
+    "interactable": true,
+    "anchors": [],
+    "visualScale": 1.0,
+    "triangles": 240,
+    "bytes": 21808,
+    "materials": 1,
+    "drawCalls": 1,
+    "occupancy": "full-block",
+    "license": "procedural (K3)"
+  }
+]

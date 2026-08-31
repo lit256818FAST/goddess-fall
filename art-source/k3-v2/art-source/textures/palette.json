@@ -1,0 +1,253 @@
+{
+  "unflagged": {
+    "texture": "unflagged-basecolor-512.png",
+    "cellSize": 64,
+    "grid": 8,
+    "cells": {
+      "cloak": {
+        "cell": [
+          0,
+          0
+        ]
+      },
+      "cloth": {
+        "cell": [
+          1,
+          0
+        ]
+      },
+      "leather": {
+        "cell": [
+          2,
+          0
+        ]
+      },
+      "leatherDk": {
+        "cell": [
+          3,
+          0
+        ]
+      },
+      "skin": {
+        "cell": [
+          4,
+          0
+        ]
+      },
+      "hair": {
+        "cell": [
+          5,
+          0
+        ]
+      },
+      "steel": {
+        "cell": [
+          6,
+          0
+        ]
+      },
+      "paper": {
+        "cell": [
+          7,
+          0
+        ]
+      },
+      "boot": {
+        "cell": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "seraphina": {
+    "texture": "seraphina-basecolor-512.png",
+    "cellSize": 64,
+    "grid": 8,
+    "cells": {
+      "robe": {
+        "cell": [
+          0,
+          0
+        ]
+      },
+      "robeDk": {
+        "cell": [
+          1,
+          0
+        ]
+      },
+      "ivory": {
+        "cell": [
+          2,
+          0
+        ]
+      },
+      "gold": {
+        "cell": [
+          3,
+          0
+        ]
+      },
+      "skin": {
+        "cell": [
+          4,
+          0
+        ]
+      },
+      "hair": {
+        "cell": [
+          5,
+          0
+        ]
+      },
+      "lantern": {
+        "cell": [
+          6,
+          0
+        ]
+      },
+      "glow": {
+        "cell": [
+          7,
+          0
+        ]
+      },
+      "sash": {
+        "cell": [
+          0,
+          1
+        ]
+      }
+    },
+    "emissive": "seraphina-emissive-512.png"
+  },
+  "reina": {
+    "texture": "reina-basecolor-512.png",
+    "cellSize": 64,
+    "grid": 8,
+    "cells": {
+      "shawl": {
+        "cell": [
+          0,
+          0
+        ]
+      },
+      "armor": {
+        "cell": [
+          1,
+          0
+        ]
+      },
+      "armorDk": {
+        "cell": [
+          2,
+          0
+        ]
+      },
+      "brass": {
+        "cell": [
+          3,
+          0
+        ]
+      },
+      "glass": {
+        "cell": [
+          4,
+          0
+        ]
+      },
+      "skin": {
+        "cell": [
+          5,
+          0
+        ]
+      },
+      "hair": {
+        "cell": [
+          6,
+          0
+        ]
+      },
+      "leather": {
+        "cell": [
+          7,
+          0
+        ]
+      },
+      "paper": {
+        "cell": [
+          0,
+          1
+        ]
+      },
+      "wood": {
+        "cell": [
+          1,
+          1
+        ]
+      },
+      "steel": {
+        "cell": [
+          2,
+          1
+        ]
+      }
+    }
+  },
+  "cultist-melee": {
+    "texture": "cultist-melee-basecolor-512.png",
+    "cellSize": 64,
+    "grid": 8,
+    "cells": {
+      "cultRed": {
+        "cell": [
+          0,
+          0
+        ]
+      },
+      "cultRedDk": {
+        "cell": [
+          1,
+          0
+        ]
+      },
+      "charcoal": {
+        "cell": [
+          2,
+          0
+        ]
+      },
+      "void": {
+        "cell": [
+          3,
+          0
+        ]
+      },
+      "armorDk": {
+        "cell": [
+          4,
+          0
+        ]
+      },
+      "steel": {
+        "cell": [
+          5,
+          0
+        ]
+      },
+      "leather": {
+        "cell": [
+          6,
+          0
+        ]
+      },
+      "bone": {
+        "cell": [
+          7,
+          0
+        ]
+      }
+    }
+  }
+}

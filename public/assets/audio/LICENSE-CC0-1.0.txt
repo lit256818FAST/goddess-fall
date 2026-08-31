@@ -1,0 +1,9 @@
+Creative Commons CC0 1.0 Universal
+
+The creators identified in AUDIO_ASSETS.md offered these audio works under
+CC0 1.0 Universal, a public-domain dedication. Attribution is not legally
+required, but this project preserves creator and source information.
+
+Official deed and legal code:
+https://creativecommons.org/publicdomain/zero/1.0/
+https://creativecommons.org/publicdomain/zero/1.0/legalcode

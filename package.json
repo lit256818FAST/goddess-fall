@@ -1,0 +1,34 @@
+{
+  "name": "goddess-fall-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader runner",
+    "build": "tsc --noEmit && vite build --configLoader runner",
+    "build:dialogue-states": "python scripts/build-dialogue-states.py",
+    "build:gallery": "node scripts/build-model-gallery.mjs",
+    "prepare:github-pages": "node scripts/prepare-github-pages.mjs",
+    "preview": "vite preview",
+    "check": "tsc --noEmit",
+    "test": "vitest run --configLoader runner --exclude recovery/**",
+    "verify:boss-assets": "node scripts/verify-boss-assets.mjs",
+    "verify:season-assets": "node scripts/verify-season-assets.mjs",
+    "verify:mainline-assets": "node scripts/verify-mainline-assets.mjs",
+    "verify:mainline-runtime": "node scripts/verify-mainline-runtime.mjs",
+    "verify:minion-assets": "node scripts/verify-minion-assets.mjs",
+    "verify:budget": "node scripts/check-package-budget.mjs",
+    "package:portable": "npm run build && node scripts/package-portable.mjs && node scripts/package-single-file.mjs",
+    "package:netlify": "npm run build && node scripts/package-netlify.mjs",
+    "verify:release": "npm run verify:season-assets && npm run verify:boss-assets && npm run verify:mainline-assets && npm run verify:mainline-runtime && npm run verify:minion-assets && npm test && npm run build && npm run verify:budget"
+  },
+  "dependencies": {
+    "three": "^0.178.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.178.1",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.4",
+    "vitest": "^3.2.4"
+  }
+}

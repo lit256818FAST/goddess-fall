@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-08-22T13:20:06.273Z",
+  "models": [
+    {
+      "id": "shield-guard",
+      "bytes": 62492,
+      "triangles": 1132,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.055,
+        "maxY": 2.344
+      },
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 1,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 1,
+          "duration": 0.72
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.4
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.8
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "scout",
+      "bytes": 62472,
+      "triangles": 1132,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.055,
+        "maxY": 2.344
+      },
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 1,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 1,
+          "duration": 0.72
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.4
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.8
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "faith-acolyte",
+      "bytes": 66056,
+      "triangles": 1260,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.055,
+        "maxY": 2.344
+      },
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 1,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 1,
+          "duration": 0.8
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.4
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.8
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "engineer",
+      "bytes": 65344,
+      "triangles": 1164,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.055,
+        "maxY": 2.344
+      },
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 1,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 1,
+          "duration": 0.72
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.4
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.8
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "raider-rider",
+      "bytes": 68268,
+      "triangles": 1316,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.055,
+        "maxY": 2.344
+      },
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 1,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 1,
+          "duration": 0.72
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.4
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.8
+        }
+      ],
+      "pass": true
+    }
+  ]
+}

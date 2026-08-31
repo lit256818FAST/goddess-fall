@@ -1,0 +1,385 @@
+{
+  "generatedAt": "2026-08-22T13:19:06.822Z",
+  "report": [
+    {
+      "id": "arthur",
+      "bytes": 125568,
+      "meshes": 26,
+      "triangles": 2140,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.009,
+        "maxY": 2.35,
+        "height": 2.342
+      },
+      "runtimeBounds": {
+        "minY": 0.007,
+        "maxY": 1.786,
+        "height": 1.78,
+        "visualScale": 0.76
+      },
+      "clipCount": 9,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 2,
+          "duration": 0.78
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "skill",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "missing": [],
+      "pass": true
+    },
+    {
+      "id": "hans",
+      "bytes": 120780,
+      "meshes": 24,
+      "triangles": 2096,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.001,
+        "maxY": 2.413,
+        "height": 2.412
+      },
+      "runtimeBounds": {
+        "minY": 0.001,
+        "maxY": 1.786,
+        "height": 1.785,
+        "visualScale": 0.74
+      },
+      "clipCount": 9,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 2,
+          "duration": 0.78
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "skill",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "missing": [],
+      "pass": true
+    },
+    {
+      "id": "asnoka",
+      "bytes": 109800,
+      "meshes": 23,
+      "triangles": 2012,
+      "boneCount": 26,
+      "rawBounds": {
+        "minY": 0.013,
+        "maxY": 2.308,
+        "height": 2.295
+      },
+      "runtimeBounds": {
+        "minY": 0.01,
+        "maxY": 1.754,
+        "height": 1.744,
+        "visualScale": 0.76
+      },
+      "clipCount": 9,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 2,
+          "duration": 0.78
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "skill",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "missing": [],
+      "pass": true
+    },
+    {
+      "id": "boss-white-knight",
+      "bytes": 135116,
+      "meshes": 31,
+      "triangles": 2240,
+      "phaseNodes": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ],
+      "clipCount": 6,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_health",
+          "tracks": 2,
+          "duration": 0.78
+        },
+        {
+          "name": "hit_health",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_health",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "phase_transition",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "boss-night-judge",
+      "bytes": 126200,
+      "meshes": 29,
+      "triangles": 2380,
+      "phaseNodes": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ],
+      "clipCount": 6,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "phase_transition",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "boss-lake-god-a",
+      "bytes": 277288,
+      "meshes": 43,
+      "triangles": 3832,
+      "phaseNodes": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ],
+      "clipCount": 6,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "phase_transition",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "boss-lake-god-b",
+      "bytes": 277280,
+      "meshes": 43,
+      "triangles": 3832,
+      "phaseNodes": [
+        "Phase1Parts",
+        "Phase2Parts"
+      ],
+      "clipCount": 6,
+      "clips": [
+        {
+          "name": "idle",
+          "tracks": 2,
+          "duration": 1.8
+        },
+        {
+          "name": "move",
+          "tracks": 2,
+          "duration": 0.6
+        },
+        {
+          "name": "attack_faith",
+          "tracks": 2,
+          "duration": 0.88
+        },
+        {
+          "name": "hit_faith",
+          "tracks": 1,
+          "duration": 0.42
+        },
+        {
+          "name": "death_faith",
+          "tracks": 1,
+          "duration": 0.82
+        },
+        {
+          "name": "phase_transition",
+          "tracks": 2,
+          "duration": 0.84
+        }
+      ],
+      "pass": true
+    }
+  ]
+}
