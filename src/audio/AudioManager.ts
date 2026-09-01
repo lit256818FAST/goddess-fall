@@ -174,12 +174,18 @@ export class AudioManager{
 
   constructor(){
     if(typeof addEventListener!=='function')return;
-    const unlock=()=>{void this.unlock()};
+    const unlock=(event:Event)=>{
+      void this.unlock();
+      const target=event.target;
+      if(!(target instanceof Element&&target.closest('.fullscreen-quick')))void this.autoEnterLandscapeFullscreen();
+    };
     addEventListener('pointerdown',unlock,{once:true,capture:true});
     // iOS Safari versions without Pointer Events only expose touchstart.
     // Keep this listener passive so it never delays the first tap.
     addEventListener('touchstart',unlock,{once:true,capture:true,passive:true});
     addEventListener('keydown',unlock,{once:true,capture:true});
+    addEventListener('orientationchange',()=>{void this.autoEnterLandscapeFullscreen();this.syncControls()});
+    addEventListener('resize',()=>this.syncControls());
     addEventListener('click',event=>{
       const target=event.target;
       if(target instanceof Element&&target.closest('button')&&!target.closest('[data-audio-control]'))this.playSfx('click');
@@ -192,7 +198,7 @@ export class AudioManager{
     root.className='audio-controls';
     root.dataset.audioControl='';
     root.setAttribute('aria-label',AUDIO_UI_TEXT.settings);
-    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="fullscreen-toggle">${this.fullscreenLabel()}</button><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
+    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><button type="button" class="fullscreen-quick" aria-label="进入全屏">${AUDIO_UI_TEXT.fullscreen}</button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="fullscreen-toggle">${this.fullscreenLabel()}</button><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
     parent.append(root);
     this.controls=root;
     this.status=root.querySelector('.audio-status')??undefined;
@@ -211,6 +217,7 @@ export class AudioManager{
     settingsToggle?.addEventListener('click',()=>{if(!panel)return;panel.hidden=!panel.hidden;settingsToggle.setAttribute('aria-expanded',String(!panel.hidden));});
     root.querySelector<HTMLButtonElement>('.settings-close')?.addEventListener('click',closeSettings);
     root.querySelector<HTMLButtonElement>('.fullscreen-toggle')?.addEventListener('click',()=>{void this.toggleFullscreen()});
+    root.querySelector<HTMLButtonElement>('.fullscreen-quick')?.addEventListener('click',()=>{void this.toggleFullscreen()});
     root.querySelector<HTMLButtonElement>('.return-title')?.addEventListener('click',()=>{closeSettings();dispatchEvent(new CustomEvent('goddess:return-title'));});
     root.querySelector<HTMLButtonElement>('.audio-toggle')?.addEventListener('click',async()=>{
       await this.unlock();
@@ -429,6 +436,38 @@ export class AudioManager{
     return doc?.fullscreenElement||doc?.webkitFullscreenElement?AUDIO_UI_TEXT.exitFullscreen:AUDIO_UI_TEXT.fullscreen;
   }
 
+  private isPhoneLandscape(){
+    return typeof matchMedia==='function'&&matchMedia('(max-width:900px) and (orientation:landscape)').matches;
+  }
+
+  private isFullscreen(){
+    const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
+    return Boolean(doc?.fullscreenElement||doc?.webkitFullscreenElement);
+  }
+
+  private async autoEnterLandscapeFullscreen(){
+    if(!this.isPhoneLandscape()||this.isFullscreen())return;
+    // Orientation changes are not always considered a user gesture. The
+    // attempt is intentionally silent; the quick button remains available
+    // for browsers that require a tap before granting fullscreen.
+    await this.enterFullscreen();
+  }
+
+  private async enterFullscreen(){
+    const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
+    const root=doc?.documentElement as (HTMLElement&{webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
+    if(!doc||!root)return false;
+    try{
+      if(root.requestFullscreen)await root.requestFullscreen();
+      else if(root.webkitRequestFullscreen)await root.webkitRequestFullscreen();
+      else return false;
+      const orientation=(globalThis.screen as Screen&{orientation?:ScreenOrientation&{lock?: (mode:string)=>Promise<void>}})?.orientation;
+      if(orientation?.lock)await orientation.lock('landscape').catch(()=>{});
+      this.syncControls();
+      return true;
+    }catch{return false}
+  }
+
   private async toggleFullscreen(){
     const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element;webkitExitFullscreen?:()=>Promise<void>|void})|undefined;
     const root=doc?.documentElement as (HTMLElement&{webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
@@ -437,11 +476,10 @@ export class AudioManager{
       if(doc.fullscreenElement||doc.webkitFullscreenElement){
         if(doc.exitFullscreen)await doc.exitFullscreen();
         else await doc.webkitExitFullscreen?.();
-      }else if(root.requestFullscreen)await root.requestFullscreen();
-      else await root.webkitRequestFullscreen?.();
-      const orientation=(globalThis.screen as Screen&{orientation?:ScreenOrientation&{lock?: (mode:string)=>Promise<void>}})?.orientation;
-      if(orientation?.lock)await orientation.lock('landscape').catch(()=>{});
-      this.syncControls();
+        this.syncControls();
+        return;
+      }
+      if(!await this.enterFullscreen())this.setStatus(AUDIO_UI_TEXT.fullscreenUnavailable);
     }catch{this.setStatus(AUDIO_UI_TEXT.fullscreenUnavailable)}
   }
 
@@ -624,11 +662,20 @@ export class AudioManager{
     if(label)label.textContent=this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel;
     if(input)input.value=String(Math.round(this.preferences.volume*100));
     const fullscreen=this.controls?.querySelector<HTMLButtonElement>('.fullscreen-toggle');
+    const quick=this.controls?.querySelector<HTMLButtonElement>('.fullscreen-quick');
+    const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
+    const root=this.controls?.ownerDocument?.documentElement as (HTMLElement&{requestFullscreen?:()=>Promise<void>|void;webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
+    const fullscreenActive=Boolean(doc?.fullscreenElement||doc?.webkitFullscreenElement);
+    const fullscreenSupported=Boolean(root?.requestFullscreen||root?.webkitRequestFullscreen);
     if(fullscreen){
-      const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
-      const root=doc?.documentElement as (HTMLElement&{webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
       fullscreen.textContent=this.fullscreenLabel();
       fullscreen.disabled=!Boolean(root?.requestFullscreen||root?.webkitRequestFullscreen);
+    }
+    if(quick){
+      quick.hidden=!this.isPhoneLandscape();
+      quick.disabled=!fullscreenSupported;
+      quick.textContent=fullscreenActive?AUDIO_UI_TEXT.exitFullscreen:AUDIO_UI_TEXT.fullscreen;
+      quick.setAttribute('aria-label',quick.textContent);
     }
     this.controls?.classList.toggle('muted',this.preferences.muted);
     if(this.controls){

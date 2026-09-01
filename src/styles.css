@@ -27,6 +27,9 @@
 .settings-panel .fullscreen-toggle:hover,.settings-panel .save-now:hover,.settings-panel .return-title:hover{background:#2a2419;color:#f1d494}
 .settings-panel .audio-status{position:static;display:block;max-width:none;padding:0;background:transparent;opacity:1;color:#77858e}
 @media(max-width:620px){.audio-controls{position:fixed;right:10px;bottom:10px;left:auto;width:46px;height:46px;margin:0;padding:0}.settings-panel{position:fixed;right:10px;bottom:64px;width:min(280px,calc(100vw - 20px));}.settings-panel .audio-toggle,.settings-panel label{min-height:40px}.settings-panel input{width:min(48vw,170px)}}
+.fullscreen-quick{display:none;position:fixed;top:max(12px,env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:80;min-width:96px;min-height:42px;padding:8px 13px;border:1px solid #c49a58;background:#101820e8;color:#e6c889;font:600 .78rem/1 system-ui,sans-serif;letter-spacing:.08em;box-shadow:0 8px 24px #0009;backdrop-filter:blur(8px)}
+.fullscreen-quick:hover{background:#2a2419;color:#f1d494}.fullscreen-quick:disabled{opacity:.6;cursor:not-allowed}
+@media(max-width:900px) and (orientation:landscape){.fullscreen-quick{display:block}}
 
 .story{padding-block:16px}.story-layout{display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,680px);align-items:stretch;width:min(1180px,94vw);height:min(860px,calc(100vh - 32px));max-height:none;text-align:left}.chapter-artwork{min-width:0;min-height:0;margin:0;overflow:hidden;border:1px solid #8f7a554d;border-right:0;background:#0d1115}.chapter-artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}.story .story-card{width:auto;min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column}.story .dialogue{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;padding-right:10px}.story .choices{flex:0 0 auto;margin-top:18px}.boss-phase.has-art{grid-template-columns:72px minmax(0,1fr);align-items:center}.boss-phase>img{display:block;width:72px;height:76px;object-fit:cover;object-position:center 24%;border:1px solid #9b7849}.boss-phase>div{display:grid;min-width:0;gap:4px}
 @media(max-width:720px){.story{place-content:start center;padding:16px}.story-layout{grid-template-columns:minmax(0,1fr);width:100%;max-height:none}.chapter-artwork{min-height:0;aspect-ratio:16/9;border-right:1px solid #8f7a554d;border-bottom:0}.story .story-card{padding:24px 20px}.dialogue{max-height:none}.boss-phase.has-art{grid-template-columns:56px minmax(0,1fr)}.boss-phase>img{width:56px;height:62px}}
@@ -39,7 +42,7 @@
   body{background:#0b1217}
   #app{display:none!important}
   body::before{content:"请将手机横向旋转";position:fixed;inset:0;display:grid;place-items:center;padding:24px;color:#ead7b4;font:600 1.35rem/1.6 "Noto Serif SC","Songti SC",serif;text-align:center;background:radial-gradient(circle at 50% 42%,#24323a,#0b1217 66%);z-index:1000}
-  body::after{content:"本游戏移动端采用横屏布局";position:fixed;left:0;right:0;top:calc(50% + 42px);color:#9ca8aa;font:500 .78rem/1.5 system-ui,sans-serif;text-align:center;z-index:1001}
+  body::after{content:"本游戏移动端采用横屏布局 · 横屏后将自动尝试全屏";position:fixed;left:0;right:0;top:calc(50% + 42px);color:#9ca8aa;font:500 .78rem/1.5 system-ui,sans-serif;text-align:center;z-index:1001}
   .audio-controls{display:none!important}
 }
 
