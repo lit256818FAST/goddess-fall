@@ -126,3 +126,17 @@
 .vn-complete{display:block;width:calc(100% - 48px);min-height:48px;margin:0 24px 18px;padding:11px 16px;border:1px solid #c49a57;background:#c49a57;color:#11171b;font:700 .95rem system-ui,sans-serif;cursor:pointer}.vn-complete:hover,.vn-complete:focus-visible{background:#e2ba6c;outline:2px solid #f1cf8b;outline-offset:2px}
 .vn-dialogue-panel .gal-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0;padding:0 18px 18px}.vn-dialogue-panel .gal-choices button{min-height:56px;margin:0;padding:12px 14px;border:1px solid #b89154;background:#172329;color:#ecd5a3;line-height:1.4}.vn-dialogue-panel .gal-choices button:hover,.vn-dialogue-panel .gal-choices button:focus-visible{border-color:#f0c978;background:#332919;outline:2px solid #e4bd71;outline-offset:2px}
 @media(max-width:720px){.vn-cast{inset:0 0 calc(134px + env(safe-area-inset-bottom))}.vn-dialogue-panel{width:calc(100% - 16px);min-height:118px;margin:0 8px max(8px,env(safe-area-inset-bottom))}.vn-advance,.vn-line{min-height:116px;padding:14px 16px 12px}.vn-advance strong,.vn-line strong{font-size:.88rem}.vn-advance p,.vn-line p{margin-top:7px;font-size:1rem;line-height:1.52}.vn-advance span{margin-top:7px}.vn-complete{width:calc(100% - 32px);min-height:46px;margin:0 16px 14px}.vn-dialogue-panel .gal-choices{grid-template-columns:1fr;gap:7px;padding:0 12px 12px}.vn-dialogue-panel .gal-choices button{min-height:48px;padding:10px 12px}}
+
+/* Landscape phones have limited vertical room. Keep the current line and
+   choices in a compact bottom tray so the scene remains visible above it. */
+@media(max-width:900px) and (orientation:landscape){
+  .vn-cast{bottom:clamp(112px,28vh,150px)}
+  .vn-dialogue-panel{width:calc(100% - 16px);min-height:0;max-height:calc(100dvh - 14px);margin:0 8px max(6px,env(safe-area-inset-bottom));overflow:auto}
+  .vn-advance,.vn-line{min-height:88px;padding:10px 14px 8px}
+  .vn-advance strong,.vn-line strong{font-size:.84rem}
+  .vn-advance p,.vn-line p{margin-top:6px;font-size:.92rem;line-height:1.4}
+  .vn-advance span{margin-top:5px;font-size:.62rem}
+  .vn-dialogue-panel .gal-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 10px 10px}
+  .vn-dialogue-panel .gal-choices button{min-height:44px;padding:7px 9px;font-size:.78rem;line-height:1.25}
+  .vn-dialogue-panel .gal-choices span{margin-top:2px;font-size:.62rem;line-height:1.2}
+}
