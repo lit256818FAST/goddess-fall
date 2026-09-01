@@ -11,6 +11,7 @@ import { ChapterRegistry } from './content/chapterRegistry';
 import { libraryEntriesForWeek, supplementalLibraryEntriesForWeek, allLibraryLockedCount, mainlineLibraryEntriesForWeek, type LibraryAxis } from './content/library';
 import {
   initialStoryState,
+  type DialogueLine,
   type DialogueNode,
   type StoryChoice,
   type StoryCondition,
@@ -687,26 +688,68 @@ function renderNode(id:string){
   renderDialogue(node);
 }
 
+type GalSceneOptions={
+  sceneLabel:string;
+  artwork:{src:string;alt:string};
+  lines:readonly DialogueLine[];
+  choices?:readonly StoryChoice[];
+  onChoice?:(choice:StoryChoice)=>void;
+  completeLabel?:string;
+  onComplete?:()=>void;
+};
+
+function galLines(lines:readonly DialogueLine[]):DialogueLine[]{
+  const steps=lines.flatMap(line=>{
+    const stage=line.stageDirection?.trim();
+    const spoken=line.text.trim();
+    return [
+      ...(stage?[{text:stage}]:[]),
+      ...(spoken?[{...line,text:spoken,stageDirection:undefined}]:[]),
+    ];
+  });
+  return steps.length?steps:[{text:'……'}];
+}
+
+function renderGalScene(options:GalSceneOptions){
+  const steps=galLines(options.lines);
+  let index=0;
+  const draw=()=>{
+    const line=steps[index];
+    const speaker=line.speakerId?characters[line.speakerId]:undefined;
+    const portraitState:DialoguePortraitState=line.portraitState??(line.emotion==='anger'?'attack':line.emotion==='fear'?'hit':'idle');
+    const portrait=speaker&&line.speakerId?dialoguePortraitForState(line.speakerId,portraitState)??portraitByCharacter[line.speakerId as CampaignCharacterId]:undefined;
+    const fallback=speaker&&line.speakerId?legacyDialoguePortraitByCharacter[line.speakerId]??portraitByCharacter[line.speakerId as CampaignCharacterId]:undefined;
+    const complete=index===steps.length-1;
+    const availableChoices=(options.choices??[]).filter(choice=>meets(choice.condition));
+    const action=complete
+      ?availableChoices.length?`<div class="choices gal-choices">${availableChoices.map(choice=>`<button data-choice="${choice.id}">${escapeHtml(choice.label)}${choice.hint?`<span>${escapeHtml(choice.hint)}</span>`:''}</button>`).join('')}</div>`:options.onComplete?`<button type="button" class="vn-complete" data-gal-complete>${escapeHtml(options.completeLabel??'继续')}</button>`:''
+      :'';
+    const dialogue=complete
+      ?`<div class="vn-line" aria-live="polite"><strong>${escapeHtml(speaker?.name??'旁白')}</strong><p>${escapeHtml(line.text)}</p></div>`
+      :`<button type="button" class="vn-advance" data-gal-advance aria-label="继续下一句对话"><strong>${escapeHtml(speaker?.name??'旁白')}</strong><p>${escapeHtml(line.text)}</p><span>点击继续</span></button>`;
+    set(`<main class="screen story"><section class="vn-stage" aria-label="${escapeHtml(options.sceneLabel)}"><img class="vn-backdrop" src="${escapeHtml(options.artwork.src)}" alt="${escapeHtml(options.artwork.alt)}" loading="eager" decoding="async"><div class="vn-cast" aria-hidden="true">${portrait?`<img class="vn-character center speaking" src="${portrait}" data-portrait-state="${portraitState}" data-dialogue-fallback="${fallback??''}" alt="" decoding="async">`:''}</div><section class="vn-dialogue-panel">${dialogue}${action}</section></section></main>`);
+    document.querySelector<HTMLImageElement>('[data-dialogue-fallback]')?.addEventListener('error',event=>{
+      const image=event.currentTarget as HTMLImageElement;const next=image.dataset.dialogueFallback;
+      if(next&&!image.dataset.fallbackTried){image.dataset.fallbackTried='true';image.src=next;return}
+      image.hidden=true;
+    });
+    document.querySelector<HTMLButtonElement>('[data-gal-advance]')?.addEventListener('click',()=>{index+=1;draw()});
+    document.querySelectorAll<HTMLButtonElement>('[data-choice]').forEach(button=>button.onclick=()=>{const choice=availableChoices.find(item=>item.id===button.dataset.choice);if(choice)options.onChoice?.(choice)});
+    document.querySelector<HTMLButtonElement>('[data-gal-complete]')?.addEventListener('click',()=>options.onComplete?.());
+  };
+  draw();
+}
+
 function renderDialogue(node:DialogueNode){
   const chapter=currentChapter();
-  const speakerIds=[...new Set(node.lines.flatMap(line=>line.speakerId?[line.speakerId]:[]))];
-  const latestSpeaker=[...node.lines].reverse().find(line=>line.speakerId)?.speakerId;
-  const latestLineBySpeaker=new Map<string,DialogueNode['lines'][number]>();
-  node.lines.forEach(line=>{if(line.speakerId)latestLineBySpeaker.set(line.speakerId,line)});
-  const portraitStateForLine=(line:DialogueNode['lines'][number]|undefined):DialoguePortraitState=>line?.portraitState??(line?.emotion==='anger'?'attack':line?.emotion==='fear'?'hit':'idle');
-  const speakerPosition=(index:number,count:number)=>count===1?'center':count===2?(index===0?'left':'right'):(index===0?'left':index===1?'center':'right');
-  const cast=speakerIds.map((id,index)=>{const speaker=characters[id];const state=portraitStateForLine(latestLineBySpeaker.get(id));const src=dialoguePortraitForState(id,state)??portraitByCharacter[id as CampaignCharacterId];const fallback=legacyDialoguePortraitByCharacter[id]??portraitByCharacter[id as CampaignCharacterId];if(!speaker||!src)return '';return `<img class="vn-character ${speakerPosition(index,speakerIds.length)} ${id===latestSpeaker?'speaking':''}" src="${src}" data-portrait-state="${state}" data-dialogue-fallback="${fallback??''}" alt="${escapeHtml(speaker.name)}" loading="eager" decoding="async">`}).join('');
-  const lines=node.lines.map(line=>{const speaker=line.speakerId?characters[line.speakerId]:undefined;const color=speaker?factions[speaker.factionId].color:'#c8c5bd';return `<div class="dialogue-line ${line.speakerId===latestSpeaker?'current-line':''}">${speaker?`<strong class="speaker" style="--faction:${color}">${escapeHtml(speaker.name)} · ${escapeHtml(speaker.title)}</strong>`:''}<p>${escapeHtml(line.text)}</p>${line.stageDirection?`<small>${escapeHtml(line.stageDirection)}</small>`:''}</div>`}).join('');
-  const choices=node.choices.filter(choice=>meets(choice.condition)).map(choice=>`<button data-choice="${choice.id}">${escapeHtml(choice.label)}${choice.hint?`<span>${escapeHtml(choice.hint)}</span>`:''}</button>`).join('');
-  const backdrop=node.artwork??chapter.artwork;
-  set(`<main class="screen story"><section class="vn-stage" aria-label="${escapeHtml(chapter.title)}剧情对话"><img class="vn-backdrop" src="${escapeHtml(backdrop.src)}" alt="${escapeHtml(backdrop.alt)}" loading="${node.artwork?'lazy':'eager'}" ${node.artwork?'':'fetchpriority="high"'} decoding="async"><div class="vn-cast" aria-hidden="true">${cast}</div><section class="vn-dialogue-panel"><header><p class="eyebrow">${chapter.title}</p><h2>${escapeHtml(node.title??chapter.title)}</h2></header><div class="dialogue">${lines}</div><p class="dialogue-scroll-hint">可向上滑动回看前文</p><div class="choices">${choices}</div></section></section></main>`);
+  renderGalScene({
+    sceneLabel:`${chapter.title}剧情对话`,
+    artwork:node.artwork??chapter.artwork,
+    lines:node.lines,
+    choices:node.choices,
+    onChoice:choice=>{applyEffects(choice.effects);renderNode(choice.next)},
+  });
   audioManager.setScene('story',{track:storyMusicForNode(node)});
-  document.querySelectorAll<HTMLImageElement>('[data-dialogue-fallback]').forEach(image=>image.addEventListener('error',()=>{
-    const fallback=image.dataset.dialogueFallback;
-    if(fallback&&!image.dataset.fallbackTried){image.dataset.fallbackTried='true';image.src=fallback;return}
-    image.hidden=true;
-  }));
-  document.querySelectorAll<HTMLButtonElement>('[data-choice]').forEach(button=>button.onclick=()=>{const choice=node.choices.find(item=>item.id===button.dataset.choice);if(!choice)return;applyEffects(choice.effects);renderNode(choice.next)});
 }
 
 function storyMusicForNode(node:DialogueNode):MusicTrackId{
@@ -1102,10 +1145,15 @@ function finishIfNeeded(){
 }
 
 function renderEnding(node:Extract<StoryNode,{kind:'ending'}>){
-  const lines=node.lines.map(line=>`<p>${line.speakerId?`<strong>${escapeHtml(characters[line.speakerId].name)}：</strong>`:''}${escapeHtml(line.text)}</p>`).join('');
-  set(`<main class="screen result"><section class="story-card"><p class="eyebrow">战斗结果 · ${escapeHtml(node.endingId)}</p><h2>${escapeHtml(node.title)}</h2>${lines}<p>${escapeHtml(node.summary)}</p><div class="outcome"><span>公众信仰 ${storyState.stats.publicFaith}</span><span>平民安全 ${storyState.stats.civilianSafety}</span><span>证据 ${storyState.evidence.length}</span></div><button id="again" class="primary">查看战后报告</button></section></main>`);
+  const chapter=currentChapter();
+  renderGalScene({
+    sceneLabel:`${chapter.title}战后对话`,
+    artwork:chapter.artwork,
+    lines:[...node.lines,{text:node.summary}],
+    completeLabel:'查看战后报告',
+    onComplete:()=>{const reported=completeCampaignBattle(clearStoryCheckpoint(campaignState),node.endingId==='failure'?'defeat':'victory');const terminal=campaignState.campaignId==='arthur-main'?campaignState.week>=7:campaignState.week>=3;persistCampaign(terminal?finishCampaignSeason(reported):reported);renderCampaignReport()},
+  });
   audioManager.setScene(node.endingId==='failure'?'defeat':'victory');
-  document.querySelector('#again')?.addEventListener('click',()=>{const reported=completeCampaignBattle(clearStoryCheckpoint(campaignState),node.endingId==='failure'?'defeat':'victory');const terminal=campaignState.campaignId==='arthur-main'?campaignState.week>=7:campaignState.week>=3;persistCampaign(terminal?finishCampaignSeason(reported):reported);renderCampaignReport()});
 }
 
 function reasonZh(reason?:string){return ({'It is not the player phase.':'现在不是我方阶段。','Unit is unavailable.':'该单位无法行动。','Only player units can be commanded.':'只能指挥我方单位。','Unit has already acted this round.':'该单位本回合已经行动。','Destination is outside the board.':'目标位于棋盘之外。','Destination is occupied.':'该位置已被占用。','Destination is outside movement range.':'目标超出移动范围。','Target is unavailable.':'目标不可用。','Cannot attack an ally.':'不能攻击友军。','Target is outside attack range.':'目标超出攻击范围。'} as Record<string,string>)[reason??'']??reason??'行动无效。'}

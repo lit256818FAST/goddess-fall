@@ -115,3 +115,14 @@
 .vn-character.speaking[data-portrait-state="attack"],.vn-character.speaking[data-portrait-state="hit"]{filter:brightness(1.07) saturate(1.02) drop-shadow(0 8px 18px #000a)}
 
 .vn-dialogue-panel .dialogue-line p:empty{display:none}
+
+/* GAL dialogue: one beat at a time. The scene stays visible; the bottom tray
+   only contains the current speaker and their current line. */
+.vn-cast{bottom:clamp(156px,26vh,244px)}
+.vn-dialogue-panel{display:block;width:min(980px,calc(100% - 48px));min-height:142px;margin:0 24px max(22px,env(safe-area-inset-bottom));padding:0;border:1px solid #c39b5eaa;border-left:4px solid #dfb96d;background:linear-gradient(105deg,#0b141bdc,#101c23ee 72%,#0a1117e8);box-shadow:0 14px 38px #000c}
+.vn-advance,.vn-line{display:block;width:100%;min-height:140px;padding:20px 24px 17px;text-align:left;color:#eee4cf;background:transparent;border:0;font:inherit}
+.vn-advance{cursor:pointer;transition:background .18s ease,filter .18s ease}.vn-advance:hover,.vn-advance:focus-visible{background:#e3bd7220;outline:2px solid #e3bd72;outline-offset:-4px}.vn-advance:active{filter:brightness(1.18)}
+.vn-advance strong,.vn-line strong{display:block;color:#e4bd71;font:700 clamp(.92rem,1.8vw,1.08rem) system-ui,sans-serif;letter-spacing:.12em}.vn-advance p,.vn-line p{max-width:76ch;margin:10px 0 0;color:#f0eadc;font-size:clamp(1rem,2vw,1.25rem);line-height:1.65}.vn-advance span{display:block;margin-top:10px;color:#aab3b5;font:600 .7rem system-ui,sans-serif;letter-spacing:.12em;text-align:right}
+.vn-complete{display:block;width:calc(100% - 48px);min-height:48px;margin:0 24px 18px;padding:11px 16px;border:1px solid #c49a57;background:#c49a57;color:#11171b;font:700 .95rem system-ui,sans-serif;cursor:pointer}.vn-complete:hover,.vn-complete:focus-visible{background:#e2ba6c;outline:2px solid #f1cf8b;outline-offset:2px}
+.vn-dialogue-panel .gal-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0;padding:0 18px 18px}.vn-dialogue-panel .gal-choices button{min-height:56px;margin:0;padding:12px 14px;border:1px solid #b89154;background:#172329;color:#ecd5a3;line-height:1.4}.vn-dialogue-panel .gal-choices button:hover,.vn-dialogue-panel .gal-choices button:focus-visible{border-color:#f0c978;background:#332919;outline:2px solid #e4bd71;outline-offset:2px}
+@media(max-width:720px){.vn-cast{inset:0 0 calc(134px + env(safe-area-inset-bottom))}.vn-dialogue-panel{width:calc(100% - 16px);min-height:118px;margin:0 8px max(8px,env(safe-area-inset-bottom))}.vn-advance,.vn-line{min-height:116px;padding:14px 16px 12px}.vn-advance strong,.vn-line strong{font-size:.88rem}.vn-advance p,.vn-line p{margin-top:7px;font-size:1rem;line-height:1.52}.vn-advance span{margin-top:7px}.vn-complete{width:calc(100% - 32px);min-height:46px;margin:0 16px 14px}.vn-dialogue-panel .gal-choices{grid-template-columns:1fr;gap:7px;padding:0 12px 12px}.vn-dialogue-panel .gal-choices button{min-height:48px;padding:10px 12px}}
