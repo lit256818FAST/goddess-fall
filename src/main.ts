@@ -140,7 +140,13 @@ const set=(html:string)=>{
   app.querySelector<HTMLButtonElement>('[data-open-archive]')?.addEventListener('click',()=>renderArchive());
   app.querySelector<HTMLButtonElement>('[data-open-models]')?.addEventListener('click',()=>renderModelGallery());
   app.querySelector<HTMLButtonElement>('[data-go-home]')?.addEventListener('click',()=>renderCampaignHome());
-  app.querySelector<HTMLButtonElement>('[data-return-title]')?.addEventListener('click',()=>dispatchEvent(new CustomEvent('goddess:return-title')));
+  const returnControl=app.querySelector<HTMLButtonElement>('[data-return-title]');
+  if(returnControl?.closest('.shop-page')){
+    returnControl.textContent='返回主页';
+    returnControl.addEventListener('click',()=>renderCampaignHome());
+  }else{
+    returnControl?.addEventListener('click',()=>dispatchEvent(new CustomEvent('goddess:return-title')));
+  }
   app.querySelectorAll<HTMLButtonElement>('[data-flow-step]').forEach(button=>button.addEventListener('click',()=>{
     const step=button.dataset.flowStep as FlowStep|undefined;
     if(step==='models')renderModelGallery();
@@ -327,6 +333,7 @@ function renderCampaignHome(){
   const nodes=mainline?mainlineMapNodes.map(node=>{const active=node.week===mainlineWeek,complete=node.week<mainlineWeek;return `<button class="map-node mainline-map-node ${active?'current':complete?'complete':''}" style="--node-x:${node.x}%;--node-y:${node.y}%" data-mainline-map-week="${node.week}" aria-label="${escapeHtml(node.title)}：${escapeHtml(node.location)}"><span>${escapeHtml(node.title)}</span><small>${escapeHtml(node.location)}</small></button>`}).join(''):content.route.map((node,index)=>{const position=routePositions[index]??routePositions[routePositions.length-1];return `<button class="map-node ${index===activeRouteIndex?'current':index<activeRouteIndex?'complete':''}" style="--node-x:${position.x}%;--node-y:${position.y}%" data-route-index="${index}"><span>${escapeHtml(node.title)}</span><small>${escapeHtml(node.location)}</small></button>`}).join('');
   const lineup=campaignState.lineup.map(id=>{const memberContent=content.roster.find(item=>item.characterId===id),person=characters[id],condition=campaignState.roster.find(item=>item.id===id)?.condition??'normal',portrait=portraitByCharacter[id];return `<article class="home-member">${portrait?`<img src="${portrait}" alt="${escapeHtml(person.name)}" width="260" height="360">`:`<div class="portrait-fallback" aria-label="${escapeHtml(person.name)}暂无人物画像"><span>${escapeHtml(person.name.slice(0,1))}</span></div>`}<div><small>${escapeHtml(memberContent?.roleName??person.title)}</small><strong>${escapeHtml(person.name)}</strong><span class="condition ${condition}">${conditionLabel[condition]}</span></div></article>`}).join('');
   set(`<main class="campaign-shell hud-page">${flowHeader('home')}<div class="campaign-home-grid"><section class="campaign-map ${mainline?'mainline-map':''}" aria-label="战斗路线"><img src="${mapAsset}" alt="${mapAlt}" width="1536" height="1024">${nodes}</section><aside class="campaign-next"><div class="campaign-next-heading"><p class="eyebrow">下一行动</p><h1>${escapeHtml(route.title)}</h1><p class="location">${escapeHtml(route.location)} · 风险${escapeHtml(visibleRisk())}</p></div><figure class="campaign-next-scene"><img src="${mapAsset}" alt="${escapeHtml(route.title)}所在区域的路线图景" width="1536" height="1024"><figcaption><span>当前战斗节点</span><strong>${escapeHtml(route.location)}</strong></figcaption></figure><div class="campaign-status-line"><span>平民安全 <b>${campaignState.civilianSafety}/3</b></span><span>${mainline?'军队声望':'女神国'} <b>${mainline?campaignState.factionAttitudes.wardens:attitudeLabel(campaignState.factionAttitudes.goddessState)}</b></span><span class="campaign-lineup-status">当前阵容 <b>${escapeHtml(lineupNames)}</b></span></div>${mainlineStats}<p>${escapeHtml(route.objective)}</p><section class="campaign-actions"><div class="campaign-actions-heading"><h2>${mainline?'战前准备':'准备行动'}</h2><span>三选一</span></div>${actions}</section>${mainlineMissionPanel}<button id="open-battle" class="campaign-primary">查看战斗</button><p id="home-feedback" class="campaign-feedback" aria-live="polite"></p></aside></div><section class="home-lineup"><header><p class="eyebrow">出战三人</p><button id="home-roster" class="text-button">调整阵容</button></header><div>${lineup}</div></section></main>`);
+  mountMobileHomeBriefToggle();
   document.querySelectorAll<HTMLButtonElement>('[data-home-action]').forEach((button,index)=>{
     button.type='button';
     button.setAttribute('aria-pressed',String(button.classList.contains('selected')));
@@ -348,6 +355,27 @@ function renderCampaignHome(){
   document.querySelectorAll<HTMLButtonElement>('[data-route-index]').forEach(button=>button.onclick=()=>{const index=Number(button.dataset.routeIndex);const feedback=document.querySelector<HTMLElement>('#home-feedback');if(index!==activeRouteIndex&&feedback)feedback.textContent='未来行动尚未开放；完成当前行动后，路线会根据战后报告更新。';else renderBattleOverview()});
   document.querySelectorAll<HTMLButtonElement>('[data-mainline-map-week]').forEach(button=>button.onclick=()=>{const week=Number(button.dataset.mainlineMapWeek);const current=Math.min(mainlineMapNodes.length,Math.max(1,campaignState.week));const feedback=document.querySelector<HTMLElement>('#home-feedback');if(week===current){renderBattleOverview();return}if(feedback)feedback.textContent=week<current?'该章节已完成，可在藏书馆回看相关档案。':'后续章节尚未开放；完成当前行动后，路线会继续向前推进。'});
   showScrollHintOnce('home');
+}
+
+function mountMobileHomeBriefToggle(){
+  const grid=document.querySelector<HTMLElement>('.campaign-home-grid');
+  const map=document.querySelector<HTMLElement>('.campaign-map');
+  const panel=document.querySelector<HTMLElement>('.campaign-next');
+  if(!grid||!map||!panel)return;
+  const close=document.createElement('button');
+  close.type='button';
+  close.className='campaign-next-close text-button';
+  close.textContent='返回地图';
+  close.addEventListener('click',()=>grid.classList.remove('brief-open'));
+  panel.prepend(close);
+  map.addEventListener('click',(event)=>{
+    if(!matchMedia('(max-width: 900px)').matches)return;
+    const target=(event.target as Element).closest<HTMLButtonElement>('.map-node');
+    if(!target||!target.classList.contains('current'))return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    grid.classList.add('brief-open');
+  },true);
 }
 
 function showScrollHintOnce(key:string){

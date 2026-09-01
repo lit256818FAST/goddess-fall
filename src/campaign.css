@@ -379,3 +379,40 @@
   .mainline-map-node{min-width:112px;padding:7px 8px}
   .mainline-map-node span{font-size:.8rem}
 }
+
+/* On phones the map is the home screen.  The next-action brief stays out of
+   the way until the current pin is tapped, then slides in as a readable
+   sheet; this keeps the route visible and prevents the action cards from
+   covering map controls. */
+@media(max-width:900px){
+  .campaign-home-grid{position:relative;display:block;height:clamp(520px,calc(100dvh - 126px),760px);min-height:520px;overflow:hidden}
+  .campaign-map{height:100%;min-height:0;border:0}
+  .campaign-next{position:absolute;inset:0 0 0 auto;width:min(92%,390px);height:100%;min-height:0;z-index:4;overflow-y:auto;overscroll-behavior:contain;padding:22px 18px;background:linear-gradient(145deg,#142027f5,#0c151bf2);backdrop-filter:blur(12px);transform:translateX(104%);transition:transform .32s ease,box-shadow .32s ease;box-shadow:none}
+  .campaign-home-grid.brief-open .campaign-next{transform:translateX(0);box-shadow:-18px 0 42px #0008}
+  .campaign-home-grid.brief-open .campaign-map{filter:brightness(.62)}
+  .campaign-next-close{display:block;margin:0 0 12px auto;padding:6px 10px;border:1px solid #8a744d99;border-radius:999px;color:#d9b66d;background:#101820aa}
+  .campaign-next-heading{text-align:left}
+  .campaign-next h1{font-size:clamp(1.5rem,6vw,2.2rem);line-height:1.15}
+  .campaign-next-scene{display:block;height:112px}
+  .home-lineup{position:relative;z-index:1}
+  .home-member img{object-position:center 14%}
+}
+@media(max-width:620px){
+  .campaign-home-grid{height:clamp(500px,calc(100dvh - 116px),720px);min-height:500px}
+  .campaign-next{width:min(94%,360px);padding:18px 14px}
+  .campaign-next-scene{height:96px}
+  .campaign-next h1{font-size:1.65rem}
+  .campaign-action{padding:10px}
+  .home-member img{object-position:center 11%}
+}
+/* Landscape is the supported phone orientation: keep the route map within
+   the viewport and use a compact slide-over brief instead of a tall page. */
+@media(max-width:900px) and (orientation:landscape){
+  .campaign-home-grid{height:calc(100dvh - 126px);min-height:260px}
+  .campaign-next{width:min(72%,400px);padding:12px 16px}
+  .campaign-next-scene{height:72px}
+  .campaign-next h1{font-size:clamp(1.3rem,4vw,1.9rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  .campaign-next{transition:none}
+}

@@ -197,6 +197,15 @@ export class AudioManager{
     this.controls=root;
     this.status=root.querySelector('.audio-status')??undefined;
     const panel=root.querySelector<HTMLElement>('#game-settings');
+    const saveButton=document.createElement('button');
+    saveButton.type='button';
+    saveButton.className='save-now';
+    saveButton.textContent='保存当前进度';
+    saveButton.addEventListener('click',async()=>{
+      await this.unlock();
+      dispatchEvent(new CustomEvent('goddess:save-now'));
+    });
+    panel?.insertBefore(saveButton,this.status??null);
     const settingsToggle=root.querySelector<HTMLButtonElement>('.settings-toggle');
     const closeSettings=()=>{if(panel){panel.hidden=true}settingsToggle?.setAttribute('aria-expanded','false')};
     settingsToggle?.addEventListener('click',()=>{if(!panel)return;panel.hidden=!panel.hidden;settingsToggle.setAttribute('aria-expanded',String(!panel.hidden));});
@@ -430,6 +439,8 @@ export class AudioManager{
         else await doc.webkitExitFullscreen?.();
       }else if(root.requestFullscreen)await root.requestFullscreen();
       else await root.webkitRequestFullscreen?.();
+      const orientation=(globalThis.screen as Screen&{orientation?:ScreenOrientation&{lock?: (mode:string)=>Promise<void>}})?.orientation;
+      if(orientation?.lock)await orientation.lock('landscape').catch(()=>{});
       this.syncControls();
     }catch{this.setStatus(AUDIO_UI_TEXT.fullscreenUnavailable)}
   }
