@@ -163,6 +163,7 @@ export class AudioManager{
   private preferences=readPreferences(globalThis.localStorage);
   private unlocked=false;
   private controls?:HTMLElement;
+  private fullscreenQuick?:HTMLButtonElement;
   private status?:HTMLElement;
   private trackCache=new Map<string,HTMLAudioElement>();
   private currentTrack?:HTMLAudioElement;
@@ -179,13 +180,17 @@ export class AudioManager{
       const target=event.target;
       if(!(target instanceof Element&&target.closest('.fullscreen-quick')))void this.autoEnterLandscapeFullscreen();
     };
-    addEventListener('pointerdown',unlock,{once:true,capture:true});
+    // Keep the gesture hook alive.  Mobile browsers can suspend media when a
+    // tab is backgrounded; a later tap must be able to unlock it again.
+    addEventListener('pointerdown',unlock,{capture:true});
     // iOS Safari versions without Pointer Events only expose touchstart.
     // Keep this listener passive so it never delays the first tap.
-    addEventListener('touchstart',unlock,{once:true,capture:true,passive:true});
-    addEventListener('keydown',unlock,{once:true,capture:true});
+    addEventListener('touchstart',unlock,{capture:true,passive:true});
+    addEventListener('keydown',unlock,{capture:true});
     addEventListener('orientationchange',()=>{void this.autoEnterLandscapeFullscreen();this.syncControls()});
     addEventListener('resize',()=>this.syncControls());
+    addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void this.resumeAfterVisibility()});
+    addEventListener('pageshow',()=>{void this.resumeAfterVisibility()});
     addEventListener('click',event=>{
       const target=event.target;
       if(target instanceof Element&&target.closest('button')&&!target.closest('[data-audio-control]'))this.playSfx('click');
@@ -198,9 +203,17 @@ export class AudioManager{
     root.className='audio-controls';
     root.dataset.audioControl='';
     root.setAttribute('aria-label',AUDIO_UI_TEXT.settings);
-    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><button type="button" class="fullscreen-quick" aria-label="进入全屏">${AUDIO_UI_TEXT.fullscreen}</button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="fullscreen-toggle">${this.fullscreenLabel()}</button><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
+    root.innerHTML=`<button type="button" class="settings-toggle" aria-expanded="false" aria-controls="game-settings" aria-label="打开设置" title="设置"><span aria-hidden="true">⚙</span></button><div id="game-settings" class="settings-panel" hidden><div class="settings-heading"><strong>设置</strong><button type="button" class="settings-close" aria-label="关闭设置">×</button></div><button type="button" class="fullscreen-toggle">${this.fullscreenLabel()}</button><button type="button" class="audio-toggle" aria-pressed="${this.preferences.muted}" aria-label="${this.preferences.muted?AUDIO_UI_TEXT.enable:AUDIO_UI_TEXT.mute}"><span class="audio-mark" aria-hidden="true"></span><span class="audio-label">${this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel}</span></button><label><span>${AUDIO_UI_TEXT.volume}</span><input type="range" min="0" max="100" step="1" value="${Math.round(this.preferences.volume*100)}" aria-label="${AUDIO_UI_TEXT.masterVolume}"></label><button type="button" class="return-title">返回标题</button><span class="audio-status" aria-live="polite">${this.unlocked?AUDIO_UI_TEXT.enabled:AUDIO_UI_TEXT.unlock}</span></div>`;
     parent.append(root);
+    const quick=document.createElement('button');
+    quick.type='button';
+    quick.className='fullscreen-quick';
+    quick.dataset.audioControl='';
+    quick.setAttribute('aria-label',AUDIO_UI_TEXT.fullscreen);
+    quick.textContent=AUDIO_UI_TEXT.fullscreen;
+    parent.append(quick);
     this.controls=root;
+    this.fullscreenQuick=quick;
     this.status=root.querySelector('.audio-status')??undefined;
     const panel=root.querySelector<HTMLElement>('#game-settings');
     const saveButton=document.createElement('button');
@@ -217,7 +230,7 @@ export class AudioManager{
     settingsToggle?.addEventListener('click',()=>{if(!panel)return;panel.hidden=!panel.hidden;settingsToggle.setAttribute('aria-expanded',String(!panel.hidden));});
     root.querySelector<HTMLButtonElement>('.settings-close')?.addEventListener('click',closeSettings);
     root.querySelector<HTMLButtonElement>('.fullscreen-toggle')?.addEventListener('click',()=>{void this.toggleFullscreen()});
-    root.querySelector<HTMLButtonElement>('.fullscreen-quick')?.addEventListener('click',()=>{void this.toggleFullscreen()});
+    quick.addEventListener('click',()=>{void this.toggleFullscreen()});
     root.querySelector<HTMLButtonElement>('.return-title')?.addEventListener('click',()=>{closeSettings();dispatchEvent(new CustomEvent('goddess:return-title'));});
     root.querySelector<HTMLButtonElement>('.audio-toggle')?.addEventListener('click',async()=>{
       await this.unlock();
@@ -243,7 +256,26 @@ export class AudioManager{
   async unlock(){
     // Pointer and touch events can both fire for one mobile tap. Do not start
     // two competing media requests for that single gesture.
-    if(this.unlocked)return true;
+    if(this.unlocked&&(!this.context||this.context.state==='running')){
+      // A mobile browser may pause the media element while the page is in the
+      // background without suspending AudioContext.  Re-issue play() on the
+      // next user gesture instead of returning early and leaving the game
+      // silent.
+      if(this.scene!=='silent'){
+        try{await this.resumeCurrentTrack()}catch{this.unlocked=false}
+      }
+      this.syncControls();
+      return this.unlocked;
+    }
+    if(this.unlocked&&this.context?.state==='suspended'){
+      try{
+        await this.context.resume();
+        this.unlocked=String(this.context.state)==='running';
+        if(this.unlocked)await this.resumeCurrentTrack();
+        this.syncControls();
+        return this.unlocked;
+      }catch{this.unlocked=false}
+    }
     const context=this.ensureContext();
     if(!context){
       // A browser may expose HTMLAudioElement but not Web Audio. Keep the
@@ -271,6 +303,37 @@ export class AudioManager{
       this.setStatus(AUDIO_UI_TEXT.unavailable);
       return false;
     }
+  }
+
+  private async resumeAfterVisibility(){
+    if(!this.unlocked||!this.context)return;
+    try{
+      if(this.context.state==='suspended')await this.context.resume();
+      if(this.context.state!=='running'){
+        this.unlocked=false;
+        this.syncControls();
+        return;
+      }
+      await this.resumeCurrentTrack();
+      this.syncControls();
+    }catch{
+      // Mobile browsers may require a fresh gesture after backgrounding. The
+      // next tap will retry unlock() instead of leaving a silent suspended app.
+      this.unlocked=false;
+      this.syncControls();
+    }
+  }
+
+  private async resumeCurrentTrack(){
+    if(this.scene==='silent')return;
+    const track=[...Object.values(MUSIC_TRACKS),...Object.values(SCENE_TRACKS),...Object.values(ORIGINAL_SCENE_TRACKS)].find(item=>item?.src===this.currentTrackSrc);
+    if(this.currentTrack){
+      this.currentTrack.muted=this.preferences.muted;
+      if(this.currentTrack.paused)await this.currentTrack.play();
+      if(track)this.fadeTrack(this.currentTrack,this.trackVolume(track),.2);
+      return;
+    }
+    this.startScene(this.requestedScene,this.requestedOptions);
   }
 
   setScene(scene:AudioScene,options:MusicSceneOptions={}){
@@ -319,6 +382,8 @@ export class AudioManager{
     for(const track of this.trackCache.values()){track.pause();track.removeAttribute('src');track.load()}
     this.trackCache.clear();
     this.controls?.remove();
+    this.fullscreenQuick?.remove();
+    this.fullscreenQuick=undefined;
     void this.context?.close();
   }
 
@@ -662,7 +727,10 @@ export class AudioManager{
     if(label)label.textContent=this.preferences.muted?AUDIO_UI_TEXT.mutedLabel:AUDIO_UI_TEXT.soundLabel;
     if(input)input.value=String(Math.round(this.preferences.volume*100));
     const fullscreen=this.controls?.querySelector<HTMLButtonElement>('.fullscreen-toggle');
-    const quick=this.controls?.querySelector<HTMLButtonElement>('.fullscreen-quick');
+    // The quick fullscreen action is intentionally a sibling of the compact
+    // settings control.  Keeping it outside the backdrop-filtered control
+    // box prevents fixed positioning from being scoped to the gear button.
+    const quick=this.fullscreenQuick;
     const doc=globalThis.document as (Document&{webkitFullscreenElement?:Element})|undefined;
     const root=this.controls?.ownerDocument?.documentElement as (HTMLElement&{requestFullscreen?:()=>Promise<void>|void;webkitRequestFullscreen?:()=>Promise<void>|void})|undefined;
     const fullscreenActive=Boolean(doc?.fullscreenElement||doc?.webkitFullscreenElement);

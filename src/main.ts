@@ -219,11 +219,11 @@ const routePositions=[{x:21,y:76},{x:40,y:48},{x:61,y:35}];
 // in the seven-volume outline: mountain border → gate road → river junction →
 // furnace city → mine → scorched front → lake capital.
 const mainlineMapNodes=[
-  {week:1,title:'刑场逃亡',location:'第一章·铁与火',x:18,y:43},
-  {week:2,title:'暗影大教堂撤离',location:'第二章·流亡与争抢',x:23,y:17},
+  {week:1,title:'刑场逃亡',location:'第一章·铁与火',x:18,y:35},
+  {week:2,title:'暗影大教堂撤离',location:'第二章·流亡与争抢',x:24,y:12},
   {week:3,title:'马奴低洼伏击',location:'第三章·新卡瓦拉守护者',x:49,y:48},
   {week:4,title:'四国会战',location:'第四章·改革与崩溃',x:53,y:16},
-  {week:5,title:'龙誓矿脉',location:'第五章·草原之主',x:17,y:56},
+  {week:5,title:'龙誓矿脉',location:'第五章·草原之主',x:17,y:68},
   {week:6,title:'造神圣殿',location:'第六章·邪神崛起',x:79,y:29},
   {week:7,title:'湖都终局',location:'第七章·终局之战',x:83,y:59},
 ] as const;
