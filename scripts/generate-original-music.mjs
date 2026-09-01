@@ -1,7 +1,7 @@
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 
-const out=join(process.cwd(),'public','assets','audio');
+const out=join(process.cwd(),'public','assets','audio','music-lazy');
 mkdirSync(out,{recursive:true});
 const rate=16000;
 const hz=n=>440*Math.pow(2,(n-69)/12);

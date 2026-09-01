@@ -17,7 +17,9 @@ function totalBytes(dir){return readdirSync(dir,{withFileTypes:true}).reduce((su
 const bytes=totalBytes(publicRoot);
 const lazyMusicRoot=join(publicRoot,'assets','audio','music-lazy');
 const lazyMusicBytes=existsSync(lazyMusicRoot)?totalBytes(lazyMusicRoot):0;
-const initialBytes=bytes-lazyMusicBytes;
+const lazyImageRoot=join(publicRoot,'assets','images-lazy');
+const lazyImageBytes=existsSync(lazyImageRoot)?totalBytes(lazyImageRoot):0;
+const initialBytes=bytes-lazyMusicBytes-lazyImageBytes;
 const mb=bytes/1024/1024,initialMb=initialBytes/1024/1024;
 if(initialBytes>20*1024*1024)throw new Error(`First-playable public asset budget exceeded: ${initialMb.toFixed(2)}MB > 20MB`);
 const formalCount=required.filter(path=>path.endsWith('.glb')).length;

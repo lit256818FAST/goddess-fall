@@ -1,6 +1,6 @@
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
-const out=join(process.cwd(),'public','assets','audio');mkdirSync(out,{recursive:true});
+const out=join(process.cwd(),'public','assets','audio','music-lazy');mkdirSync(out,{recursive:true});
 const rate=22050,TAU=Math.PI*2,tempo=58,beat=60/tempo,total=Math.floor(48*rate),data=new Float32Array(total),midi=n=>440*Math.pow(2,(n-69)/12);
 function tone(start,duration,freq,amp,partials=[1,2]){
   const from=Math.floor(start*rate),to=Math.min(total,Math.floor((start+duration)*rate));

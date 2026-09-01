@@ -10,13 +10,13 @@
 | --- | ---: | --- | --- | --- |
 | 主线章节视觉 | 7 | `public/assets/images/mainline-*.webp` | `src/content/mainlineChapters.ts` 第一至第七章 | 已接入 |
 | 主线节点级剧情插图 | 7 | `public/assets/images/mainline-nodes/*.webp` | 主线各章 intro 对话节点，按需懒加载 | 已接入 |
-| 主线对话透明立绘 | 3 | `public/assets/images/dialogue/` | `renderDialogue()`、主线藏书馆人物图鉴 | 已接入 |
-| 主线 NPC/Boss 对话立绘 | 5 | `public/assets/images/dialogue/old-mara.webp` 等 | `renderDialogue()`，无图时保留原有 fallback | 已接入 |
+| 主线对话透明立绘 | 3 | `public/assets/images-lazy/dialogue/` | `renderDialogue()`、主线藏书馆人物图鉴 | 已接入 |
+| 主线 NPC/Boss 对话立绘 | 5 | `public/assets/images-lazy/dialogue/old-mara.webp` 等 | `renderDialogue()`，无图时保留原有 fallback | 已接入 |
 | 商店商品图 | 8 | `public/assets/images/shop/` | `renderShop()` 的六件装备、口粮、回血药剂 | 已接入 |
 | 主线 Boss 战斗背景 | 3 | `public/assets/images/boss-*-bg.webp` | `src/game/bossPhases.ts` 白光、永夜、湖都 | 已接入 |
 | 军职任务图标 | 7 | `public/assets/images/missions/*.webp` | `src/game/mainlineMissions.ts`、主线主页任务板 | 已接入 |
 | 无旗使团角色立绘 | 6 | `public/assets/images/portrait-*.webp` | 支线阵容、支线藏书馆 | 已有 |
-| 无旗使团透明对话立绘 | 6 | `public/assets/images/dialogue/` | `renderDialogue()`，原档案立绘作为 fallback | 已接入 |
+| 无旗使团透明对话立绘 | 6 | `public/assets/images-lazy/dialogue/` | `renderDialogue()`，原档案立绘作为 fallback | 已接入 |
 | 启动、路线、档案背景 | 3 | `public/assets/images/` | 启动页、主页、藏书馆/档案 | 已有 |
 
 当前 `public/assets/images/` 运行时目录共 73 个文件，约 **4.87 MiB**；其中对话目录 29 个文件、约 **2.80 MiB**（含待清理的重复副本）。主线与支线透明对话图的源文件保存在 `art-source/dialogue-alpha/`，格式为 PNG-32/RGBA；运行时采用 WebP，以降低首次下载体积。
@@ -49,12 +49,12 @@
 当前映射：
 
 ```ts
-arthur -> idle: /assets/images/dialogue/arthur.webp
-          attack/hit: /assets/images/dialogue/states/arthur-{attack,hit}.webp
-hans   -> idle: /assets/images/dialogue/hans.webp
-          attack/hit: /assets/images/dialogue/states/hans-{attack,hit}.webp
-asnoka -> idle: /assets/images/dialogue/asnoka.webp
-          attack/hit: /assets/images/dialogue/states/asnoka-{attack,hit}.webp
+arthur -> idle: /assets/images-lazy/dialogue/arthur.webp
+          attack/hit: /assets/images-lazy/dialogue/states/arthur-{attack,hit}.webp
+hans   -> idle: /assets/images-lazy/dialogue/hans.webp
+          attack/hit: /assets/images-lazy/dialogue/states/hans-{attack,hit}.webp
+asnoka -> idle: /assets/images-lazy/dialogue/asnoka.webp
+          attack/hit: /assets/images-lazy/dialogue/states/asnoka-{attack,hit}.webp
 ```
 
 其余 11 名对话角色同样映射到 `dialogue/states/` 的 attack/hit WebP；idle 统一回退到原档案立绘。`DialogueLine.portraitState` 可显式指定状态，未指定时 `anger -> attack`、`fear -> hit`、其他情绪 -> idle。桌面端显示多名角色，当前说话者提高亮度并前移；移动端只显示当前说话者，历史台词保留在可滚动面板中。
@@ -77,7 +77,7 @@ asnoka -> idle: /assets/images/dialogue/asnoka.webp
 - 透明 PNG 源文件不进入 `public/`，不会增加首次可玩下载；
 - `npm run build` 已通过，主包约 1,038 KiB（未压缩）；
 - `npm run verify:budget` 当前未通过：初始 `public` 包约 **39.18 MiB**，超过 20 MiB 门槛；完整 `public` 约 **91.03 MiB**，主要体积仍来自既有模型与延迟音乐资源。
-- 三状态新增运行时文件：`public/assets/images/dialogue/states/` 下 28 张 WebP，合计约 **3.41 MiB**；逐张检查为 RGBA 且 Alpha 非空。idle 不重复进入该目录。
+- 三状态新增运行时文件：`public/assets/images-lazy/dialogue/states/` 下 28 张 WebP，合计约 **3.41 MiB**；逐张检查为 RGBA 且 Alpha 非空。idle 不重复进入该目录。
 - 新图片接入后必须重新执行构建，并检查图片路径无 404。
 
 ## 验收记录

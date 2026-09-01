@@ -35,7 +35,7 @@ OGG 只在场景首次使用、且用户通过点击或键盘操作解锁浏览�
 - 官方页面：https://opengameart.org/content/unsolved-investigation
 - 官方文件：https://opengameart.org/sites/default/files/Unsolved-Investigation-isaiah658_0.ogg
 - 原始文件名：`Unsolved-Investigation-isaiah658.ogg`
-- 本地文件：`public/assets/audio/unsolved-investigation.ogg`
+- 本地文件：`public/assets/audio/music-lazy/unsolved-investigation.ogg`
 - 本地大小：2,200,350 bytes
 - 许可证：CC0 1.0 Universal
 - 用途：旧主页回退音乐（当前主页主曲为 `Lantern Map`）

@@ -90,7 +90,7 @@ def save_frame(image: Image.Image, source_dir: Path, runtime_dir: Path, key: str
 
 def main() -> None:
     source_dir = SOURCE_ROOT / "states"
-    runtime_dir = ROOT / "public" / "assets" / "images" / "dialogue" / "states"
+    runtime_dir = ROOT / "public" / "assets" / "images-lazy" / "dialogue" / "states"
     source_dir.mkdir(parents=True, exist_ok=True)
     runtime_dir.mkdir(parents=True, exist_ok=True)
     for key, source_path in SOURCE_FILES.items():

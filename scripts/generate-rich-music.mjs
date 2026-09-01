@@ -1,7 +1,7 @@
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 
-const out=join(process.cwd(),'public','assets','audio');mkdirSync(out,{recursive:true});
+const out=join(process.cwd(),'public','assets','audio','music-lazy');mkdirSync(out,{recursive:true});
 // 16kHz keeps the browser package small while preserving the harmonic range
 // of these intentionally soft, low-register ambient tracks.
 const rate=16000, TAU=Math.PI*2, beat=60/76;

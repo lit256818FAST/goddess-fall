@@ -176,9 +176,9 @@ const flowSteps:Array<{id:FlowStep;label:string}>=[
   {id:'archive',label:'档案'},
 ];
 const portraitByCharacter:Partial<Record<CampaignCharacterId,string>>={
-  arthur:'/assets/images/dialogue/arthur.webp',
-  hans:'/assets/images/dialogue/hans.webp',
-  asnoka:'/assets/images/dialogue/asnoka.webp',
+  arthur:'/assets/images-lazy/dialogue/arthur.webp',
+  hans:'/assets/images-lazy/dialogue/hans.webp',
+  asnoka:'/assets/images-lazy/dialogue/asnoka.webp',
   the_unflagged:'/assets/images/portrait-unflagged.webp',
   seraphina:'/assets/images/portrait-seraphina.webp',
   reina:'/assets/images/portrait-reina.webp',
@@ -189,23 +189,23 @@ const portraitByCharacter:Partial<Record<CampaignCharacterId,string>>={
 type DialoguePortraitState='idle'|'attack'|'hit';
 type DialoguePortraitSet=Record<DialoguePortraitState,string>;
 const dialoguePortraitByCharacter:Partial<Record<keyof typeof characters,DialoguePortraitSet>>={
-  arthur:{idle:'/assets/images/dialogue/arthur.webp',attack:'/assets/images/dialogue/states/arthur-attack.webp',hit:'/assets/images/dialogue/states/arthur-hit.webp'},
-  hans:{idle:'/assets/images/dialogue/hans.webp',attack:'/assets/images/dialogue/states/hans-attack.webp',hit:'/assets/images/dialogue/states/hans-hit.webp'},
-  asnoka:{idle:'/assets/images/dialogue/asnoka.webp',attack:'/assets/images/dialogue/states/asnoka-attack.webp',hit:'/assets/images/dialogue/states/asnoka-hit.webp'},
-  old_mara:{idle:'/assets/images/dialogue/old-mara.webp',attack:'/assets/images/dialogue/states/old-mara-attack.webp',hit:'/assets/images/dialogue/states/old-mara-hit.webp'},
-  masked_saboteur:{idle:'/assets/images/dialogue/gray-eyed.webp',attack:'/assets/images/dialogue/states/gray-eyed-attack.webp',hit:'/assets/images/dialogue/states/gray-eyed-hit.webp'},
-  white_knight_captain:{idle:'/assets/images/dialogue/white-knight-captain.webp',attack:'/assets/images/dialogue/states/white-knight-captain-attack.webp',hit:'/assets/images/dialogue/states/white-knight-captain-hit.webp'},
-  night_judge:{idle:'/assets/images/dialogue/night-judge-final.webp',attack:'/assets/images/dialogue/states/night-judge-attack.webp',hit:'/assets/images/dialogue/states/night-judge-hit.webp'},
-  lake_dual_god:{idle:'/assets/images/dialogue/lake-dual-god.webp',attack:'/assets/images/dialogue/states/lake-dual-god-attack.webp',hit:'/assets/images/dialogue/states/lake-dual-god-hit.webp'},
-  the_unflagged:{idle:'/assets/images/dialogue/unflagged.webp',attack:'/assets/images/dialogue/states/unflagged-attack.webp',hit:'/assets/images/dialogue/states/unflagged-hit.webp'},
-  seraphina:{idle:'/assets/images/dialogue/seraphina.webp',attack:'/assets/images/dialogue/states/seraphina-attack.webp',hit:'/assets/images/dialogue/states/seraphina-hit.webp'},
-  reina:{idle:'/assets/images/dialogue/reina-final2.webp',attack:'/assets/images/dialogue/states/reina-attack.webp',hit:'/assets/images/dialogue/states/reina-hit.webp'},
-  odric:{idle:'/assets/images/dialogue/odric.webp',attack:'/assets/images/dialogue/states/odric-attack.webp',hit:'/assets/images/dialogue/states/odric-hit.webp'},
-  cole:{idle:'/assets/images/dialogue/cole.webp',attack:'/assets/images/dialogue/states/cole-attack.webp',hit:'/assets/images/dialogue/states/cole-hit.webp'},
-  agnes:{idle:'/assets/images/dialogue/agnes.webp',attack:'/assets/images/dialogue/states/agnes-attack.webp',hit:'/assets/images/dialogue/states/agnes-hit.webp'},
+  arthur:{idle:'/assets/images-lazy/dialogue/arthur.webp',attack:'/assets/images-lazy/dialogue/states/arthur-attack.webp',hit:'/assets/images-lazy/dialogue/states/arthur-hit.webp'},
+  hans:{idle:'/assets/images-lazy/dialogue/hans.webp',attack:'/assets/images-lazy/dialogue/states/hans-attack.webp',hit:'/assets/images-lazy/dialogue/states/hans-hit.webp'},
+  asnoka:{idle:'/assets/images-lazy/dialogue/asnoka.webp',attack:'/assets/images-lazy/dialogue/states/asnoka-attack.webp',hit:'/assets/images-lazy/dialogue/states/asnoka-hit.webp'},
+  old_mara:{idle:'/assets/images-lazy/dialogue/old-mara.webp',attack:'/assets/images-lazy/dialogue/states/old-mara-attack.webp',hit:'/assets/images-lazy/dialogue/states/old-mara-hit.webp'},
+  masked_saboteur:{idle:'/assets/images-lazy/dialogue/gray-eyed.webp',attack:'/assets/images-lazy/dialogue/states/gray-eyed-attack.webp',hit:'/assets/images-lazy/dialogue/states/gray-eyed-hit.webp'},
+  white_knight_captain:{idle:'/assets/images-lazy/dialogue/white-knight-captain.webp',attack:'/assets/images-lazy/dialogue/states/white-knight-captain-attack.webp',hit:'/assets/images-lazy/dialogue/states/white-knight-captain-hit.webp'},
+  night_judge:{idle:'/assets/images-lazy/dialogue/night-judge-final.webp',attack:'/assets/images-lazy/dialogue/states/night-judge-attack.webp',hit:'/assets/images-lazy/dialogue/states/night-judge-hit.webp'},
+  lake_dual_god:{idle:'/assets/images-lazy/dialogue/lake-dual-god.webp',attack:'/assets/images-lazy/dialogue/states/lake-dual-god-attack.webp',hit:'/assets/images-lazy/dialogue/states/lake-dual-god-hit.webp'},
+  the_unflagged:{idle:'/assets/images-lazy/dialogue/unflagged.webp',attack:'/assets/images-lazy/dialogue/states/unflagged-attack.webp',hit:'/assets/images-lazy/dialogue/states/unflagged-hit.webp'},
+  seraphina:{idle:'/assets/images-lazy/dialogue/seraphina.webp',attack:'/assets/images-lazy/dialogue/states/seraphina-attack.webp',hit:'/assets/images-lazy/dialogue/states/seraphina-hit.webp'},
+  reina:{idle:'/assets/images-lazy/dialogue/reina-final2.webp',attack:'/assets/images-lazy/dialogue/states/reina-attack.webp',hit:'/assets/images-lazy/dialogue/states/reina-hit.webp'},
+  odric:{idle:'/assets/images-lazy/dialogue/odric.webp',attack:'/assets/images-lazy/dialogue/states/odric-attack.webp',hit:'/assets/images-lazy/dialogue/states/odric-hit.webp'},
+  cole:{idle:'/assets/images-lazy/dialogue/cole.webp',attack:'/assets/images-lazy/dialogue/states/cole-attack.webp',hit:'/assets/images-lazy/dialogue/states/cole-hit.webp'},
+  agnes:{idle:'/assets/images-lazy/dialogue/agnes.webp',attack:'/assets/images-lazy/dialogue/states/agnes-attack.webp',hit:'/assets/images-lazy/dialogue/states/agnes-hit.webp'},
 };
 const legacyDialoguePortraitByCharacter:Partial<Record<keyof typeof characters,string>>={
-  arthur:'/assets/images/dialogue/arthur.webp',hans:'/assets/images/dialogue/hans.webp',asnoka:'/assets/images/dialogue/asnoka.webp',old_mara:'/assets/images/dialogue/old-mara.webp',masked_saboteur:'/assets/images/dialogue/gray-eyed.webp',white_knight_captain:'/assets/images/dialogue/white-knight-captain.webp',night_judge:'/assets/images/dialogue/night-judge-final.webp',lake_dual_god:'/assets/images/dialogue/lake-dual-god.webp',the_unflagged:'/assets/images/dialogue/unflagged.webp',seraphina:'/assets/images/dialogue/seraphina.webp',reina:'/assets/images/dialogue/reina-final2.webp',odric:'/assets/images/dialogue/odric.webp',cole:'/assets/images/dialogue/cole.webp',agnes:'/assets/images/dialogue/agnes.webp',
+  arthur:'/assets/images-lazy/dialogue/arthur.webp',hans:'/assets/images-lazy/dialogue/hans.webp',asnoka:'/assets/images-lazy/dialogue/asnoka.webp',old_mara:'/assets/images-lazy/dialogue/old-mara.webp',masked_saboteur:'/assets/images-lazy/dialogue/gray-eyed.webp',white_knight_captain:'/assets/images-lazy/dialogue/white-knight-captain.webp',night_judge:'/assets/images-lazy/dialogue/night-judge-final.webp',lake_dual_god:'/assets/images-lazy/dialogue/lake-dual-god.webp',the_unflagged:'/assets/images-lazy/dialogue/unflagged.webp',seraphina:'/assets/images-lazy/dialogue/seraphina.webp',reina:'/assets/images-lazy/dialogue/reina-final2.webp',odric:'/assets/images-lazy/dialogue/odric.webp',cole:'/assets/images-lazy/dialogue/cole.webp',agnes:'/assets/images-lazy/dialogue/agnes.webp',
 };
 const dialoguePortraitForState=(id:keyof typeof characters,state:DialoguePortraitState='idle')=>dialoguePortraitByCharacter[id]?.[state]??legacyDialoguePortraitByCharacter[id];
 const conditionLabel={normal:'状态良好',fatigued:'疲劳',wounded:'轻伤'} as const;

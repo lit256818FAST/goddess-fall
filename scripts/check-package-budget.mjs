@@ -13,10 +13,14 @@ const publicBytes = bytesIn(path.join(root, 'public'));
 const distBytes = bytesIn(path.join(root, 'dist'));
 const lazyPublicDirectory = path.join(root, 'public', 'assets', 'audio', 'music-lazy');
 const lazyDistDirectory = path.join(root, 'dist', 'assets', 'audio', 'music-lazy');
+const lazyImagesPublicDirectory = path.join(root, 'public', 'assets', 'images-lazy');
+const lazyImagesDistDirectory = path.join(root, 'dist', 'assets', 'images-lazy');
 const lazyPublicBytes = bytesIn(lazyPublicDirectory);
 const lazyDistBytes = bytesIn(lazyDistDirectory);
-const publicInitialBytes = publicBytes - lazyPublicBytes;
-const distInitialBytes = distBytes - lazyDistBytes;
+const lazyImagesPublicBytes = bytesIn(lazyImagesPublicDirectory);
+const lazyImagesDistBytes = bytesIn(lazyImagesDistDirectory);
+const publicInitialBytes = publicBytes - lazyPublicBytes - lazyImagesPublicBytes;
+const distInitialBytes = distBytes - lazyDistBytes - lazyImagesDistBytes;
 const firstPlayableLimit = 20 * 1024 * 1024;
 const fullCacheLimit = 100 * 1024 * 1024;
 if (publicInitialBytes > firstPlayableLimit) throw new Error(`initial public package ${publicInitialBytes} bytes exceeds 20MiB`);
@@ -27,6 +31,7 @@ console.log(JSON.stringify({
   publicMiB: Number((publicBytes / 1024 / 1024).toFixed(2)),
   publicInitialMiB: Number((publicInitialBytes / 1024 / 1024).toFixed(2)),
   lazyMusicMiB: Number((lazyPublicBytes / 1024 / 1024).toFixed(2)),
+  lazyImagesMiB: Number((lazyImagesPublicBytes / 1024 / 1024).toFixed(2)),
   distMiB: Number((distBytes / 1024 / 1024).toFixed(2)),
   distInitialMiB: Number((distInitialBytes / 1024 / 1024).toFixed(2)),
   firstPlayableLimitMiB: 20,

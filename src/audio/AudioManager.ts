@@ -19,16 +19,16 @@ export interface SceneTrack{
 }
 
 const investigationTrack:SceneTrack={
-  src:'/assets/audio/unsolved-investigation.ogg',
+  src:'/assets/audio/music-lazy/unsolved-investigation.ogg',
   title:'Unsolved Investigation',
   creator:'isaiah658',
   license:'CC0',
   gain:.5,
 };
 
-const originalStoryTrack:SceneTrack={src:'/assets/audio/original-story.wav',title:'Ashes Between Words · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.46};
-const originalLibraryTrack:SceneTrack={src:'/assets/audio/original-library.wav',title:'The Scriptorium · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.42};
-const originalArchiveTrack:SceneTrack={src:'/assets/audio/original-archive.wav',title:'Ledger of Consequences · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.44};
+const originalStoryTrack:SceneTrack={src:'/assets/audio/music-lazy/original-story.wav',title:'Ashes Between Words · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.46};
+const originalLibraryTrack:SceneTrack={src:'/assets/audio/music-lazy/original-library.wav',title:'The Scriptorium · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.42};
+const originalArchiveTrack:SceneTrack={src:'/assets/audio/music-lazy/original-archive.wav',title:'Ledger of Consequences · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.44};
 
 const importedTrack=(file:string,title:string,gain:number):SceneTrack=>({src:`/assets/audio/music-lazy/${file}`,title,creator:'用户提供音频 · 待确认授权',license:'user-provided',gain});
 
@@ -49,8 +49,8 @@ export const MUSIC_TRACKS:Readonly<Record<MusicTrackId,SceneTrack>>={
 /** Previous scene tracks remain available for rollback and procedural fallback. */
 export const ORIGINAL_SCENE_TRACKS:Readonly<Partial<Record<AudioScene,SceneTrack>>>={
   title:originalArchiveTrack,home:investigationTrack,story:originalStoryTrack,library:originalLibraryTrack,archive:originalArchiveTrack,
-  battle:{src:'/assets/audio/original-battle.wav',title:'No Flag, No Retreat · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.52},
-  boss:{src:'/assets/audio/original-boss.wav',title:'The Veiled Furnace · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.48},
+  battle:{src:'/assets/audio/music-lazy/original-battle.wav',title:'No Flag, No Retreat · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.52},
+  boss:{src:'/assets/audio/music-lazy/original-boss.wav',title:'The Veiled Furnace · original',creator:'Goddess Fall Audio Team',license:'CC0',gain:.48},
 };
 
 export const SCENE_TRACKS:Partial<Record<AudioScene,SceneTrack>>={
@@ -91,8 +91,8 @@ export const SCENE_AUDIO:Readonly<Record<AudioScene,SceneAudioDefinition>>={
   boss:{source:MUSIC_TRACKS.shadowMarchBoss.src,mode:'track',family:'boss'},
   library:{source:MUSIC_TRACKS.archiveGateAlt.src,mode:'track',family:'story'},
   archive:{source:MUSIC_TRACKS.archiveGateAlt.src,mode:'track',family:'story'},
-  victory:{source:'/assets/audio/original-victory.wav',mode:'track',family:'result'},
-  defeat:{source:'/assets/audio/original-defeat.wav',mode:'track',family:'result'},
+  victory:{source:'/assets/audio/music-lazy/original-victory.wav',mode:'track',family:'result'},
+  defeat:{source:'/assets/audio/music-lazy/original-defeat.wav',mode:'track',family:'result'},
   silent:{source:'silent',mode:'silent',family:'silent'},
 };
 
