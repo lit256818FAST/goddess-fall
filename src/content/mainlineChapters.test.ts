@@ -19,4 +19,17 @@ describe("Arthur mainline chapter spine", () => {
     expect(Object.values(mainlineChapterByWeek[6].nodes).filter((node) => node.kind === "battle")).toHaveLength(1);
     expect(Object.values(mainlineChapterByWeek[7].nodes).filter((node) => node.kind === "battle")).toHaveLength(1);
   });
+
+  it("keeps each chapter's playable story beats substantial", () => {
+    for (const chapter of Object.values(mainlineChapterByWeek)) {
+      const dialogueNodes = Object.values(chapter.nodes).filter((node) => node.kind === "dialogue");
+      const endingNodes = Object.values(chapter.nodes).filter((node) => node.kind === "ending");
+      expect(dialogueNodes[0]?.lines.length).toBeGreaterThanOrEqual(5);
+      expect(endingNodes.every((node) => node.lines.length >= 2)).toBe(true);
+    }
+    for (const week of [1, 2, 3, 4, 5]) {
+      const dialogueNodes = Object.values(mainlineChapterByWeek[week].nodes).filter((node) => node.kind === "dialogue");
+      expect(dialogueNodes[1]?.lines.length).toBeGreaterThanOrEqual(3);
+    }
+  });
 });

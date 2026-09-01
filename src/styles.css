@@ -113,3 +113,5 @@
 .vn-character[data-portrait-state="attack"]{filter:brightness(.82) saturate(.92) drop-shadow(0 0 12px #d19b4a55)}
 .vn-character[data-portrait-state="hit"]{filter:brightness(.78) saturate(.82) sepia(.08)}
 .vn-character.speaking[data-portrait-state="attack"],.vn-character.speaking[data-portrait-state="hit"]{filter:brightness(1.07) saturate(1.02) drop-shadow(0 8px 18px #000a)}
+
+.vn-dialogue-panel .dialogue-line p:empty{display:none}
