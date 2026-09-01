@@ -35,6 +35,40 @@
   .fullscreen-quick{position:fixed!important;top:max(12px,env(safe-area-inset-top,0px))!important;right:max(12px,env(safe-area-inset-right,0px))!important;bottom:auto!important;left:auto!important}
 }
 
+/* Phone battle HUD: keep the map dominant, but reserve the right column for
+   decisions.  Low-priority history and exit controls are available elsewhere
+   (settings), so they do not consume the single combat screen. */
+@media(max-width:900px) and (orientation:landscape){
+  .battle{height:100dvh;min-height:0;padding:6px 8px;overflow:hidden}
+  .battle header{min-height:40px;margin:0;align-items:center}
+  .battle header .eyebrow,.battle header .objective{display:none}
+  .battle h2{max-width:58vw;margin:0;font-size:1rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .battle-layout{width:100%;height:calc(100dvh - 52px);margin:0;grid-template-columns:minmax(0,1fr) clamp(210px,29vw,300px);gap:8px}
+  #viewport{min-height:0;height:100%}
+  .battle aside{display:flex;flex-direction:column;gap:7px;min-height:0;padding:9px;overflow-y:auto;background:#11191feF;font-size:.72rem;scrollbar-width:thin}
+  .battle-meta{order:1;min-height:20px;font-size:.7rem}
+  .mission-objective{order:2;gap:2px;margin:0;padding:7px 8px;font-size:.67rem;line-height:1.32}
+  .mission-objective small{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:.59rem}
+  .boss-phase{order:3;margin:0;padding:7px 8px;font-size:.65rem}
+  .unit-card{order:4;gap:4px;padding:8px;font-size:.72rem}
+  .unit-card .meter{height:4px}
+  .unit-card small{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:.61rem;line-height:1.35}
+  .attack-controls{order:5;margin:0;padding:7px}
+  .attack-controls p{margin-bottom:5px;font-size:.64rem}
+  .attack-controls button{min-height:34px;padding:.4rem .25rem;font-size:.64rem}
+  #undo{order:6;margin:0;min-height:34px;padding:.45rem;font-size:.68rem}
+  .dispatch-controls{order:7;margin:0;padding:7px}
+  .battle aside [data-action="end-phase"]{order:8;position:sticky;bottom:0;z-index:4;min-height:40px;margin:0;padding:.55rem .45rem;box-shadow:0 6px 14px #0008}
+  .battle aside>h3{order:9;margin:2px 0 0;font-size:.82rem}
+  .battle aside>#status{order:10;min-height:0;margin:0;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:.68rem;line-height:1.42}
+  .intents{order:11;max-height:94px;overflow:auto}
+  .intents h3{margin:4px 0;font-size:.76rem}
+  .intent{margin:2px 0;padding:5px;font-size:.62rem;line-height:1.28}
+  .battle-log,.battle aside>#help,.battle aside>#retreat{display:none}
+  .tutorial{left:10px;bottom:10px;width:min(312px,44vw);padding:10px 12px;font-size:.7rem}
+  .tutorial p{min-height:0;margin:.35rem 0}
+}
+
 .story{padding-block:16px}.story-layout{display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,680px);align-items:stretch;width:min(1180px,94vw);height:min(860px,calc(100vh - 32px));max-height:none;text-align:left}.chapter-artwork{min-width:0;min-height:0;margin:0;overflow:hidden;border:1px solid #8f7a554d;border-right:0;background:#0d1115}.chapter-artwork img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}.story .story-card{width:auto;min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column}.story .dialogue{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;padding-right:10px}.story .choices{flex:0 0 auto;margin-top:18px}.boss-phase.has-art{grid-template-columns:72px minmax(0,1fr);align-items:center}.boss-phase>img{display:block;width:72px;height:76px;object-fit:cover;object-position:center 24%;border:1px solid #9b7849}.boss-phase>div{display:grid;min-width:0;gap:4px}
 @media(max-width:720px){.story{place-content:start center;padding:16px}.story-layout{grid-template-columns:minmax(0,1fr);width:100%;max-height:none}.chapter-artwork{min-height:0;aspect-ratio:16/9;border-right:1px solid #8f7a554d;border-bottom:0}.story .story-card{padding:24px 20px}.dialogue{max-height:none}.boss-phase.has-art{grid-template-columns:56px minmax(0,1fr)}.boss-phase>img{width:56px;height:62px}}
 @media(prefers-reduced-motion:reduce){.chapter-artwork img{scroll-behavior:auto}}

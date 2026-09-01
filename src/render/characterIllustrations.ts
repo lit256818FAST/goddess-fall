@@ -59,7 +59,7 @@ export class CharacterIllustrationLoader {
       if (!sprite) return;
       const image = texture.image as { width?: number; height?: number } | undefined;
       const aspect = image?.width && image?.height ? image.width / image.height : 2 / 3;
-      const height = 1.95;
+      const height = .975;
       sprite.scale.set(aspect * height, height, 1);
     };
     const applyState = (action: VisualAction, durationMs?: number) => {
