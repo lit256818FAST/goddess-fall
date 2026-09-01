@@ -1,7 +1,13 @@
-/** Models are kept in an optional gallery package, never in the first-playable game package. */
+/** Only Iron & Fire mainline GLBs live in the optional gallery package. */
 export const modelInventoryRoot = '/model-inventory/assets/models';
-export const runtimeModelLoadingEnabled = false;
+export function isIronFireInventoryModel(url: string): boolean {
+  return /\/assets\/models\/(?:mainline|enemies\/mainline)\//.test(url);
+}
+
+export function runtimeModelLoadingAllowed(url: string): boolean {
+  return !isIronFireInventoryModel(url);
+}
 
 export function inventoryModelUrl(url: string): string {
-  return url.replace(/^\/assets\/models\//, `${modelInventoryRoot}/`);
+  return isIronFireInventoryModel(url) ? url.replace(/^\/assets\/models\//, `${modelInventoryRoot}/`) : url;
 }

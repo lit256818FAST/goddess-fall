@@ -30,6 +30,10 @@ export class CharacterIllustrationLoader {
     const root = new THREE.Group();
     root.name = `illustration-${unit.id}`;
     root.add(fallback);
+    // The transparent full-body asset is the battle default. Keep the old
+    // 3D model hidden during async loading and reveal it only if the image
+    // cannot be loaded, so the board never flashes the legacy model first.
+    fallback.visible = false;
     const hitTarget = new THREE.Mesh(new THREE.BoxGeometry(.72, 1.5, .72), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }));
     hitTarget.name = `${unit.id}-hit-proxy`;
     hitTarget.position.y = .75;
@@ -101,7 +105,12 @@ export class CharacterIllustrationLoader {
       const queued = pending;
       pending = undefined;
       applyState(queued?.action ?? 'idle', queued?.durationMs);
-    }).catch(() => undefined);
+    }).catch(() => {
+      if (!localDisposed) {
+        fallback.visible = true;
+        fallbackActive = true;
+      }
+    });
 
     return {
       root,

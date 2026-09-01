@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { battleScenePresetFor, mainlineBattleScenePresets, terrainForBattleScene } from './battleScenePresets';
+import { battleBackgroundFor, battleScenePresetFor, mainlineBattleScenePresets, terrainForBattleScene } from './battleScenePresets';
 
 describe('mainline battle scene presets', () => {
   it('provides the first four mainline vertical-slice scenes', () => {
@@ -23,8 +23,23 @@ describe('mainline battle scene presets', () => {
     }
   });
 
+  it('assigns a battle background to every mainline battle id', () => {
+    const ids = [
+      'arthur-execution-escape', 'arthur-border-blockade', 'arthur-cathedral-evacuation', 'arthur-council-front',
+      'arthur-lowland-ambush', 'arthur-army-trials', 'white-knight-charge', 'arthur-four-country-war',
+      'arthur-dragon-oath', 'arthur-steppe-supply', 'night-judge', 'lake-dual-god',
+    ];
+    expect(ids.every(id => battleBackgroundFor(id)?.startsWith('/assets/images/'))).toBe(true);
+  });
+
   it('returns no scene contract for a side-campaign battle', () => {
     expect(battleScenePresetFor('holy-square-crisis')).toBeUndefined();
     expect(terrainForBattleScene('holy-square-crisis')).toBeUndefined();
+  });
+
+  it('keeps legacy side-campaign battle boards on authored scene art', () => {
+    for (const battleId of ['holy-square-crisis', 'odric-judgment', 'border-machines', 'grain-crossing', 'iron-bulwark', 'silent-march', 'veiled-avatar']) {
+      expect(battleBackgroundFor(battleId)).toMatch(/^\/assets\/images\/.+\.webp$/);
+    }
   });
 });

@@ -55,10 +55,10 @@ describe('character visual manifest',()=>{
   }
  });
 
- it('keeps K3 as the second tier for the original three heroes',()=>{
-  expect(characterVisualManifest.unflagged.fallbacks?.[0].url).toContain('/k3/heroes/unflagged.glb');
-  expect(characterVisualManifest.seraphina.fallbacks?.[0].url).toContain('/k3/heroes/seraphina.glb');
-  expect(characterVisualManifest.reina.fallbacks?.[0].url).toContain('/k3/heroes/reina.glb');
+ it('keeps K3 as the first 3D tier for the original three heroes',()=>{
+  expect(characterVisualManifest.unflagged.url).toContain('/k3/heroes/unflagged.glb');
+  expect(characterVisualManifest.seraphina.url).toContain('/k3/heroes/seraphina.glb');
+  expect(characterVisualManifest.reina.url).toContain('/k3/heroes/reina.glb');
   expect(characterVisualManifest.odric.fallbacks).toBeUndefined();
  });
 

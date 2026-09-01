@@ -42,6 +42,7 @@ export interface BattleScenePreset {
   id: string;
   title: string;
   region: string;
+  background?: string;
   terrain: readonly BattleSceneTerrainSpec[];
   objectiveCells?: readonly { x: number; y: number }[];
   lighting?: BattleSceneLighting;
@@ -102,12 +103,39 @@ const cell = (
   options: Omit<BattleSceneTerrainSpec, 'position' | 'kind'> = {},
 ): BattleSceneTerrainSpec => ({ position: { x, y }, kind, ...options });
 
+const battleBackgrounds: Readonly<Record<string, string>> = {
+  'holy-square-crisis': '/assets/images/mainline-iron-fire.webp',
+  'odric-judgment': '/assets/images/boss-white-knight-bg.webp',
+  'border-machines': '/assets/images/mainline-iron-fire.webp',
+  'grain-crossing': '/assets/images/mainline-kavala.webp',
+  'iron-bulwark': '/assets/images/boss-white-knight-bg.webp',
+  'silent-march': '/assets/images/mainline-exile.webp',
+  'veiled-avatar': '/assets/images/boss-night-judge-bg.webp',
+  'arthur-execution-escape': '/assets/images/mainline-iron-fire.webp',
+  'arthur-border-blockade': '/assets/images/mainline-iron-fire.webp',
+  'arthur-cathedral-evacuation': '/assets/images/mainline-exile.webp',
+  'arthur-council-front': '/assets/images/mainline-exile.webp',
+  'arthur-lowland-ambush': '/assets/images/mainline-kavala.webp',
+  'arthur-army-trials': '/assets/images/mainline-kavala.webp',
+  'white-knight-charge': '/assets/images/boss-white-knight-bg.webp',
+  'arthur-four-country-war': '/assets/images/mainline-reform.webp',
+  'arthur-dragon-oath': '/assets/images/mainline-steppe.webp',
+  'arthur-steppe-supply': '/assets/images/mainline-steppe.webp',
+  'night-judge': '/assets/images/boss-night-judge-bg.webp',
+  'lake-dual-god': '/assets/images/boss-lake-dual-god-bg.webp',
+};
+
+export function battleBackgroundFor(battleId: string): string | undefined {
+  return battleBackgrounds[battleId];
+}
+
 /** First runtime vertical slice for the Arthur campaign. */
 export const mainlineBattleScenePresets: Readonly<Record<string, BattleScenePreset>> = {
   'arthur-execution-escape': {
     id: 'arthur-execution-escape',
     title: '刑场逃亡',
     region: '卫道士军国 · 刑场边境',
+    background: battleBackgroundFor('arthur-execution-escape'),
     terrain: [
       cell(3, 3, 'holy-fire', { label: '处刑火盆', assetId: 'brazier', interactable: true, blocksMovement: true }),
       cell(4, 3, 'holy-fire', { label: '处刑祭坛', assetId: 'altar', interactable: true, blocksMovement: true }),
@@ -124,6 +152,7 @@ export const mainlineBattleScenePresets: Readonly<Record<string, BattleScenePres
     id: 'arthur-border-blockade',
     title: '边境堵截',
     region: '卫道士军国 · 东侧军牌哨线',
+    background: battleBackgroundFor('arthur-border-blockade'),
     terrain: [
       cell(3, 2, 'mechanism', { label: '锁轴控制轮', assetId: 'valve-wheel', interactable: true, blocksMovement: true }),
       cell(4, 2, 'mechanism', { label: '锁轴动力块', assetId: 'anvil-block', interactable: true, blocksMovement: true }),
@@ -140,6 +169,7 @@ export const mainlineBattleScenePresets: Readonly<Record<string, BattleScenePres
     id: 'arthur-lowland-ambush',
     title: '马奴低洼伏击',
     region: '新卡瓦拉 · 河湾低洼地',
+    background: battleBackgroundFor('arthur-lowland-ambush'),
     terrain: [
       cell(3, 3, 'mechanism', { label: '北侧水闸', assetId: 'valve-wheel', interactable: true, blocksMovement: true }),
       cell(4, 3, 'mud', { assetId: 'mud-patch' }),
@@ -156,6 +186,7 @@ export const mainlineBattleScenePresets: Readonly<Record<string, BattleScenePres
     id: 'lake-dual-god',
     title: '湖都信仰发散器',
     region: '湖都外围 · 三路信仰装置',
+    background: battleBackgroundFor('lake-dual-god'),
     terrain: [
       cell(2, 2, 'mechanism', { label: '赤核发散器', assetId: 'veiled-anchor', interactable: true, blocksMovement: true }),
       cell(5, 2, 'mechanism', { label: '白核发散器', assetId: 'ritual-ring', interactable: true, blocksMovement: true }),

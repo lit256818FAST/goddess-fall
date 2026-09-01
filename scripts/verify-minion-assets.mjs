@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const modelDir = path.join(root, 'public', 'assets', 'models', 'enemies', 'mainline');
+const modelDir = path.join(root, 'model-inventory', 'assets', 'models', 'enemies', 'mainline');
 const manifestPath = path.join(modelDir, 'manifest.json');
 const expected = {
   'shield-guard': ['idle', 'move', 'attack_health', 'hit_health', 'death_health'],
@@ -32,7 +32,7 @@ const report = [];
 for (const [id, actions] of Object.entries(expected)) {
   const entry = entries.get(id);
   if (!entry) throw new Error(`manifest entry missing: ${id}`);
-  const file = path.join(root, 'public', entry.modelPath.replace(/^\//, '').replaceAll('/', path.sep));
+  const file = path.join(root, 'model-inventory', entry.modelPath.replace(/^\//, '').replaceAll('/', path.sep).replace(/^assets[\\/]models[\\/]/, 'assets\\models\\'));
   if (!fs.existsSync(file)) throw new Error(`model missing: ${entry.modelPath}`);
   const json = readGlbJson(file);
   const clips = (json.animations ?? []).map((animation) => ({ name: animation.name, channels: animation.channels?.length ?? 0 }));

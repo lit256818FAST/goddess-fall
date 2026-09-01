@@ -64,7 +64,7 @@ function characterAssets(): ModelGalleryAsset[] {
   for (const [key, entry] of Object.entries(characterVisualManifest) as [VisualKey, typeof characterVisualManifest[VisualKey]][]) {
     if (!entry.url) continue;
     const title = characterTitles[key] ?? key;
-    assets.push({ id: key, title, category: characterCategory(key), maker: makerForUrl(entry.url), source: 'K3', url: inventoryModelUrl(entry.url), visualScale: entry.visualScale, actions: Object.keys(entry.actionAliases ?? {}) });
+    assets.push({ id: key, title, category: characterCategory(key), maker: makerForUrl(entry.url), source: 'runtime', url: inventoryModelUrl(entry.url), visualScale: entry.visualScale, actions: Object.keys(entry.actionAliases ?? {}) });
     for (const [index, fallback] of (entry.fallbacks ?? []).entries()) {
       assets.push({ id: key + '-fallback-' + index, title: title + ' · K3 回退', category: 'K3 回退', maker: 'K3', source: 'K3', url: inventoryModelUrl(fallback.url), visualScale: fallback.visualScale, actions: Object.keys(entry.actionAliases ?? {}), fallbackOf: key });
     }

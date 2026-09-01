@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader, type GLTF } from 'three/addons/loaders/GLTFLoader.js';
 import type { TerrainCell } from '../game/battle';
-import { runtimeModelLoadingEnabled } from './modelInventory';
 
 /** Static K3 environment assets are optional visual replacements, never rule dependencies. */
 export type EnvironmentVisualKey='rail-straight'|'rail-curve'|'rail-buffer'|'valve-wheel'|'scrap-pile'|'mud-patch'|'anvil-block'|'ore-crate'|'iron-fence'|'coal-cart'|'altar'|'brazier'|'bush'|'column'|'dead-tree'|'gate-segment'|'grain-cart'|'road-sign'|'rubble'|'wall-broken'|'statue-base'|'corrupted-brazier'|'stone-steps'|'floating-shard-a'|'floating-shard-b'|'black-bush'|'black-tree'|'ritual-ring'|'veil-pillar'|'fallen-bell'|'veiled-anchor'|'veiled-pillar'|'veiled-rubble'|'veiled-brazier';
@@ -55,7 +54,7 @@ export class EnvironmentVisualLoader {
   create(cell:TerrainCell,fallback:THREE.Group,tint?:number):THREE.Group {
     const root=new THREE.Group();root.name=`environment-${cell.assetId??cell.kind}`;root.add(fallback);
     const key=environmentVisualKeyForCell(cell),entry=key?environmentVisualManifest[key]:undefined;
-    if(!entry||!runtimeModelLoadingEnabled)return root;
+    if(!entry)return root;
     this.load(entry.url).then(gltf=>{
       if(this.disposed)return;
       const model=gltf.scene.clone(true);model.name=`${key}-model`;model.scale.setScalar(entry.visualScale);const tintColor=tint===undefined?undefined:new THREE.Color(tint);model.traverse(child=>{if(child instanceof THREE.Mesh){child.castShadow=true;child.receiveShadow=true;child.userData.terrain=cell;const materials=(Array.isArray(child.material)?child.material:[child.material]).map(material=>material.clone());child.material=Array.isArray(child.material)?materials:materials[0];if(tintColor){materials.forEach(material=>{const colorMaterial=material as THREE.Material&{color?:THREE.Color};if(colorMaterial.color)colorMaterial.color.lerp(tintColor,.34)})}}});

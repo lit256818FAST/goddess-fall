@@ -75,7 +75,7 @@ asnoka -> idle: /assets/images/dialogue/asnoka.webp
 - `dist/` 当前构建总量约 **92.08 MiB**，仍低于 100 MiB 上限；
 - `public/assets/images/` 图片运行时目录约 **8.28 MiB**；
 - 透明 PNG 源文件不进入 `public/`，不会增加首次可玩下载；
-- `npm run build` 已通过，主包约 1,025 KiB（未压缩）；
+- `npm run build` 已通过，主包约 1,038 KiB（未压缩）；
 - `npm run verify:budget` 当前未通过：初始 `public` 包约 **39.18 MiB**，超过 20 MiB 门槛；完整 `public` 约 **91.03 MiB**，主要体积仍来自既有模型与延迟音乐资源。
 - 三状态新增运行时文件：`public/assets/images/dialogue/states/` 下 28 张 WebP，合计约 **3.41 MiB**；逐张检查为 RGBA 且 Alpha 非空。idle 不重复进入该目录。
 - 新图片接入后必须重新执行构建，并检查图片路径无 404。
@@ -90,3 +90,10 @@ asnoka -> idle: /assets/images/dialogue/asnoka.webp
 - 最后一次生产构建：`npm run build` 通过。
 - 三状态构建：`npm run build:dialogue-states` 输出 42 张源帧（14×3），运行时保留 28 张 attack/hit WebP；`npm run check` 通过。
 - production preview 已抽检状态资源：28/28 返回 HTTP 200、`image/webp`；浏览器预览页错误日志为空。主线资产专项脚本仍受继承工作树中的 `boss-night-judge` 动画通道缺失与 Node 环境 `self` 未定义影响，未因本次立绘改动扩大。
+
+### 战斗棋盘场景与单位表现
+
+- `src/render/battleScenePresets.ts` 为主线及旧支线战斗 ID 提供底图映射；`src/render/battlefield.ts` 以无雾透明平面承载场景图，失败时保留程序化棋盘与色板。
+- 我方单位通过 `src/render/characterIllustrations.ts` 优先加载真实 Alpha 全身图的 idle/attack/hit 三态；`src/render/characterVisuals.ts` 的 K3 模型只作为已有 K3 角色的失败回退。
+- `AudioManager` 的普通战斗、Boss 两阶段及支线战斗音频均已核对实际文件存在；普通主线节点共用 `Shadow Council March` 是现有设计，不是断链。
+- 本轮浏览器复测：桌面 1440×1024 棋盘底图、2D 我方单位和控制台状态通过；移动 390×844 显示既定横屏提示，未发现运行时 error/warn。
