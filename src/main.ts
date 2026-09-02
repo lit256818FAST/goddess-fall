@@ -996,7 +996,25 @@ function endPhase(){
   audioManager.playSfx('endPhase');
   const after=endPlayerTurn(before);
   battleState={...before,phase:'enemy'};battlefield?.sync(battleState);syncBattle('敌方阶段：正在执行已预告的行动……');renderTutorial();
-  setTimeout(()=>{battleState=after;selectedId=undefined;applyLakeMutualSiphon();const objective=applyMissionObjective(true);battlefield?.sync(battleState);for(const intent of [...before.enemyIntents].reverse()){const actor=before.units.find(unit=>unit.id===intent.unitId);if(intent.type==='move'){battleLog.unshift({text:`${actor?.name??'敌人'} 移动至 (${intent.destination.x+1},${intent.destination.y+1})。`,cell:intent.destination})}else{const target=before.units.find(unit=>unit.id===intent.targetId),cell=target?.position;battleLog.unshift({text:`${actor?.name??'敌人'} 在 (${(cell?.x??0)+1},${(cell?.y??0)+1}) 攻击 ${target?.name??'目标'}。`,cell})}}battleLog.splice(3);syncBattle(objective??`第 ${battleState.round} 回合开始；所有存活同伴恢复行动。`);if(tutorial==='observe-enemy'&&(battleState.round===tutorialRound+1||battleState.phase==='victory'||battleState.phase==='defeat'))completeTutorial();finishIfNeeded()},reducedMotion?0:500);
+  setTimeout(()=>{animateEnemyMovements(before,after,()=>{battleState=after;selectedId=undefined;applyLakeMutualSiphon();const objective=applyMissionObjective(true);battlefield?.sync(battleState);for(const intent of [...before.enemyIntents].reverse()){const actor=before.units.find(unit=>unit.id===intent.unitId);if(intent.type==='move'){battleLog.unshift({text:`${actor?.name??'敌人'} 移动至 (${intent.destination.x+1},${intent.destination.y+1})。`,cell:intent.destination})}else{const target=before.units.find(unit=>unit.id===intent.targetId),cell=target?.position;battleLog.unshift({text:`${actor?.name??'敌人'} 在 (${(cell?.x??0)+1},${(cell?.y??0)+1}) 攻击 ${target?.name??'目标'}。`,cell})}}battleLog.splice(3);syncBattle(objective??`第 ${battleState.round} 回合开始；所有存活同伴恢复行动。`);if(tutorial==='observe-enemy'&&(battleState.round===tutorialRound+1||battleState.phase==='victory'||battleState.phase==='defeat'))completeTutorial();finishIfNeeded()})},reducedMotion?0:500);
+}
+
+function animateEnemyMovements(before:BattleState,after:BattleState,done:()=>void){
+  const moves=before.enemyIntents.filter((intent):intent is Extract<typeof intent,{type:'move'}>=>intent.type==='move');
+  if(!moves.length){done();return}
+  let stage:BattleState={...before,phase:'enemy',enemyIntents:before.enemyIntents};
+  const play=(index:number)=>{
+    const intent=moves[index];
+    if(!intent){done();return}
+    const current=stage.units.find(unit=>unit.id===intent.unitId),final=after.units.find(unit=>unit.id===intent.unitId);
+    if(!current||!final||current.position.x===final.position.x&&current.position.y===final.position.y){play(index+1);return}
+    const from={...current.position},to={...final.position};
+    stage={...stage,units:stage.units.map(unit=>unit.id===intent.unitId?{...unit,position:to}:unit)};
+    audioManager.playSfx('move');
+    battlefield?.sync(stage,{type:'move',unitId:intent.unitId,from,to});
+    setTimeout(()=>play(index+1),reducedMotion?0:280);
+  };
+  play(0);
 }
 
 function syncBattle(message?:string){
