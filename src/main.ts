@@ -1055,6 +1055,7 @@ function renderAttackControls(){
 }
 
 function renderAdditionalSkills(root:HTMLElement,unit:Unit){
+  const rangeNotice=document.createElement('small');rangeNotice.className='attack-range-note';rangeNotice.textContent=unit.attackRange>1?`远程攻击 · 射程 ${unit.attackRange}`:'近战攻击 · 射程 1';const cancel=root.querySelector('[data-attack="cancel"]');if(cancel)root.insertBefore(rangeNotice,cancel);else root.append(rangeNotice);
   const options:Record<string,[SkillId,string]>={
     u1:['witness-cross','交叉质询 · 信念 -2'],u2:['seraphina-sanctify','净化 · 清除暴露、压制、灼痕'],u3:['reina-repair','现场修复 · 生命 +2'],
     u4:['odric-lock','封门 · 最近敌人 -1生命'],u5:['cole-charge','冲锋 · 最近敌人 -2生命并压制'],u6:['agnes-veil','虚像 · 信念 -1'],

@@ -12,11 +12,11 @@ export type CharacterBattleProfile = Readonly<
  */
 export const characterBattleProfiles: Readonly<Record<Exclude<CampaignCharacterId, "arthur" | "hans" | "asnoka">, CharacterBattleProfile>> = {
   the_unflagged: { health: 7, faith: 5, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 2 },
-  seraphina: { health: 5, faith: 8, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 3 },
-  reina: { health: 6, faith: 6, moveRange: 3, attackRange: 1, attackDamage: 4, faithDamage: 2 },
+  seraphina: { health: 5, faith: 8, moveRange: 3, attackRange: 2, attackDamage: 3, faithDamage: 3 },
+  reina: { health: 6, faith: 6, moveRange: 3, attackRange: 2, attackDamage: 4, faithDamage: 2 },
   odric: { health: 9, faith: 5, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 2 },
-  cole: { health: 5, faith: 5, moveRange: 4, attackRange: 1, attackDamage: 2, faithDamage: 2 },
-  agnes: { health: 5, faith: 8, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 4 },
+  cole: { health: 5, faith: 5, moveRange: 4, attackRange: 2, attackDamage: 2, faithDamage: 2 },
+  agnes: { health: 5, faith: 8, moveRange: 3, attackRange: 3, attackDamage: 3, faithDamage: 4 },
 };
 
 export const mainlineCharacterBattleProfiles: Readonly<Record<"arthur" | "hans" | "asnoka", CharacterBattleProfile>> = {

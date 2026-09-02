@@ -56,6 +56,17 @@ describe("battle rules", () => {
     expect(broken.state.units.find((unit) => unit.id === "e1")?.faith).toBe(0);
   });
 
+  it("allows a ranged profession to attack without moving into melee", () => {
+    const state = createBattle(roster({
+      p1: { attackRange: 2, attackDamage: 2 },
+      e1: { position: { x: 2, y: 0 }, health: 5 },
+    }));
+    const result = attackUnit(state, "p1", "e1", "health");
+    expect(result.ok).toBe(true);
+    expect(result.state.units.find((unit) => unit.id === "p1")?.position).toEqual({ x: 0, y: 0 });
+    expect(result.state.units.find((unit) => unit.id === "e1")?.health).toBe(3);
+  });
+
   it("treats environment cells as real blockers and interactables", () => {
     const state = createBattle(roster(), [
       { position: { x: 1, y: 0 }, kind: "ruin-cover", blocksMovement: true, interactable: false },

@@ -143,3 +143,8 @@
 @media(min-width:721px){#viewport{min-height:0}}
 #viewport canvas{width:100%!important;height:100%!important;min-width:0;min-height:0}
 .battle-layout{grid-template-rows:minmax(0,1fr)}
+.attack-range-note{display:block;color:#d5ad5e;font:600 .68rem/1.3 system-ui,sans-serif;letter-spacing:.04em}
+.vn-character{bottom:-12px}
+.vn-character.speaking{transform:translateY(8px)}
+.vn-character.center.speaking{transform:translate(-50%,8px)}
+@media(max-width:720px){.vn-character.speaking{bottom:-14px;transform:none}.vn-character.center.speaking{transform:none}}

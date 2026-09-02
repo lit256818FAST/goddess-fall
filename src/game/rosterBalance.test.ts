@@ -32,6 +32,14 @@ describe("six-character roster balance proof", () => {
     }
   });
 
+  it("gives ranged professions a distinct attack reach", () => {
+    expect(characterBattleProfiles.seraphina.attackRange).toBe(2);
+    expect(characterBattleProfiles.reina.attackRange).toBe(2);
+    expect(characterBattleProfiles.cole.attackRange).toBe(2);
+    expect(characterBattleProfiles.agnes.attackRange).toBe(3);
+    expect(characterBattleProfiles.odric.attackRange).toBe(1);
+  });
+
   it("gives every character a top-two advantage mission and a bottom-half poor-fit mission", () => {
     const ranks = Object.fromEntries(campaignCharacterIds.map((id) => [id, [] as number[]]));
     for (const config of Object.values(battleObjectiveConfigs)) {
