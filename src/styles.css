@@ -140,3 +140,6 @@
   .vn-dialogue-panel .gal-choices button{min-height:44px;padding:7px 9px;font-size:.78rem;line-height:1.25}
   .vn-dialogue-panel .gal-choices span{margin-top:2px;font-size:.62rem;line-height:1.2}
 }
+@media(min-width:721px){#viewport{min-height:0}}
+#viewport canvas{width:100%!important;height:100%!important;min-width:0;min-height:0}
+.battle-layout{grid-template-rows:minmax(0,1fr)}
