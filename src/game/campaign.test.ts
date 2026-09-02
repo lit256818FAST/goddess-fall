@@ -6,6 +6,7 @@ import {
   clearStoryCheckpoint,
   commitCampaignAction,
   completeCampaignBattle,
+  consumeCampaignPotion,
   createCampaignState,
   createMainlineCampaignState,
   equipCampaignWeapon,
@@ -150,6 +151,12 @@ describe("campaign state", () => {
     const swapped = equipCampaignWeapon(purchased, "echo-compass");
     expect(swapped.equippedWeapon).toBe("echo-compass");
     expect(swapped.coins).toBe(48);
+  });
+
+  it("consumes one stocked potion without allowing a negative inventory", () => {
+    const state = { ...createCampaignState(), potions: 2 };
+    expect(consumeCampaignPotion(state).potions).toBe(1);
+    expect(consumeCampaignPotion({ ...state, potions: 0 }).potions).toBe(0);
   });
 
   it("migrates a valid version-one save and preserves the existing campaign", () => {

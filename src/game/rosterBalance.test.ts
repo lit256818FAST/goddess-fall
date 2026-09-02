@@ -32,12 +32,16 @@ describe("six-character roster balance proof", () => {
     }
   });
 
-  it("gives ranged professions a distinct attack reach", () => {
-    expect(characterBattleProfiles.seraphina.attackRange).toBe(2);
-    expect(characterBattleProfiles.reina.attackRange).toBe(2);
-    expect(characterBattleProfiles.cole.attackRange).toBe(2);
+  it("gives each profession a distinct attack style and reach", () => {
+    expect(characterBattleProfiles.seraphina.attackRange).toBe(3);
+    expect(characterBattleProfiles.reina.attackRange).toBe(4);
+    expect(characterBattleProfiles.cole.attackRange).toBe(4);
     expect(characterBattleProfiles.agnes.attackRange).toBe(3);
     expect(characterBattleProfiles.odric.attackRange).toBe(1);
+    expect(characterBattleProfiles.odric.attackStyle).toBe("heavy-single");
+    expect(characterBattleProfiles.seraphina.attackStyle).toBe("ranged-single");
+    expect(characterBattleProfiles.reina.criticalChance).toBeGreaterThan(0);
+    expect(characterBattleProfiles.the_unflagged.attackStyle).toBe("melee-aoe");
   });
 
   it("gives every character a top-two advantage mission and a bottom-half poor-fit mission", () => {

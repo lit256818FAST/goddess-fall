@@ -290,6 +290,11 @@ export function buyCampaignPotion(state: CampaignState): CampaignState {
   return { ...state, coins: state.coins - cost, potions: (state.potions ?? 0) + 1 };
 }
 
+export function consumeCampaignPotion(state: CampaignState): CampaignState {
+  if ((state.potions ?? 0) <= 0) return state;
+  return { ...state, potions: Math.max(0, state.potions - 1) };
+}
+
 export function buyCampaignRations(state: CampaignState, quantity = 3): CampaignState {
   const amount = Math.max(1, Math.floor(quantity));
   const cost = amount;

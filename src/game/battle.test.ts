@@ -11,6 +11,7 @@ import {
   terrainSpecialtyLabel,
   moveUnit,
   passiveLabel,
+  useBattleItem,
   useSkill,
   undoMove,
   type UnitTemplate,
@@ -65,6 +66,52 @@ describe("battle rules", () => {
     expect(result.ok).toBe(true);
     expect(result.state.units.find((unit) => unit.id === "p1")?.position).toEqual({ x: 0, y: 0 });
     expect(result.state.units.find((unit) => unit.id === "e1")?.health).toBe(3);
+  });
+
+  it("resolves melee attacks as a two-cell splash around the selected target", () => {
+    const state = createBattle(roster({
+      p1: { attackRange: 2, attackStyle: "melee-aoe", attackDamage: 4 },
+      e1: { position: { x: 2, y: 0 }, health: 8 },
+      e2: { position: { x: 2, y: 2 }, health: 8 },
+      e3: { position: { x: 7, y: 4 }, health: 8 },
+    }));
+    const result = attackUnit(state, "p1", "e1", "health");
+    expect(result.ok).toBe(true);
+    expect(result.affectedUnitIds).toEqual(["e1", "e2"]);
+    expect(result.state.units.find((unit) => unit.id === "e1")?.health).toBe(4);
+    expect(result.state.units.find((unit) => unit.id === "e2")?.health).toBe(6);
+    expect(result.state.units.find((unit) => unit.id === "e3")?.health).toBe(8);
+  });
+
+  it("keeps heavy attacks single-target and gives ranged attacks deterministic criticals", () => {
+    let state = createBattle(roster({
+      p1: { attackRange: 1, attackStyle: "heavy-single", attackDamage: 4 },
+      e1: { position: { x: 1, y: 0 }, health: 8 },
+      e2: { position: { x: 1, y: 1 }, health: 8 },
+    }));
+    let result = attackUnit(state, "p1", "e1", "health");
+    expect(result.affectedUnitIds).toEqual(["e1"]);
+    expect(result.state.units.find((unit) => unit.id === "e2")?.health).toBe(8);
+
+    state = createBattle(roster({
+      p1: { attackRange: 4, attackStyle: "ranged-single", criticalChance: 1, attackDamage: 2 },
+      e1: { position: { x: 4, y: 0 }, health: 10 },
+    }));
+    result = attackUnit(state, "p1", "e1", "health");
+    expect(result.critical).toBe(true);
+    expect(result.damageAmount).toBe(6);
+    expect(result.state.units.find((unit) => unit.id === "e1")?.health).toBe(4);
+  });
+
+  it("uses a healing potion as an action and rejects full-health targets", () => {
+    const initial = createBattle(roster({ p2: { position: { x: 0, y: 2 } } }));
+    const state = { ...initial, units: initial.units.map((unit) => unit.id === "p2" ? { ...unit, health: 4 } : unit) };
+    const result = useBattleItem(state, "healing-potion", "p1", "p2");
+    expect(result.ok).toBe(true);
+    expect(result.damageAmount).toBe(-3);
+    expect(result.state.units.find((unit) => unit.id === "p2")?.health).toBe(7);
+    expect(result.state.units.find((unit) => unit.id === "p1")?.acted).toBe(true);
+    expect(useBattleItem(state, "healing-potion", "p1", "p1").ok).toBe(false);
   });
 
   it("treats environment cells as real blockers and interactables", () => {

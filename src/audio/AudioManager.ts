@@ -1,5 +1,5 @@
 export type AudioScene='title'|'home'|'story'|'battle'|'boss'|'library'|'archive'|'victory'|'defeat'|'silent';
-export type SoundEffect='click'|'select'|'cancel'|'terrain'|'endPhase'|'error'|'move'|'attackHealth'|'attackFaith'|'skill'|'hit'|'victory'|'defeat'|'bossWarning';
+export type SoundEffect='click'|'select'|'cancel'|'terrain'|'endPhase'|'error'|'move'|'attackHealth'|'attackFaith'|'skill'|'hit'|'item'|'victory'|'defeat'|'bossWarning';
 export type MusicTrackId='archiveGate'|'archiveGateAlt'|'lanternMap'|'lanternMapAlt'|'ashesMap'|'ashesMapAlt'|'shadowMarch'|'shadowMarchBoss'|'abyssGatefall'|'abyssGatefallSide';
 export type MusicSceneOptions={track?:MusicTrackId;campaignId?:'arthur-main'|'unflagged-side';bossPhase?:1|2};
 
@@ -372,6 +372,7 @@ export class AudioManager{
     if(effect==='attackFaith'){tone(390,.24,.08,'sine',760);this.toneAt(585,.2,.045,'triangle',880)}
     if(effect==='skill'){tone(300,.16,.07,'triangle',520);this.toneAt(660,.22,.04,'sine',880)}
     if(effect==='hit'){tone(95,.13,.14,'square',45);this.noiseBurst(.1,.055)}
+    if(effect==='item'){tone(520,.12,.06,'sine',760);this.toneAt(760,.14,.035,'triangle',980)}
     if(effect==='victory'){[0,150,300].forEach((delay,index)=>setTimeout(()=>this.toneAt([392,494,587][index],.42,.07,'triangle'),delay))}
     if(effect==='defeat'){tone(185,.7,.08,'sawtooth',62);setTimeout(()=>this.toneAt(138,.65,.06,'triangle',46),110)}
     if(effect==='bossWarning'){tone(92,.48,.12,'square',58);setTimeout(()=>this.toneAt(82,.5,.11,'square',52),560)}

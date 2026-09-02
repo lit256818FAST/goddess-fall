@@ -3,6 +3,8 @@ export const BOARD_SIZE = 8;
 export type Team = "player" | "enemy";
 export type BattlePhase = "player" | "enemy" | "victory" | "defeat";
 export type DamageKind = "health" | "faith";
+export type AttackStyle = "heavy-single" | "melee-aoe" | "ranged-single";
+export type BattleItemId = "healing-potion";
 export type TerrainKind = "holy-fire" | "ruin-cover" | "brush" | "mud" | "mechanism";
 export type SkillId = "witness-mark" | "seraphina-restore" | "reina-overload" | "odric-guard" | "cole-rally" | "agnes-rite" | "witness-cross" | "seraphina-sanctify" | "reina-repair" | "odric-lock" | "cole-charge" | "agnes-veil" | "arthur-guardbreak" | "arthur-rally" | "hans-intercept" | "asnoka-scout";
 
@@ -37,6 +39,12 @@ export interface Unit {
   attackRange: number;
   attackDamage: number;
   faithDamage: number;
+  /** How the basic attack resolves; optional for legacy/test templates. */
+  attackStyle?: AttackStyle;
+  /** Chance in [0, 1] for a ranged basic attack to deal a critical hit. */
+  criticalChance?: number;
+  /** Flat physical mitigation provided by armor. */
+  armor?: number;
   exposed: boolean;
   guarded: boolean;
   suppressed: boolean;
@@ -83,12 +91,19 @@ export interface UnitTemplate {
   attackRange?: number;
   attackDamage?: number;
   faithDamage?: number;
+  attackStyle?: AttackStyle;
+  criticalChance?: number;
+  armor?: number;
 }
 
 export interface ActionResult {
   state: BattleState;
   ok: boolean;
   reason?: string;
+  affectedUnitIds?: string[];
+  damageAmount?: number;
+  critical?: boolean;
+  attackStyle?: AttackStyle;
 }
 
 export function passiveLabel(unit:Pick<Unit,"id">):string|undefined {
@@ -163,6 +178,7 @@ const DEFAULT_FAITH = 6;
 export function createUnit(template: UnitTemplate): Unit {
   const health = template.health ?? DEFAULT_HEALTH;
   const faith = template.faith ?? DEFAULT_FAITH;
+  const attackStyle = template.attackStyle ?? inferAttackStyle(template.attackRange ?? 1);
   return {
     ...template,
     position: { ...template.position },
@@ -174,6 +190,9 @@ export function createUnit(template: UnitTemplate): Unit {
     attackRange: template.attackRange ?? 1,
     attackDamage: template.attackDamage ?? 3,
     faithDamage: template.faithDamage ?? 2,
+    attackStyle,
+    criticalChance: Math.max(0, Math.min(1, template.criticalChance ?? (attackStyle === "ranged-single" ? .2 : 0))),
+    armor: Math.max(0, template.armor ?? 0),
     exposed: false,
     guarded: false,
     suppressed: false,
@@ -273,11 +292,46 @@ export function attackUnit(
   if (distance(attacker!.position, target.position) > attacker!.attackRange) {
     return failed(state, "Target is outside attack range.");
   }
-  const amount = (damageKind === "health" ? attacker!.attackDamage : attacker!.faithDamage) + (target.exposed ? 2 : 0) + passiveAttackBonus(attacker!, target, damageKind);
-  const units = applyDamage(state.units, targetId, damageKind, amount).map((unit) =>
-    unit.id === attackerId ? { ...unit, acted: true } : unit.id === targetId ? { ...unit, exposed: false } : unit,
+  const attackStyle = attacker!.attackStyle ?? inferAttackStyle(attacker!.attackRange);
+  const baseAmount = (damageKind === "health" ? attacker!.attackDamage : attacker!.faithDamage)
+    + (target.exposed ? 2 : 0)
+    + passiveAttackBonus(attacker!, target, damageKind)
+    + (attackStyle === "ranged-single" && distance(attacker!.position, target.position) >= 3 ? 1 : 0);
+  const critical = attackStyle === "ranged-single" && shouldCritical(state, attacker!, target);
+  const amount = critical ? baseAmount * 2 : baseAmount;
+  const affected = attackStyle === "melee-aoe"
+    ? state.units.filter((unit) => unit.team !== attacker!.team && isActive(unit) && distance(unit.position, target.position) <= 2)
+    : [target];
+  let units = state.units;
+  for (const affectedTarget of affected) {
+    const hitAmount = affectedTarget.id === target.id ? amount : Math.max(1, Math.floor(amount * .5));
+    units = applyDamage(units, affectedTarget.id, damageKind, hitAmount);
+  }
+  units = units.map((unit) =>
+    unit.id === attackerId ? { ...unit, acted: true } : affected.some((hit) => hit.id === unit.id) ? { ...unit, exposed: false } : unit,
   );
-  return succeeded(refresh({ ...state, units }));
+  const next = succeeded(refresh({ ...state, units }));
+  return { ...next, affectedUnitIds: affected.map((unit) => unit.id), damageAmount: amount, critical, attackStyle };
+}
+
+export function attackStyleLabel(unit: Pick<Unit, "attackStyle" | "attackRange" | "criticalChance">): string {
+  const style = unit.attackStyle ?? inferAttackStyle(unit.attackRange);
+  if (style === "heavy-single") return `重装单点 · 射程 ${unit.attackRange} · 护甲优先`;
+  if (style === "melee-aoe") return `近战范围 · 射程 ${unit.attackRange} · 命中目标周围 2 格`;
+  const chance = Math.round((unit.criticalChance ?? .2) * 100);
+  return `远程单点 · 射程 ${unit.attackRange} · 暴击 ${chance}%`;
+}
+
+function inferAttackStyle(range: number): AttackStyle {
+  return range <= 1 ? "heavy-single" : range >= 4 ? "ranged-single" : "melee-aoe";
+}
+
+function shouldCritical(state: BattleState, attacker: Unit, target: Unit): boolean {
+  const chance = Math.max(0, Math.min(1, attacker.criticalChance ?? .2));
+  if (!chance) return false;
+  const signature = state.round * 17 + attacker.position.x * 31 + attacker.position.y * 47 + target.position.x * 59 + target.position.y * 71
+    + [...attacker.id].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return (Math.abs(signature) % 100) / 100 < chance;
 }
 
 export function useSkill(state: BattleState, skill: SkillId, actorId: string, targetId: string): ActionResult {
@@ -391,6 +445,24 @@ export function useSkill(state: BattleState, skill: SkillId, actorId: string, ta
   return succeeded(refresh({ ...state, units }));
 }
 
+/** Uses a shop consumable during the player phase; the selected unit spends its action. */
+export function useBattleItem(state: BattleState, item: BattleItemId, actorId: string, targetId = actorId): ActionResult {
+  const actor = state.units.find((unit) => unit.id === actorId);
+  const target = state.units.find((unit) => unit.id === targetId);
+  const error = validatePlayerAction(state, actor);
+  if (error) return failed(state, error);
+  if (item !== "healing-potion") return failed(state, "Unknown battle item.");
+  if (!target || target.team !== "player" || !isActive(target)) return failed(state, "Item target is unavailable.");
+  if (distance(actor!.position, target.position) > 2) return failed(state, "Item target is outside support range.");
+  if (target.health >= target.maxHealth) return failed(state, "This unit does not need healing.");
+  const restored = Math.min(3, target.maxHealth - target.health);
+  const units = state.units.map((unit) => unit.id === target.id
+    ? { ...unit, health: unit.health + restored }
+    : unit.id === actorId ? { ...unit, acted: true } : unit);
+  const next = succeeded(refresh({ ...state, units }));
+  return { ...next, affectedUnitIds: [target.id], damageAmount: -restored };
+}
+
 export function endPlayerTurn(state: BattleState): BattleState {
   if (state.phase !== "player") return state;
   const pending: BattleState = { ...state, phase: "enemy", enemyIntents: previewEnemyIntents(state) };
@@ -501,8 +573,10 @@ function nearest(source: Unit, targets: Unit[]): Unit | undefined {
 function applyDamage(units: Unit[], id: string, kind: DamageKind, amount: number): Unit[] {
   return units.map((unit) => {
     if (unit.id !== id) return unit;
+    const guardReduction = unit.guarded ? (unit.id === "u4" ? 3 : unit.id === "u-hans" ? 2 : 1) : 0;
+    const mitigation = Math.max(unit.armor ?? 0, guardReduction);
     return kind === "health"
-      ? { ...unit, health: Math.max(0, unit.health - Math.max(0, amount - (unit.guarded ? unit.id === "u4" ? 3 : 2 : 0))), guarded: false }
+      ? { ...unit, health: Math.max(0, unit.health - Math.max(0, amount - mitigation)), guarded: false }
       : { ...unit, faith: Math.max(0, unit.faith - amount) };
   });
 }

@@ -58,6 +58,7 @@
   .attack-controls button{min-height:34px;padding:.4rem .25rem;font-size:.64rem}
   #undo{order:6;margin:0;min-height:34px;padding:.45rem;font-size:.68rem}
   .dispatch-controls{order:7;margin:0;padding:7px}
+  .item-controls{order:7;margin:0;padding:7px}
   .battle aside [data-action="end-phase"]{order:8;position:sticky;bottom:0;z-index:4;min-height:40px;margin:0;padding:.55rem .45rem;box-shadow:0 6px 14px #0008}
   .battle aside>h3{order:9;margin:2px 0 0;font-size:.82rem}
   .battle aside>#status{order:10;min-height:0;margin:0;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:.68rem;line-height:1.42}
@@ -65,6 +66,7 @@
   .intents h3{margin:4px 0;font-size:.76rem}
   .intent{margin:2px 0;padding:5px;font-size:.62rem;line-height:1.28}
   .battle-log,.battle aside>#help,.battle aside>#retreat{display:none}
+  #reset-view{order:12;margin-top:auto;min-height:36px;padding:.45rem;font-size:.68rem}
   .tutorial{left:10px;bottom:10px;width:min(312px,44vw);padding:10px 12px;font-size:.7rem}
   .tutorial p{min-height:0;margin:.35rem 0}
 }
@@ -144,6 +146,14 @@
 #viewport canvas{width:100%!important;height:100%!important;min-width:0;min-height:0}
 .battle-layout{grid-template-rows:minmax(0,1fr)}
 .attack-range-note{display:block;color:#d5ad5e;font:600 .68rem/1.3 system-ui,sans-serif;letter-spacing:.04em}
+.item-controls{display:grid;gap:6px;margin:8px 0;padding:8px 9px;border-top:1px solid #4c5b61;background:#10181d}
+.item-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;font:600 .72rem/1.3 system-ui,sans-serif;color:#d7c291}
+.item-heading small{color:#8f9da0;font-size:.64rem;font-weight:500}
+.item-use{width:100%;padding:.55rem .7rem;border:1px solid #b89154;background:#1a292e;color:#ecd5a3;text-align:left;font-size:.75rem}
+.item-use:hover:not(:disabled),#reset-view:hover{border-color:#f0c978;background:#2b271e}
+.item-use:disabled{opacity:.4;cursor:not-allowed}
+.unit-attack-profile{display:block;color:#c5a764;font:600 .67rem/1.35 system-ui,sans-serif}
+#reset-view{margin-top:10px}
 .vn-character{bottom:-12px}
 .vn-character.speaking{transform:translateY(8px)}
 .vn-character.center.speaking{transform:translate(-50%,8px)}

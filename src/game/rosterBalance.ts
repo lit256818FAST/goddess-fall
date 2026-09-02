@@ -1,9 +1,9 @@
-import type { UnitTemplate } from "./battle";
+import type { AttackStyle, UnitTemplate } from "./battle";
 import { battleObjectiveConfigs, type BattleObjectiveConfig, type MissionModifierKind } from "./battleObjectives";
 import type { CampaignCharacterId } from "./campaign";
 
 export type CharacterBattleProfile = Readonly<
-  Required<Pick<UnitTemplate, "health" | "faith" | "moveRange" | "attackRange" | "attackDamage" | "faithDamage">>
+  Required<Pick<UnitTemplate, "health" | "faith" | "moveRange" | "attackRange" | "attackDamage" | "faithDamage" | "attackStyle" | "criticalChance" | "armor">>
 >;
 
 /**
@@ -11,18 +11,18 @@ export type CharacterBattleProfile = Readonly<
  * preventing the proof from silently drifting away from player-facing values.
  */
 export const characterBattleProfiles: Readonly<Record<Exclude<CampaignCharacterId, "arthur" | "hans" | "asnoka">, CharacterBattleProfile>> = {
-  the_unflagged: { health: 7, faith: 5, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 2 },
-  seraphina: { health: 5, faith: 8, moveRange: 3, attackRange: 2, attackDamage: 3, faithDamage: 3 },
-  reina: { health: 6, faith: 6, moveRange: 3, attackRange: 2, attackDamage: 4, faithDamage: 2 },
-  odric: { health: 9, faith: 5, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 2 },
-  cole: { health: 5, faith: 5, moveRange: 4, attackRange: 2, attackDamage: 2, faithDamage: 2 },
-  agnes: { health: 5, faith: 8, moveRange: 3, attackRange: 3, attackDamage: 3, faithDamage: 4 },
+  the_unflagged: { health: 7, faith: 5, moveRange: 3, attackRange: 2, attackDamage: 3, faithDamage: 2, attackStyle: "melee-aoe", criticalChance: 0, armor: 1 },
+  seraphina: { health: 5, faith: 8, moveRange: 3, attackRange: 3, attackDamage: 3, faithDamage: 3, attackStyle: "ranged-single", criticalChance: .1, armor: 0 },
+  reina: { health: 6, faith: 6, moveRange: 3, attackRange: 4, attackDamage: 5, faithDamage: 2, attackStyle: "ranged-single", criticalChance: .2, armor: 0 },
+  odric: { health: 9, faith: 5, moveRange: 3, attackRange: 1, attackDamage: 3, faithDamage: 2, attackStyle: "heavy-single", criticalChance: 0, armor: 2 },
+  cole: { health: 5, faith: 5, moveRange: 4, attackRange: 4, attackDamage: 5, faithDamage: 2, attackStyle: "ranged-single", criticalChance: .3, armor: 0 },
+  agnes: { health: 5, faith: 8, moveRange: 3, attackRange: 3, attackDamage: 3, faithDamage: 4, attackStyle: "ranged-single", criticalChance: .15, armor: 0 },
 };
 
 export const mainlineCharacterBattleProfiles: Readonly<Record<"arthur" | "hans" | "asnoka", CharacterBattleProfile>> = {
-  arthur: { health: 8, faith: 4, moveRange: 3, attackRange: 1, attackDamage: 4, faithDamage: 1 },
-  hans: { health: 10, faith: 4, moveRange: 2, attackRange: 1, attackDamage: 3, faithDamage: 1 },
-  asnoka: { health: 6, faith: 6, moveRange: 4, attackRange: 2, attackDamage: 3, faithDamage: 2 },
+  arthur: { health: 8, faith: 4, moveRange: 3, attackRange: 2, attackDamage: 4, faithDamage: 1, attackStyle: "melee-aoe", criticalChance: 0, armor: 1 },
+  hans: { health: 10, faith: 4, moveRange: 2, attackRange: 1, attackDamage: 3, faithDamage: 1, attackStyle: "heavy-single", criticalChance: 0, armor: 3 },
+  asnoka: { health: 6, faith: 6, moveRange: 4, attackRange: 4, attackDamage: 5, faithDamage: 2, attackStyle: "ranged-single", criticalChance: .3, armor: 0 },
 };
 
 export const campaignCharacterIds = Object.freeze(

@@ -22,6 +22,7 @@ import {
 import { characters, factions } from './content/world';
 import {
   attackUnit,
+  attackStyleLabel,
   createBattle,
   distance,
   endPlayerTurn,
@@ -32,6 +33,7 @@ import {
   terrainInteractionLabel,
   terrainSpecialtyLabel,
   useSkill,
+  useBattleItem,
   undoMove,
   type BattleState,
   type SkillId,
@@ -58,6 +60,7 @@ import {
   setStoryCheckpoint,
   setCampaignLineup,
   buyCampaignPotion,
+  consumeCampaignPotion,
   buyCampaignRations,
   buyCampaignWeapon,
   equipCampaignWeapon,
@@ -882,13 +885,14 @@ function startBattle(nodeId:string){
 
 function renderBattleShell(){
   const chapter=currentChapter(),node=chapter.nodes[battleNodeId];if(!node||node.kind!=='battle'||!battleState)return;
-  set(`<main class="battle"><header><div><p class="eyebrow">${chapter.title}</p><h2>${escapeHtml(node.title)}</h2></div><div class="objective">${node.objectives.map(escapeHtml).join(' · ')}</div></header><section class="battle-layout"><div id="viewport" aria-label="8乘8三维战术棋盘"></div><aside><div class="battle-meta"><strong id="phase"></strong><span id="remaining"></span></div><div id="mission-objective" class="mission-objective" aria-live="polite"></div><div id="boss-phase" class="boss-phase" aria-live="polite"></div><section id="tutorial" class="tutorial" aria-live="polite"></section><h3>战况</h3><p id="status" aria-live="polite"></p><div id="unit-card" class="unit-card" tabindex="0">选择单位查看状态</div><div id="attack-controls" class="attack-controls"></div><button id="undo" class="ghost" disabled>撤回本次移动</button><div id="dispatch-controls" class="dispatch-controls" aria-live="polite"></div><section class="intents"><h3>敌方意图</h3><div id="intent-list"></div></section><section class="battle-log"><h3>最近战报</h3><ol id="battle-log"></ol></section><button id="wait" data-action="end-phase">结束我方阶段</button><button id="help" class="ghost">重看教程</button><button id="retreat" class="ghost">退出战斗</button></aside></section></main>`);
+  set(`<main class="battle"><header><div><p class="eyebrow">${chapter.title}</p><h2>${escapeHtml(node.title)}</h2></div><div class="objective">${node.objectives.map(escapeHtml).join(' · ')}</div></header><section class="battle-layout"><div id="viewport" aria-label="8乘8三维战术棋盘"></div><aside><div class="battle-meta"><strong id="phase"></strong><span id="remaining"></span></div><div id="mission-objective" class="mission-objective" aria-live="polite"></div><div id="boss-phase" class="boss-phase" aria-live="polite"></div><section id="tutorial" class="tutorial" aria-live="polite"></section><h3>战况</h3><p id="status" aria-live="polite"></p><div id="unit-card" class="unit-card" tabindex="0">选择单位查看状态</div><div id="attack-controls" class="attack-controls"></div><section id="item-controls" class="item-controls" aria-live="polite"></section><button id="undo" class="ghost" disabled>撤回本次移动</button><div id="dispatch-controls" class="dispatch-controls" aria-live="polite"></div><section class="intents"><h3>敌方意图</h3><div id="intent-list"></div></section><section class="battle-log"><h3>最近战报</h3><ol id="battle-log"></ol></section><button id="wait" data-action="end-phase">结束我方阶段</button><button id="help" class="ghost">重看教程</button><button id="retreat" class="ghost">退出战斗</button><button id="reset-view" class="ghost">重置视角</button></aside></section></main>`);
   const view=document.querySelector<HTMLElement>('#viewport')!;
   try{const basePreset=battleScenePresetFor(node.battleId);const visualPreset=basePreset??{id:node.battleId,title:node.title,region:chapter.title,background:battleBackgroundFor(node.battleId),terrain:[],palette:paletteForBattleId(node.battleId)};battlefield=new Battlefield(view,battleState,onBattleInput,visualPreset);if(new URLSearchParams(location.search).has('qa'))qaWindow.__goddessBattlefield=battlefield}catch(err){view.innerHTML=`<div class="error">3D战场无法启动。请确认浏览器已启用 WebGL。<br><small>${escapeHtml(String(err))}</small><br><button id="retry" class="primary">重试</button></div>`;document.querySelector('#retry')?.addEventListener('click',()=>startBattle(battleNodeId))}
   document.querySelector('#wait')?.addEventListener('click',endPhase);
   document.querySelector('#undo')?.addEventListener('click',undoLastMove);
   document.querySelector('#help')?.addEventListener('click',()=>{tutorial='intro';tutorialForced=true;renderTutorial()});
   document.querySelector('#retreat')?.addEventListener('click',()=>{if(confirm('退出将放弃本场战斗进度，确定吗？'))renderCampaignHome()});
+  document.querySelector('#reset-view')?.addEventListener('click',()=>{battlefield?.resetCameraView();audioManager.playSfx('select');syncBattle('视角已重置，可继续拖拽、双指旋转或缩放棋盘。')});
 }
 
 function onBattleInput(input:BattleInput){
@@ -910,7 +914,7 @@ function onBattleInput(input:BattleInput){
   if(input.type==='attack'){
     if(tutorial==='move-three'){syncBattle('先完成一次三格移动，再练习攻击。');return}
     const actor=unitById(input.unitId),target=unitById(input.targetId);if(!actor||!target)return;
-    undoSnapshot=undefined;const before=input.damageKind==='faith'?target.faith:target.health,result=attackUnit(battleState,input.unitId,input.targetId,input.damageKind),after=result.state.units.find(unit=>unit.id===target.id),amount=Math.max(0,before-(input.damageKind==='faith'?(after?.faith??before):(after?.health??before))),animation:BattleAnimation={type:'attack',unitId:input.unitId,targetId:input.targetId,damageKind:input.damageKind,amount,visualAction:input.damageKind==='faith'&&['u2','u6'].includes(input.unitId)?'skill':undefined};resolveAction(result,`${actor.name} 对 ${target.name} 造成${input.damageKind==='faith'?'信念':'生命'}伤害，坐标 (${target.position.x+1},${target.position.y+1})。`,animation,target.position);if(result.ok)setAttackMode(undefined);
+    undoSnapshot=undefined;const before=input.damageKind==='faith'?target.faith:target.health,result=attackUnit(battleState,input.unitId,input.targetId,input.damageKind),after=result.state.units.find(unit=>unit.id===target.id),amount=result.damageAmount??Math.max(0,before-(input.damageKind==='faith'?(after?.faith??before):(after?.health??before))),style=result.attackStyle??actor.attackStyle,affected=result.affectedUnitIds??[target.id],animation:BattleAnimation={type:'attack',unitId:input.unitId,targetId:input.targetId,damageKind:input.damageKind,amount,visualAction:input.damageKind==='faith'&&['u2','u6'].includes(input.unitId)?'skill':undefined,affectedTargetIds:affected,critical:result.critical};const splash=affected.length>1?`，波及 ${affected.length-1} 名目标`:'';const crit=result.critical?'暴击！':'';const profile=style==='ranged-single'?'远程射击':style==='melee-aoe'?'范围攻击':'重装单点';resolveAction(result,`${actor.name} ${profile} ${crit}对 ${target.name} 造成${input.damageKind==='faith'?'信念':'生命'}伤害${splash}，坐标 (${target.position.x+1},${target.position.y+1})。`,animation,target.position);if(result.ok)setAttackMode(undefined);
   }
 }
 
@@ -1008,6 +1012,27 @@ function syncBattle(message?:string){
   const mission=document.querySelector<HTMLElement>('#mission-objective');
   if(mission&&objectiveRuntime){const evaluation=evaluateBattleObjective(battleState,objectiveRuntime),notes=[...objectiveRuntime.activeRoleNotes,...storyBattleNotes];mission.innerHTML=`<strong>${escapeHtml(objectiveRuntime.config.title)}</strong><span>${escapeHtml(evaluation.progressText)}</span>${notes.length?`<small>${notes.map(escapeHtml).join(' · ')}</small>`:''}`}
   renderUnitCard();renderAttackControls();renderDispatchControls();renderIntents();renderLog();renderTutorial();
+  renderBattleItems();
+}
+
+function renderBattleItems(){
+  const root=document.querySelector<HTMLElement>('#item-controls');
+  if(!root)return;
+  const selected=unitById(selectedId),potions=campaignState.potions??0;
+  const canUse=Boolean(selected&&selected.team==='player'&&isActive(selected)&&!selected.acted&&potions>0&&selected.health<selected.maxHealth);
+  root.innerHTML=`<div class="item-heading"><strong>战斗道具</strong><small>商店药剂 · ${potions} 瓶</small></div><button type="button" class="item-use" data-use-potion ${canUse?'':'disabled'}>回血药剂 · 恢复 3 生命${selected?`（${escapeHtml(selected.name)}）`:''}</button>`;
+  root.querySelector<HTMLButtonElement>('[data-use-potion]')?.addEventListener('click',useHealingPotion);
+}
+
+function useHealingPotion(){
+  if(!battleState||!selectedId)return;
+  const actor=unitById(selectedId);if(!actor)return;
+  const result=useBattleItem(battleState,'healing-potion',actor.id,actor.id);
+  if(!result.ok){audioManager.playSfx('error');syncBattle(reasonZh(result.reason));return}
+  persistCampaign(consumeCampaignPotion(campaignState));
+  audioManager.playSfx('item');
+  const restored=Math.max(0,result.damageAmount??0);
+  resolveAction(result,`${actor.name} 使用回血药剂，恢复 ${restored} 点生命。`,undefined,actor.position);
 }
 
 function renderDispatchControls(){
@@ -1039,7 +1064,8 @@ function renderUnitCard(){
   const states=[unit.exposed?'暴露':null,unit.guarded?'护持':null,unit.suppressed?'压制':null,unit.scorched?'灼痕':null].filter(Boolean).join(' · ');
   const movement=Math.max(1,unit.moveRange-(unit.suppressed?1:0));
   const passive=unit.team==='player'?passiveLabel(unit):undefined;
-  card.classList.toggle('enemy-card',unit.team==='enemy');card.innerHTML=`<strong>${escapeHtml(unit.name)}${unit.team==='enemy'?' · 敌方':''}</strong><span data-vital="health">生命 ${unit.health}/${unit.maxHealth}</span><i class="meter"><b style="width:${health}%"></b></i><span data-vital="faith">信念 ${unit.faith}/${unit.maxFaith}</span><i class="meter faith"><b style="width:${faith}%"></b></i><small>${isActive(unit)?unit.team==='enemy'?intentText:unit.acted?'本回合已行动':'可行动 · 移动 '+movement+' 格':'已退出战斗'}${states?' · '+states:''}${passive?' · 被动：'+escapeHtml(passive):''}</small>`;
+  const attackProfile=unit.team==='enemy'?`攻击技能：${attackStyleLabel(unit)}；伤害：生命 ${unit.attackDamage} / 信念 ${unit.faithDamage}`:'';
+  card.classList.toggle('enemy-card',unit.team==='enemy');card.innerHTML=`<strong>${escapeHtml(unit.name)}${unit.team==='enemy'?' · 敌方':''}</strong><span data-vital="health">生命 ${unit.health}/${unit.maxHealth}</span><i class="meter"><b style="width:${health}%"></b></i><span data-vital="faith">信念 ${unit.faith}/${unit.maxFaith}</span><i class="meter faith"><b style="width:${faith}%"></b></i>${attackProfile?`<small class="unit-attack-profile">${escapeHtml(attackProfile)}</small>`:''}<small>${escapeHtml(isActive(unit)?unit.team==='enemy'?intentText:unit.acted?'本回合已行动':'可行动 · 移动 '+movement+' 格':'已退出战斗')}${states?' · '+states:''}${passive?' · 被动：'+escapeHtml(passive):''}</small>`;
 }
 
 function renderAttackControls(){
@@ -1055,7 +1081,7 @@ function renderAttackControls(){
 }
 
 function renderAdditionalSkills(root:HTMLElement,unit:Unit){
-  const rangeNotice=document.createElement('small');rangeNotice.className='attack-range-note';rangeNotice.textContent=unit.attackRange>1?`远程攻击 · 射程 ${unit.attackRange}`:'近战攻击 · 射程 1';const cancel=root.querySelector('[data-attack="cancel"]');if(cancel)root.insertBefore(rangeNotice,cancel);else root.append(rangeNotice);
+  const rangeNotice=document.createElement('small');rangeNotice.className='attack-range-note';rangeNotice.textContent=attackStyleLabel(unit);const cancel=root.querySelector('[data-attack="cancel"]');if(cancel)root.insertBefore(rangeNotice,cancel);else root.append(rangeNotice);
   const options:Record<string,[SkillId,string]>={
     u1:['witness-cross','交叉质询 · 信念 -2'],u2:['seraphina-sanctify','净化 · 清除暴露、压制、灼痕'],u3:['reina-repair','现场修复 · 生命 +2'],
     u4:['odric-lock','封门 · 最近敌人 -1生命'],u5:['cole-charge','冲锋 · 最近敌人 -2生命并压制'],u6:['agnes-veil','虚像 · 信念 -1'],
